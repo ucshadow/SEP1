@@ -3,7 +3,8 @@
 
 Semester 1 project by:
 
-- Catalin
+
 - Radu
 - Nikolay
 - Yusuf
+- Catalin
