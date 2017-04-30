@@ -1,4 +1,4 @@
-public class GuestDate {
+public class GuestData {
 
 	private Name name;
 	private long phoneNumber;
@@ -6,7 +6,7 @@ public class GuestDate {
 	private String nationality;
 	private String dateOfBirth;
 
-	public GuestDate(Name name, long phoneNumber, Address address,
+	public GuestData(Name name, long phoneNumber, Address address,
 			String nationality, String dateOfBirth) {
 
 		this.name = name;
@@ -56,16 +56,16 @@ public class GuestDate {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public GuestDate copy() {
-		return new GuestDate(name, phoneNumber, address, nationality,
+	public GuestData copy() {
+		return new GuestData(name, phoneNumber, address, nationality,
 				dateOfBirth);
 	}
 
 	public boolean equals(Object obj) {
-		if (!(obj instanceof GuestDate)) {
+		if (!(obj instanceof GuestData)) {
 			return false;
 		}
-		GuestDate other = (GuestDate) obj;
+		GuestData other = (GuestData) obj;
 		return name.equals(other.name) && phoneNumber == other.phoneNumber
 				&& address.equals(other.address)
 				&& nationality.equals(other.nationality)
