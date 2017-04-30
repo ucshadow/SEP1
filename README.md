@@ -1,5 +1,5 @@
 
-[![N|Solid](http://i.imgur.com/febpx3G.png)](en.via.dk)
+[![N|Solid](http://i.imgur.com/Y8K24UT.png)](en.via.dk)
 
 Semester 1 project by:
 
