@@ -42,12 +42,26 @@ public class DateHandler implements Serializable {
 
     public boolean isBefore(DateHandler date) {
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+
         try {
             Date thisDate = f.parse(toString());
             Date other = f.parse(date.toString());
             if(thisDate.before(other)) {
                 return true;
             }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isBeforeRange(DateHandler first, DateHandler second){
+        SimpleDateFormat g = new SimpleDateFormat("dd/MM/yyyy");
+
+        try{
+            Date firstDate = g.parse(first.toString());
+            Date secondDate = g.parse(second.toString());
+            return firstDate.before(secondDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
