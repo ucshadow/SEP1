@@ -6,6 +6,7 @@ public class Guest {
     private boolean bookingInitiator;
     private boolean lateArrivalNotice;
     private boolean priorityGuest;
+    private int roomNumber;
 
     public Guest(GuestData guestData, Arrival arrival, Departure departure, String roomType,
                  boolean bookingInitiator, boolean lateArrivalNotice, boolean priorityGuest) {
@@ -72,6 +73,14 @@ public class Guest {
 
     public void setPriorityGuest(boolean priorityGuest) {
         this.priorityGuest = priorityGuest;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     public Guest copy(){

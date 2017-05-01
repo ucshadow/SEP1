@@ -1,93 +1,143 @@
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class MyFileIO {
+public class MyFileIO
+{
+    public void writeToFile(String fileName, Object obj) throws FileNotFoundException, IOException
+    {
+        ObjectOutputStream writeToFile = null;
 
-    public void writeToFile(String fileName, String str) throws FileNotFoundException {
-        write(fileName, str, false);
-    }
+        try
+        {
+            FileOutputStream fileOutStream = new FileOutputStream(fileName);
+            writeToFile = new ObjectOutputStream(fileOutStream);
 
-    public void appendToFile(String fileName, String str) throws FileNotFoundException {
-        write(fileName, str, true);
-    }
-
-    private void write(String fileName, String str, boolean append) throws FileNotFoundException {
-        PrintWriter writeToFile = null;
-
-        try {
-            FileOutputStream fileOutStream = new FileOutputStream(fileName, append);
-            writeToFile = new PrintWriter(fileOutStream);
-            writeToFile.println(str);
-        } finally {
-            if (writeToFile != null) {
-                writeToFile.close();
+            writeToFile.writeObject(obj);
+        }
+        finally
+        {
+            if (writeToFile != null)
+            {
+                try
+                {
+                    writeToFile.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("IO Error closing file " + fileName);
+                }
             }
         }
     }
 
-    public void writeToFile(String fileName, String[] strs) throws FileNotFoundException {
-        write(fileName, strs, false);
-    }
+    public void writeToFile(String fileName, Object[] objs) throws FileNotFoundException, IOException
+    {
+        ObjectOutputStream writeToFile = null;
 
-    public void appendToFile(String fileName, String[] strs) throws FileNotFoundException {
-        write(fileName, strs, true);
-    }
+        try
+        {
+            FileOutputStream fileOutStream = new FileOutputStream(fileName);
+            writeToFile = new ObjectOutputStream(fileOutStream);
 
-    private void write(String fileName, String[] strs, boolean append) throws FileNotFoundException {
-        PrintWriter writeToFile = null;
-
-        try {
-            FileOutputStream fileOutStream = new FileOutputStream(fileName, append);
-            writeToFile = new PrintWriter(fileOutStream);
-
-            for (int i = 0; i < strs.length; i++) {
-                writeToFile.println(strs[i]);
+            for (int i = 0; i < objs.length; i++)
+            {
+                writeToFile.writeObject(objs[i]);
             }
-        } finally {
-            if (writeToFile != null) {
-                writeToFile.close();
+        }
+        finally
+        {
+            if (writeToFile != null)
+            {
+                try
+                {
+                    writeToFile.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("IO Error closing file " + fileName);
+                }
             }
         }
     }
 
-    public String readStringFromFile(String fileName) throws FileNotFoundException {
-        Scanner readFromFile = null;
-        String str = "";
-
-        try {
+    public Object readObjectFromFile(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException
+    {
+        Object obj = null;
+        ObjectInputStream readFromFile = null;
+        try
+        {
             FileInputStream fileInStream = new FileInputStream(fileName);
-            readFromFile = new Scanner(fileInStream);
-            str = readFromFile.nextLine();
-        } finally {
-            if (readFromFile != null) {
-                readFromFile.close();
+            readFromFile = new ObjectInputStream(fileInStream);
+            try
+            {
+                obj = readFromFile.readObject();
+            }
+            catch (EOFException eof)
+            {
+                //Done reading
             }
         }
-        return str;
+        finally
+        {
+            if (readFromFile != null)
+            {
+                try
+                {
+                    readFromFile.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("IO Error closing file " + fileName);
+                }
+            }
+        }
+
+        return obj;
     }
 
-    public ArrayList<String> readArrayFromFile(String fileName) throws FileNotFoundException {
-        Scanner readFromFile = null;
-        ArrayList<String> strs = new ArrayList<String>();
+    public Object[] readArrayFromFile(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException
+    {
+        ArrayList<Object> objs = new ArrayList<Object>();
 
-        try {
+        ObjectInputStream readFromFile = null;
+        try
+        {
             FileInputStream fileInStream = new FileInputStream(fileName);
-            readFromFile = new Scanner(fileInStream);
-
-            while (readFromFile.hasNext()) {
-                strs.add(readFromFile.nextLine());
+            readFromFile = new ObjectInputStream(fileInStream);
+            while (true)
+            {
+                try
+                {
+                    objs.add(readFromFile.readObject());
+                }
+                catch (EOFException eof)
+                {
+                    //Done reading
+                    break;
+                }
             }
-        } finally {
-            if (readFromFile != null) {
-                readFromFile.close();
+        }
+        finally
+        {
+            if (readFromFile != null)
+            {
+                try
+                {
+                    readFromFile.close();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("IO Error closing file " + fileName);
+                }
             }
         }
 
-        String[] strsArray = new String[strs.size()];
-        return strs;
+        return objs.toArray();
     }
 }
