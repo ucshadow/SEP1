@@ -1,118 +1,81 @@
 public class Guest {
-    private GuestData guestData;
-    private Arrival arrival;
-    private Departure departure;
-    private String roomType;
-    private boolean bookingInitiator;
-    private boolean lateArrivalNotice;
-    private boolean priorityGuest;
-    private int roomNumber;
 
-    public Guest(GuestData guestData, Arrival arrival, Departure departure, String roomType,
-                 boolean bookingInitiator, boolean lateArrivalNotice, boolean priorityGuest) {
-        this.guestData = guestData;
-        this.arrival = arrival;
-        this.departure = departure;
-        this.roomType = roomType;
-        this.bookingInitiator = bookingInitiator;
-        this.lateArrivalNotice = lateArrivalNotice;
-        this.priorityGuest = priorityGuest;
-    }
+	private Name name;
+	private long phoneNumber;
+	private Address address;
+	private String nationality;
+	private String dateOfBirth;
 
-    public GuestData getGuestData() {
-        return guestData;
-    }
+	public Guest(Name name, long phoneNumber, Address address,
+				 String nationality, String dateOfBirth) {
 
-    public void setGuestData(GuestData guestData) {
-        this.guestData = guestData;
-    }
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.nationality = nationality;
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public Arrival getArrival() {
-        return arrival;
-    }
+	public Name getName() {
+		return name;
+	}
 
-    public void setArrival(Arrival arrival) {
-        this.arrival = arrival;
-    }
+	public void setName(Name name) {
+		this.name = name;
+	}
 
-    public Departure getDeparture() {
-        return departure;
-    }
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setDeparture(Departure departure) {
-        this.departure = departure;
-    }
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public String getRoomType() {
-        return roomType;
-    }
+	public Address getAddress() {
+		return address;
+	}
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public boolean isBookingInitiator() {
-        return bookingInitiator;
-    }
+	public String getNationality() {
+		return nationality;
+	}
 
-    public void setBookingInitiator(boolean bookingInitiator) {
-        this.bookingInitiator = bookingInitiator;
-    }
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
 
-    public boolean isLateArrivalNotice() {
-        return lateArrivalNotice;
-    }
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-    public void setLateArrivalNotice(boolean lateArrivalNotice) {
-        this.lateArrivalNotice = lateArrivalNotice;
-    }
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public boolean isPriorityGuest() {
-        return priorityGuest;
-    }
+	public Guest copy() {
+		return new Guest(name, phoneNumber, address, nationality,
+				dateOfBirth);
+	}
 
-    public void setPriorityGuest(boolean priorityGuest) {
-        this.priorityGuest = priorityGuest;
-    }
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Guest)) {
+			return false;
+		}
+		Guest other = (Guest) obj;
+		return name.equals(other.name) && phoneNumber == other.phoneNumber
+				&& address.equals(other.address)
+				&& nationality.equals(other.nationality)
+				&& dateOfBirth.equals(other.dateOfBirth);
+	}
 
-    public int getRoomNumber() {
-        return roomNumber;
-    }
+	public String toString() {
+		return name.toString() + address.toString() + ", phone number "
+				+ phoneNumber + ", nationality " + nationality
+				+ ", date of birth" + dateOfBirth;
+	}
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public Guest copy(){
-        return new Guest(guestData, arrival, departure, roomType,
-        bookingInitiator, lateArrivalNotice, priorityGuest);
-    }
-
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        Guest guest = (Guest) obj;
-
-        if (bookingInitiator != guest.bookingInitiator) return false;
-        if (lateArrivalNotice != guest.lateArrivalNotice) return false;
-        if (priorityGuest != guest.priorityGuest) return false;
-        if (guestData != null ? !guestData.equals(guest.guestData) : guest.guestData != null) return false;
-        if (arrival != null ? !arrival.equals(guest.arrival) : guest.arrival != null) return false;
-        if (departure != null ? !departure.equals(guest.departure) : guest.departure != null) return false;
-        return roomType != null ? roomType.equals(guest.roomType) : guest.roomType == null;
-    }
-
-    @Override
-    public String toString() {
-        return "Guest{" +
-                "guestData=" + guestData +
-                ", arrival=" + arrival +
-                ", departure=" + departure +
-                ", roomType='" + roomType + '\'' +
-                ", bookingInitiator=" + bookingInitiator +
-                ", lateArrivalNotice=" + lateArrivalNotice +
-                ", priorityGuest=" + priorityGuest +
-                '}';
-    }
 }

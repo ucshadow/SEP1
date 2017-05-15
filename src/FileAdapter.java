@@ -9,17 +9,17 @@ public class FileAdapter {
         this.fileName = fileName;
     }
 
-    public void writeToFile(Guest guest) {
+    public void writeToFile(Reservation reservation) {
         try {
-            fileIO.writeToFile(fileName, guest);
+            fileIO.writeToFile(fileName, reservation);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void writeToFile(Guest[] guests) {
+    public void writeToFile(Reservation[] reservations) {
         try {
-            fileIO.writeToFile(fileName, guests);
+            fileIO.writeToFile(fileName, reservations);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,8 +53,8 @@ public class FileAdapter {
         this.fileName = fileName;
     }
 
-    public ArrayList<Guest> getAllGuests(String fileName) {
-        ArrayList<Guest> guests = new ArrayList<Guest>();
+    public ArrayList<Reservation> getAllGuests(String fileName) {
+        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
         Object[] fg = null;
         try {
             fg = fileIO.readArrayFromFile(fileName);
@@ -64,8 +64,8 @@ public class FileAdapter {
             e.printStackTrace();
         }
         for (int i = 0; i < fg.length; i++) {
-            guests.add((Guest) fg[i]);
+            reservations.add((Reservation) fg[i]);
         }
-        return guests;
+        return reservations;
     }
 }
