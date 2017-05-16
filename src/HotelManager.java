@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class HotelManager {
+public class HotelManager implements Serializable {
     private Room price;
     private ArrayList<Room> rooms;
     private DateHandler dateHandler;
@@ -12,13 +13,27 @@ public class HotelManager {
         fileAdapter = new FileAdapter("reservations.bin");
         rooms = new ArrayList<Room>();
         dateHandler = new DateHandler(1, 1, 2017);
-        allReservations = fileAdapter.getAllGuests(fileAdapter.getFileName());
+        allReservations = fileAdapter.getAllGuests("inHouseGuests.bin");
     }
 
-//    public void checkIn(Reservation guest, int roomNumber){
-//
-//    }
-//
+    public void checkIn(Reservation guest, int roomNumber) {
+        ArrayList<Reservation> temp = new ArrayList<Reservation>();
+        ArrayList<Reservation> excludingCheckIn = new ArrayList<Reservation>();
+        ArrayList<Object> currentReservations = fileAdapter.readFromFileObj("reservations.bin");
+        for (int i = 0; i< currentReservations.size(); i++){
+            temp.add((Reservation) currentReservations.get(i));
+        }
+        for (int i = 0; i < temp.size(); i++) {
+            if (temp.get(i).equals(guest)) {
+                temp.get(i).setRoomNumber(roomNumber);
+                fileAdapter.writeToFile("inHouseGuests.bin" , temp.get(i));
+            } else {
+                excludingCheckIn.add(temp.get(i));
+            }
+        }
+        fileAdapter.writeToFile("reservations.bin", excludingCheckIn.get(i));
+    }
+
 //    public String checkOut(String firstName){
 //
 //    }
@@ -28,7 +43,7 @@ public class HotelManager {
 //    }
 
     public void createReservation(Reservation reservation, String roomType) {
-        reservation.setRoomType(roomType);
+        reservations.setRoomType(roomType);
         fileAdapter.writeToFile(reservation);
         // this method will not check for availability. We will have checked the availability
         // before we get to this method.
@@ -90,7 +105,7 @@ public class HotelManager {
         int kingSizeRoom = 0;
         ArrayList<Reservation> compare = new ArrayList<Reservation>();
         ArrayList<Reservation> temp = new ArrayList<>();
-        compare = fileAdapter.getAllGuests("reservations.txt");
+        compare = fileAdapter.getAllGuests("reservations.bin");
         for (int i = 0; i < compare.size(); i++) {
             if ((!(compare.get(i).getDeparture().getCheckOutDate().isBefore(arrival)))
                     && (!(compare.get(i).getArrival().getCheckInDate().isBefore(departure)))) {
