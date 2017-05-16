@@ -1,4 +1,6 @@
-public class Arrival {
+import java.io.Serializable;
+
+public class Arrival implements Serializable {
     private DateHandler checkInDate;
 
     public Arrival(DateHandler checkInDate){

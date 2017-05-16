@@ -1,4 +1,6 @@
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
     private Guest guest;
     private Arrival arrival;
     private Departure departure;

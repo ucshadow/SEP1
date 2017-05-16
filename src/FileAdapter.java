@@ -1,14 +1,9 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class FileAdapter {
+public class FileAdapter implements Serializable {
     private MyFileIO fileIO;
-    private String fileName;
-
-    public FileAdapter(String fileName) {
-        this.fileName = fileName;
-    }
 
     public void writeToFile(String fileName, Reservation reservation) {
         try {
@@ -28,9 +23,9 @@ public class FileAdapter {
 
 
     public void writeToFileObj(String fileName, Object object) {
-        try 0 {
+        try {
             fileIO.writeToFile(fileName, object);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -92,7 +87,7 @@ public class FileAdapter {
         }
     }
 
-    public void removeSingleObjectFromFile(String fileName, Reservation reservation){
+    public void removeSingleObjectFromFile(String fileName, Reservation reservation) {
         Object[] read = null;
         try {
             read = fileIO.readArrayFromFile(fileName);
@@ -102,8 +97,8 @@ public class FileAdapter {
             e.printStackTrace();
         }
         ArrayList<Object> lessValues = new ArrayList<Object>();
-        for(int i = 0; i < read.length; i++){
-            if(!(read[i].equals(reservation))){
+        for (int i = 0; i < read.length; i++) {
+            if (!(read[i].equals(reservation))) {
                 lessValues.add(read[i]);
             }
         }

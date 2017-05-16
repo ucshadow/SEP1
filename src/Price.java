@@ -1,4 +1,6 @@
-public class Price {
+import java.io.Serializable;
+
+public class Price implements Serializable {
 
     private double singleRoom;
     private double doubleRoom;
@@ -14,8 +16,15 @@ public class Price {
         this.tripleSuite = tripleSuite;
     }
 
-    public double getSingleRoom() {
+    public Price(){
+        singleRoom = 125;
+        doubleRoom = 165;
+        singleSuite = 249;
+        doubleSuite = 329;
+        tripleSuite = 399;
+    }
 
+    public double getSingleRoom() {
         return singleRoom;
     }
 
@@ -53,6 +62,31 @@ public class Price {
 
     public void setTripleSuite(double tripleSuite) {
         this.tripleSuite = tripleSuite;
+    }
+
+    public double getRoomPrice(String roomType) {
+        if (roomType.equals("single room")) {
+            return singleRoom;
+        }
+        if (roomType.equals("double room")) {
+            return doubleRoom;
+        }
+        if (roomType.equals("double room-twin beds")) {
+            return doubleRoom;
+        }
+        if (roomType.equals("double room-kingsize")) {
+            return doubleRoom;
+        }
+        if (roomType.equals("single bedroom suite")) {
+            return singleSuite;
+        }
+        if (roomType.equals("two bedroom suite")) {
+            return doubleSuite;
+        }
+        if (roomType.equals("three bedroom suite")) {
+            return tripleSuite;
+        }
+        return 0;
     }
 
 //    public String toString() {

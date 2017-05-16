@@ -3,6 +3,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateHandler implements Serializable {
 
@@ -55,18 +56,18 @@ public class DateHandler implements Serializable {
         return false;
     }
 
-    public boolean isBeforeRange(DateHandler first, DateHandler second){
-        SimpleDateFormat g = new SimpleDateFormat("dd/MM/yyyy");
-
-        try{
-            Date firstDate = g.parse(first.toString());
-            Date secondDate = g.parse(second.toString());
-            return firstDate.before(secondDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public boolean isBeforeRange(DateHandler first, DateHandler second){
+//        SimpleDateFormat g = new SimpleDateFormat("dd/MM/yyyy");
+//
+//        try{
+//            Date firstDate = g.parse(first.toString());
+//            Date secondDate = g.parse(second.toString());
+//            return firstDate.before(secondDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
 //    public boolean isAfter(DateHandler date) {
 //        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
@@ -105,8 +106,6 @@ public class DateHandler implements Serializable {
     public DateHandler copy() {
         return new DateHandler(day, month, year);
     }
-
-
 
     public String toString() {
         return day + "/" + month + "/" + year;

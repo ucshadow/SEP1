@@ -1,52 +1,56 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class HotelManager implements Serializable {
-    private Room price;
-    private ArrayList<Room> rooms;
+//    private Room room;
+    private Price price;
+//    private ArrayList<Room> rooms;
     private DateHandler dateHandler;
     private FileAdapter fileAdapter;
     private ArrayList<Reservation> allReservations;
     // we don't have a guest because all methods take a guest
 
     public HotelManager() {
-        fileAdapter = new FileAdapter("reservations.bin");
-        rooms = new ArrayList<Room>();
+        fileAdapter = new FileAdapter();
+        this.price = new Price();
+//        rooms = new ArrayList<Room>();
         dateHandler = new DateHandler(1, 1, 2017);
         allReservations = fileAdapter.getAllGuests("inHouseGuests.bin");
     }
 
-    public void checkIn(Reservation guest, int roomNumber) {
-        ArrayList<Reservation> temp = new ArrayList<Reservation>();
-        ArrayList<Reservation> excludingCheckIn = new ArrayList<Reservation>();
-        ArrayList<Object> currentReservations = fileAdapter.readFromFileObj("reservations.bin");
-        for (int i = 0; i< currentReservations.size(); i++){
-            temp.add((Reservation) currentReservations.get(i));
-        }
-        for (int i = 0; i < temp.size(); i++) {
-            if (temp.get(i).equals(guest)) {
-                temp.get(i).setRoomNumber(roomNumber);
-                fileAdapter.writeToFile("inHouseGuests.bin" , temp.get(i));
-            } else {
-                excludingCheckIn.add(temp.get(i));
-            }
-        }
-        fileAdapter.writeToFile("reservations.bin", excludingCheckIn.get(i));
+    public void checkIn(Reservation reservation, int roomNumber) {
+        fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
+        reservation.setRoomNumber(roomNumber);
+        fileAdapter.appendToFile("inHouseGuests.bin", reservation);
     }
 
-//    public String checkOut(String firstName){
-//
-//    }
-//
+    public String checkOut(Reservation reservation, double discount) {
+        Calendar cal = new GregorianCalendar();
+        Calendar cal2 = new GregorianCalendar();
+        cal.setTime(new Date((reservation.getArrival().getCheckInDate().getYear())
+                , (reservation.getArrival().getCheckInDate().getMonth() - 1)
+                , reservation.getArrival().getCheckInDate().getDay()));
+        cal2.setTime(new Date((reservation.getDeparture().getCheckOutDate().getYear())
+                , (reservation.getDeparture().getCheckOutDate().getMonth() - 1)
+                , reservation.getDeparture().getCheckOutDate().getDay()));
+        int total = cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR);
+        double totalPrice = price.getRoomPrice(reservation.getRoomType()) * total;
+        fileAdapter.removeSingleObjectFromFile("inHouseGuests.bin", reservation);
+        fileAdapter.appendToFile("pastReservations.bin", reservation);
+        totalPrice = (discount * 100) / totalPrice;
+        return Double.toString(totalPrice);
+
+    }
+
 //    public String checkOut(int roomNumber){
 //
 //    }
 
-    public void createReservation(Reservation reservation, String roomType) {
-        reservations.setRoomType(roomType);
-        fileAdapter.writeToFile(reservation);
-        // this method will not check for availability. We will have checked the availability
-        // before we get to this method.
+    public void createReservation(Reservation reservation) {
+        fileAdapter.appendToFile("reservations.bin", reservation);
     }
 
     public ArrayList<Reservation> modifyReservation(String firstName) {
@@ -62,13 +66,7 @@ public class HotelManager implements Serializable {
     }
 
     public void cancelReservation(Reservation reservation) {
-        for (int i = 0; i < allReservations.size(); i++) {
-            if (allReservations.get(i).equals(reservation)) {
-                allReservations.remove(i);
-                fileAdapter.writeToFile((Reservation[]) allReservations.toArray());
-                break;
-            }
-        }
+        fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
     }
 
     public ArrayList<Reservation> getArrivalList(DateHandler today) {
@@ -135,8 +133,6 @@ public class HotelManager implements Serializable {
             if (temp.get(i).getRoomType().equals("double room-kingsize")) {
                 kingSizeRoom++;
             }
-
-
         }
 
         if (countSingleBedroomSuite <= 2) {
@@ -189,8 +185,8 @@ public class HotelManager implements Serializable {
         return str;
     }
 
-    public void setMasterPrices(ArrayList<Price> prices) {
-        fileAdapter.writeToFileObj(prices);
+    public void setMasterPrices(ArrayList<Double> prices) {
+        fileAdapter.writeToFileObj("prices.bin", prices);
     }
 
     // remember to implement the changeSmokingType and addExtraBed in the GUI
