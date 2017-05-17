@@ -91,18 +91,19 @@ public class Reservation implements Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if(!(obj instanceof Reservation)) {
+            return false;
+        }
 
         Reservation reservation = (Reservation) obj;
 
         if (bookingInitiator != reservation.bookingInitiator) return false;
         if (lateArrivalNotice != reservation.lateArrivalNotice) return false;
         if (priorityGuest != reservation.priorityGuest) return false;
-        if (guest != null ? !guest.equals(reservation.guest) : reservation.guest != null) return false;
-        if (arrival != null ? !arrival.equals(reservation.arrival) : reservation.arrival != null) return false;
-        if (departure != null ? !departure.equals(reservation.departure) : reservation.departure != null) return false;
-        return roomType != null ? roomType.equals(reservation.roomType) : reservation.roomType == null;
+        if (!guest.equals(reservation.guest)) return false;
+        if (!arrival.equals(reservation.arrival)) return false;
+        if (!departure.equals(reservation.departure)) return false;
+        return roomType.equals(reservation.roomType);
     }
 
     @Override

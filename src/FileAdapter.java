@@ -1,9 +1,10 @@
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileAdapter implements Serializable {
-    private MyFileIO fileIO;
+    private MyFileIO fileIO = new MyFileIO();
 
     public void writeToFile(String fileName, Reservation reservation) {
         try {
@@ -67,9 +68,11 @@ public class FileAdapter implements Serializable {
     }
 
     public void appendToFile(String fileName, Reservation reservation) {
+
         Object[] read = null;
         try {
             read = fileIO.readArrayFromFile(fileName);
+            //System.out.println(Arrays.toString(read));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -79,7 +82,7 @@ public class FileAdapter implements Serializable {
         for (int i = 0; i < read.length; i++) {
             newValues[i] = read[i];
         }
-        newValues[newValues.length] = reservation;
+        newValues[newValues.length - 1] = reservation;
         try {
             fileIO.writeToFile(fileName, newValues);
         } catch (IOException e) {
@@ -104,6 +107,7 @@ public class FileAdapter implements Serializable {
         }
         Object[] temp = new Object[lessValues.size()];
         lessValues.toArray(temp);
+        System.out.println(Arrays.toString(temp));
         try {
             fileIO.writeToFile(fileName, temp);
         } catch (IOException e) {

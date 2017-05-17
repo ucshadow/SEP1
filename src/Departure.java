@@ -19,6 +19,14 @@ public class Departure implements Serializable {
         return new Departure(checkOutDate);
     }
 
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Departure)) return false;
+
+        Departure arrival = (Departure) obj;
+
+        return checkOutDate.equals(arrival.checkOutDate);
+    }
+
     public String toString() {
         return "Departure{" +
                 "checkOutDate=" + checkOutDate +

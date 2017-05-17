@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+// toDo: if file is empty use write instead of append;
 public class HotelManager implements Serializable {
 //    private Room room;
     private Price price;
@@ -18,6 +19,7 @@ public class HotelManager implements Serializable {
         this.price = new Price();
 //        rooms = new ArrayList<Room>();
         dateHandler = new DateHandler(1, 1, 2017);
+        // toDO: fix for empty file!!
         allReservations = fileAdapter.getAllGuests("inHouseGuests.bin");
     }
 
@@ -28,6 +30,7 @@ public class HotelManager implements Serializable {
     }
 
     public String checkOut(Reservation reservation, double discount) {
+
         Calendar cal = new GregorianCalendar();
         Calendar cal2 = new GregorianCalendar();
         cal.setTime(new Date((reservation.getArrival().getCheckInDate().getYear())
