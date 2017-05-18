@@ -1,46 +1,64 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class CreateReservationWindowGUI {
     private JFrame mainFrame;
     private JTabbedPane CreateReservationPane;
-    private JPanel reservationPanel;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
-    private JPanel guestDataLabels;
-    private JPanel guestDataTextFields;
-    private JPanel guestDataCheckBoxes;
+    private JPanel reservationPanel, leftPanel, rightPanel, guestDataLabels, guestDataTextFields, guestDataCheckBoxes, leftPanelButtons, rightPanelButtons;
     private JLabel firstNameLabel, middleNameLabel, lastNameLabel, countryLabel, cityLabel, postCodeLabel, streetLabel, phoneNumberLabel, nationalityLabel, dateOfBirthLabel, arrivalLabel, departureLabel, roomTypeLabel, bookingInitiatorLabel, lateArrivalNoticeLabel, priorityGuestLabel;
-    private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality, dateOfBirth, arrival, departure, roomType;
+    private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality, dateOfBirth, arrival, departure;
     private JCheckBox bookingInitiator, lateArrivalNotice, priorityGuest;
-    private JList allGuests;
+    //    private JList ;
     private JScrollPane allGuestScroll;
-    private JButton save;
+    private JButton save, clear, choose, refresh;
     private ArrayList<JLabel> allJLabels;
     private ArrayList<JTextField> allTextFields;
     private ArrayList<Reservation> allReservations;
-    private MyButtonListener listner;
+    private MyButtonListener listener;
+    private JComboBox<String> roomTypes;
+    private KeyPressEvent presser;
+    private JTable allGuests;
+    private DefaultTableModel dtm;
+    private String[] columnNames;
+    private Object[][] resColumn;
+    private ArrayList<Reservation> foundNames;
+    private MyListSelectionListener tableSelect;
+    private Reservation chosenReservation;
 
     public CreateReservationWindowGUI() {
-        listner = new MyButtonListener();
-        mainFrame = new JFrame("Create reservation");
-        save = new JButton("SAVE");
-        save.addActionListener(listner);
+
         left();
         takeAllGuest();
         right();
+        prepareGUI();
+    }
+
+    public void prepareGUI() {
+        listener = new MyButtonListener();
+        presser = new KeyPressEvent();
+        mainFrame = new JFrame("Create reservation");
+        tableSelect = new MyListSelectionListener();
+        left();
+
+        right();
+
         reservationPanel = new JPanel();
         reservationPanel.setPreferredSize(new Dimension(1440, 960));
         reservationPanel.add(leftPanel, BorderLayout.WEST);
         reservationPanel.add(rightPanel, BorderLayout.EAST);
-        reservationPanel.add(save,BorderLayout.SOUTH);
+        bookingInitiator.doClick();
         CreateReservationPane = new JTabbedPane();
         CreateReservationPane.addTab("CreateReservation", reservationPanel);
-        mainFrame.add(CreateReservationPane);
 
+        mainFrame.add(CreateReservationPane);
         mainFrame.setSize(1440, 960);
         mainFrame.setVisible(true);
         mainFrame.setResizable(false);
@@ -50,34 +68,121 @@ public class CreateReservationWindowGUI {
 
         // Center window to screen
         mainFrame.setLocationRelativeTo(null);
+    }
+
+    private class MyListSelectionListener implements ListSelectionListener {
+
+        public void valueChanged(ListSelectionEvent e) {
+            int a = allGuests.getSelectedRow();
+            chosenReservation = foundNames.get(a);
+        }
 
     }
 
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == save) {
-                CreaterForReservation();
+                createrForReservation();
+
+            } else if (e.getSource() == clear) {
+                firstName.setText("");
+                middleName.setText("");
+                lastName.setText("");
+                country.setText("");
+                city.setText("");
+                postCode.setText("");
+                street.setText("");
+                phoneNumber.setText("");
+                nationality.setText("");
+                dateOfBirth.setText("");
+                arrival.setText("");
+                departure.setText("");
+                if (lateArrivalNotice.isSelected()) {
+                    lateArrivalNotice.doClick();
+                }
+                if (priorityGuest.isSelected()) {
+                    priorityGuest.doClick();
+                }
+            } else if (e.getSource() == refresh) {
+                createReservationTable(new ArrayList<Reservation>());
+            } else if (e.getSource() == choose) {
+                firstName.setText(chosenReservation.getGuest().getName().getFirstName());
+                middleName.setText(chosenReservation.getGuest().getName().getMiddleName());
+                lastName.setText(chosenReservation.getGuest().getName().getLastName());
+                country.setText(chosenReservation.getGuest().getAddress().getCountry());
+                city.setText(chosenReservation.getGuest().getAddress().getCity());
+                postCode.setText(chosenReservation.getGuest().getAddress().getPostCode());
+                street.setText(chosenReservation.getGuest().getAddress().getStreet());
+                phoneNumber.setText(String.valueOf(chosenReservation.getGuest().getPhoneNumber()));
+                nationality.setText(chosenReservation.getGuest().getNationality());
+                dateOfBirth.setText(chosenReservation.getGuest().getDateOfBirth());
+                roomTypes.setSelectedItem(chosenReservation.getRoomType());
+                if (chosenReservation.isPriorityGuest()) {
+                    priorityGuest.doClick();
+                }
 
             }
+
         }
 
     }
 
+    class KeyPressEvent implements KeyListener {
+        public void keyTyped(KeyEvent e) {
+        }
+
+        public void keyPressed(KeyEvent e) {
+//            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+//
+//            }
+//            //System.out.println(e.getKeyChar());
+
+        }
+
+        public void keyReleased(KeyEvent e) {
+            foundNames = new ArrayList<Reservation>();
+            createReservationTable(allReservations);
+
+            for (int i = 0; i < resColumn.length; i++) {
+                String fullName = String.valueOf(resColumn[i][0].toString().toLowerCase());
+                if (fullName.contains(firstName.getText().toLowerCase())) {
+                    foundNames.add(allReservations.get(i));
+                }
+            }
+            createReservationTable(foundNames);
+
+
+        }
+    }
+
+
     public void left() {
         leftPanel = new JPanel();
-        leftPanel.setPreferredSize(new Dimension(700, 700));
+        leftPanel.setPreferredSize(new Dimension(700, 650));
+
+        save = new JButton("SAVE");
+        save.addActionListener(listener);
+        clear = new JButton("CLEAR");
+        clear.addActionListener(listener);
 
         guestDataLabels = new JPanel(new GridLayout(13, 1, 2, 2));
-        guestDataLabels.setPreferredSize(new Dimension(100, 450));
+        guestDataLabels.setPreferredSize(new Dimension(250, 450));
 
         guestDataCheckBoxes = new JPanel(new GridLayout(3, 3, 2, 2));
         guestDataCheckBoxes.setPreferredSize(new Dimension(450, 150));
 
         guestDataTextFields = new JPanel(new GridLayout(13, 1, 2, 2));
-        guestDataTextFields.setPreferredSize(new Dimension(350, 450));
+        guestDataTextFields.setPreferredSize(new Dimension(200, 450));
+
+        leftPanelButtons = new JPanel();
+        leftPanelButtons.setPreferredSize(new Dimension(600, 100));
 
         allTextFields = new ArrayList<JTextField>();
         allJLabels = new ArrayList<JLabel>();
+        String[] roomTypesForComboBox = {"single room", "double room", "double room-twin beds", "double room-kingsize",
+                "single bedroom suite", "double bedroom suite", "three bedroom suite"};
+        roomTypes = new JComboBox<String>(roomTypesForComboBox);
+
 
         allTextFields.add(firstName = new JTextField());
         allTextFields.add(middleName = new JTextField());
@@ -91,8 +196,9 @@ public class CreateReservationWindowGUI {
         allTextFields.add(dateOfBirth = new JTextField());
         allTextFields.add(arrival = new JTextField());
         allTextFields.add(departure = new JTextField());
-        allTextFields.add(roomType = new JTextField());
 
+        firstName.addKeyListener(presser);
+        phoneNumber.addKeyListener(presser);
         allJLabels.add(firstNameLabel = new JLabel("First name"));
         allJLabels.add(middleNameLabel = new JLabel("Middle name"));
         allJLabels.add(lastNameLabel = new JLabel("Last name"));
@@ -102,10 +208,11 @@ public class CreateReservationWindowGUI {
         allJLabels.add(streetLabel = new JLabel("Street"));
         allJLabels.add(phoneNumberLabel = new JLabel("Phone number"));
         allJLabels.add(nationalityLabel = new JLabel("Nationality"));
-        allJLabels.add(dateOfBirthLabel = new JLabel("Date of birth"));
-        allJLabels.add(arrivalLabel = new JLabel("Arrival"));
-        allJLabels.add(departureLabel = new JLabel("Departure"));
+        allJLabels.add(dateOfBirthLabel = new JLabel("Date of birth (dd/mm/yyyy)"));
+        allJLabels.add(arrivalLabel = new JLabel("Arrival (dd/mm/yyyy)"));
+        allJLabels.add(departureLabel = new JLabel("Departure (dd/mm/yyyy)"));
         allJLabels.add(roomTypeLabel = new JLabel("Room type"));
+
 
         guestDataCheckBoxes.add(bookingInitiatorLabel = new JLabel("Booking initiator"));
         guestDataCheckBoxes.add(bookingInitiator = new JCheckBox());
@@ -121,53 +228,96 @@ public class CreateReservationWindowGUI {
         for (int i = 0; i < allTextFields.size(); i++) {
             guestDataTextFields.add(allTextFields.get(i));
         }
-
+        guestDataTextFields.add(roomTypes);
+        leftPanelButtons.add(save);
+        leftPanelButtons.add(clear);
         leftPanel.add(guestDataLabels);
         leftPanel.add(guestDataTextFields);
         leftPanel.add(guestDataCheckBoxes);
+        leftPanel.add(leftPanelButtons);
     }
 
 
     public void right() {
 
         rightPanel = new JPanel();
-        rightPanel.setPreferredSize(new Dimension(600, 700));
+        rightPanel.setPreferredSize(new Dimension(600, 650));
 
-        allGuests = new JList(allReservations.toArray());
-        allGuests.setPreferredSize(new Dimension(600, 700));
+        rightPanelButtons = new JPanel();
+        rightPanelButtons.setPreferredSize(new Dimension(600, 100));
 
+        refresh = new JButton("REFRESH");
+        refresh.addActionListener(listener);
+
+        choose = new JButton("CHOOSE");
+        choose.addActionListener(listener);
+
+        columnNames = new String[5];
+        columnNames[0] = "First name";
+        columnNames[1] = "Middle name";
+        columnNames[2] = "Last name";
+        columnNames[3] = "Country";
+        columnNames[4] = "Phone number";
+        dtm = new DefaultTableModel(columnNames, 0);
+
+        allGuests = new JTable(dtm) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        allGuests.getSelectionModel().addListSelectionListener(tableSelect);
         allGuestScroll = new JScrollPane(allGuests);
         allGuestScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        allGuestScroll.setPreferredSize(new Dimension(600, 400));
+        allGuestScroll.setPreferredSize(new Dimension(600, 600));
+        allGuests.revalidate();
+        rightPanelButtons.add(refresh);
+        rightPanelButtons.add(choose);
         rightPanel.add(allGuestScroll);
+        rightPanel.add(rightPanelButtons);
 
     }
 
-    public ArrayList<Reservation> takeAllGuest() {
+    public void takeAllGuest() {
         FileAdapter fa = new FileAdapter();
         ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
         ArrayList<Reservation> pastReservation = fa.getAllGuests("pastReservations.bin");
         ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
+        ArrayList<Reservation> temp = new ArrayList<Reservation>();
         allReservations = new ArrayList<Reservation>();
-        int a = 0;
-        for (int i = 0; i < reservations.size(); i++) {
-            allReservations.add(reservations.get(i));
-            a++;
+
+        temp.addAll(reservations);
+
+        temp.addAll(pastReservation);
+
+        temp.addAll(inHouse);
+
+        for (int i = 0; i < temp.size(); i++) {
+            allReservations.add(temp.get(i));
         }
-        int b = a;
-        for (int j = 0; j < pastReservation.size(); j++) {
-            allReservations.add(b,pastReservation.get(j));
-            b++;
-        }
-        int c = b;
-        for (int k = 0; k < inHouse.size(); k++) {
-            allReservations.add(c,inHouse.get(k));
-        }
-        return allReservations;
+
     }
 
+    // we decided to use the same method Allan is using in order to update the reservation table
 
-    public void CreaterForReservation() {
+    public void createReservationTable(ArrayList<Reservation> res) {
+        resColumn = new Object[res.size()][5];
+
+        for (int i = 0; i < res.size(); i++) {
+            resColumn[i][0] = res.get(i).getGuest().getName().getFirstName();
+            resColumn[i][1] = res.get(i).getGuest().getName().getMiddleName();
+            resColumn[i][2] = res.get(i).getGuest().getName().getLastName();
+            resColumn[i][3] = res.get(i).getGuest().getAddress().getCountry();
+            resColumn[i][4] = res.get(i).getGuest().getPhoneNumber();
+        }
+
+        dtm = new DefaultTableModel(resColumn, columnNames);
+        allGuests.setModel(dtm);
+        allGuests.revalidate();
+
+
+    }
+
+    public void createrForReservation() {
 
 
         DateHandler date = new DateHandler(Integer.parseInt(dateOfBirth.getText().split("/")[0]),
@@ -183,11 +333,10 @@ public class CreateReservationWindowGUI {
         Name name = new Name(firstName.getText(), middleName.getText(), lastName.getText());
         Address add = new Address(country.getText(), city.getText(), postCode.getText(), street.getText());
         Guest guest = new Guest(name, Long.parseLong(phoneNumber.getText()), add, nationality.getText(), dateOfBirth.getText());
-        Reservation rs = new Reservation(guest, arr, dep, roomType.getText(), bookingInitiator.isSelected(),
+        Reservation rs = new Reservation(guest, arr, dep, roomTypes.getName(), bookingInitiator.isSelected(),
                 lateArrivalNotice.isSelected(), priorityGuest.isSelected());
         HotelManager hm = new HotelManager();
         hm.createReservation(rs);
-        System.out.println("We did itttttt");
     }
 
 
