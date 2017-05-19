@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CreateReservationWindowGUI {
@@ -16,9 +17,8 @@ public class CreateReservationWindowGUI {
     private JLabel firstNameLabel, middleNameLabel, lastNameLabel, countryLabel, cityLabel, postCodeLabel, streetLabel, phoneNumberLabel, nationalityLabel, dateOfBirthLabel, arrivalLabel, departureLabel, roomTypeLabel, bookingInitiatorLabel, lateArrivalNoticeLabel, priorityGuestLabel;
     private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality, dateOfBirth, arrival, departure;
     private JCheckBox bookingInitiator, lateArrivalNotice, priorityGuest;
-    //    private JList ;
     private JScrollPane allGuestScroll;
-    private JButton save, clear, choose, refresh;
+    private JButton save, clear, choose, refresh, cancel;
     private ArrayList<JLabel> allJLabels;
     private ArrayList<JTextField> allTextFields;
     private ArrayList<Reservation> allReservations;
@@ -32,6 +32,7 @@ public class CreateReservationWindowGUI {
     private ArrayList<Reservation> foundNames;
     private MyListSelectionListener tableSelect;
     private Reservation chosenReservation;
+    private boolean canConvertToDateHandlerB, isCanConvertToDateHandlerA, isCanConvertToDateHandlerD;
 
     public CreateReservationWindowGUI() {
 
@@ -79,30 +80,70 @@ public class CreateReservationWindowGUI {
 
     }
 
+
     private class MyButtonListener implements ActionListener {
+        public boolean isValidDate(String str) {
+            String[] arr = str.split("/");
+            if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {
+                if (arr[1].chars().allMatch(Character::isDigit) && arr[1].length() == 2) {
+                    if (arr[2].chars().allMatch(Character::isDigit) && arr[2].length() == 4) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public boolean isValidPhoneNumber(String str) {
+            Long a;
+            try{
+                a = Long.parseLong(str);
+            } catch(Exception e) {
+                return false;
+            }
+            return true;
+        }
+
+        public void clear() {
+            firstName.setText("");
+            middleName.setText("");
+            lastName.setText("");
+            country.setText("");
+            city.setText("");
+            postCode.setText("");
+            street.setText("");
+            phoneNumber.setText("");
+            nationality.setText("");
+            dateOfBirth.setText("");
+            arrival.setText("");
+            departure.setText("");
+            if (lateArrivalNotice.isSelected()) {
+                lateArrivalNotice.doClick();
+            }
+            if (priorityGuest.isSelected()) {
+                priorityGuest.doClick();
+            }
+        }
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == save) {
+                // dateOfBirth, arrival, departure is checked when pressing save
+                if (!(isValidDate(dateOfBirth.getText()))) {
+                    JOptionPane.showMessageDialog(null, "Date of birth " + dateOfBirth.getText() + " is not a valid date");
+                }
+                if (!(isValidDate(arrival.getText()))) {
+                    JOptionPane.showMessageDialog(null, "Arrival date " + arrival.getText() + " is not a valid date");
+                }
+                if (!(isValidDate(departure.getText()))) {
+                    JOptionPane.showMessageDialog(null, "Departure date " + departure.getText() + " is not a valid date");
+                }
+                if (!(isValidPhoneNumber(phoneNumber.getText()))){
+                    JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber.getText() + "is not a phone number");
+                }
                 createrForReservation();
+                clear();
 
             } else if (e.getSource() == clear) {
-                firstName.setText("");
-                middleName.setText("");
-                lastName.setText("");
-                country.setText("");
-                city.setText("");
-                postCode.setText("");
-                street.setText("");
-                phoneNumber.setText("");
-                nationality.setText("");
-                dateOfBirth.setText("");
-                arrival.setText("");
-                departure.setText("");
-                if (lateArrivalNotice.isSelected()) {
-                    lateArrivalNotice.doClick();
-                }
-                if (priorityGuest.isSelected()) {
-                    priorityGuest.doClick();
-                }
+                clear();
             } else if (e.getSource() == refresh) {
                 createReservationTable(new ArrayList<Reservation>());
             } else if (e.getSource() == choose) {
@@ -120,9 +161,12 @@ public class CreateReservationWindowGUI {
                 if (chosenReservation.isPriorityGuest()) {
                     priorityGuest.doClick();
                 }
-
+            } else if (e.getSource() == cancel) {
+                int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit the create reservation window?", "Exit", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
             }
-
         }
 
     }
@@ -252,6 +296,9 @@ public class CreateReservationWindowGUI {
         choose = new JButton("CHOOSE");
         choose.addActionListener(listener);
 
+        cancel = new JButton("CANCEL");
+        cancel.addActionListener(listener);
+
         columnNames = new String[5];
         columnNames[0] = "First name";
         columnNames[1] = "Middle name";
@@ -272,6 +319,7 @@ public class CreateReservationWindowGUI {
         allGuests.revalidate();
         rightPanelButtons.add(refresh);
         rightPanelButtons.add(choose);
+        rightPanelButtons.add(cancel);
         rightPanel.add(allGuestScroll);
         rightPanel.add(rightPanelButtons);
 
