@@ -31,10 +31,10 @@ public class FileAdapter implements Serializable {
         }
     }
 
-    public ArrayList<Object> readFromFileObj(String fileName) {
-        ArrayList<Object> read = new ArrayList<Object>();
+    public Object readFromFileObj(String fileName) {
+        Object read = null;
         try {
-            read.add(fileIO.readArrayFromFile(fileName));
+            read = fileIO.readObjectFromFile(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

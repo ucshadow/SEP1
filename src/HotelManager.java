@@ -104,9 +104,9 @@ public class HotelManager implements Serializable {
         int doubleRoom = 0;
         int twinRoom = 0;
         int kingSizeRoom = 0;
-        ArrayList<Reservation> compare = new ArrayList<Reservation>();
         ArrayList<Reservation> temp = new ArrayList<>();
-        compare = fileAdapter.getAllGuests("reservations.bin");
+        ArrayList<Reservation> compare = fileAdapter.getAllGuests("reservations.bin");
+        compare.addAll(fileAdapter.getAllGuests("inHouseGuests.bin"));
         for (int i = 0; i < compare.size(); i++) {
             if ((!(compare.get(i).getDeparture().getCheckOutDate().isBefore(arrival)))
                     && (!(compare.get(i).getArrival().getCheckInDate().isBefore(departure)))) {
@@ -115,6 +115,7 @@ public class HotelManager implements Serializable {
         }
 
         for (int i = 0; i < temp.size(); i++) {
+            //System.out.println(temp.get(i));
             if (temp.get(i).getRoomType().equals("single bedroom suite")) {
                 countSingleBedroomSuite++;
             }
@@ -144,47 +145,47 @@ public class HotelManager implements Serializable {
             countSingleBedroomSuite = 0;
         }
 
-        if (countTwoBedroomSuite >= 1) {
+        if (countTwoBedroomSuite <= 1) {
             countTwoBedroomSuite = 1 - countTwoBedroomSuite;
         } else {
             countTwoBedroomSuite = 0;
         }
 
 
-        if (countThreeBedroomSuite >= 1) {
+        if (countThreeBedroomSuite <= 1) {
             countThreeBedroomSuite = 1 - countThreeBedroomSuite;
         } else {
             countThreeBedroomSuite = 0;
         }
 
-        if (singleRoom >= 10) {
-            singleRoom = 0;
-        } else {
+        if (singleRoom <= 10) {
             singleRoom = 10 - singleRoom;
+        } else {
+            singleRoom = 0;
         }
 
-        if (doubleRoom >= 28) {
+        if (doubleRoom <= 28) {
             doubleRoom = 28 - doubleRoom;
         } else {
             doubleRoom = 0;
         }
 
-        if (twinRoom >= 6) {
+        if (twinRoom <= 6) {
             twinRoom = 6 - twinRoom;
         } else {
             twinRoom = 0;
         }
 
-        if (kingSizeRoom >= 22) {
+        if (kingSizeRoom <= 22) {
             kingSizeRoom = 22 - kingSizeRoom;
         } else {
             kingSizeRoom = 0;
         }
 
-        String str = "Single room : " + singleRoom + ",Double room :" + doubleRoom
-                + ",Double room-twin bed" + twinRoom + ",Double room-kingsize bed :"
-                + kingSizeRoom + ",Single suite" + countSingleBedroomSuite + ",Double suite"
-                + countTwoBedroomSuite + ",Triple Suite :" + countThreeBedroomSuite;
+        String str = "Single room: " + singleRoom + "\nDouble room: " + doubleRoom
+                + "\nDouble room-twin bed: " + twinRoom + "\nDouble room-kingsize bed: "
+                + kingSizeRoom + "\nSingle suite: " + countSingleBedroomSuite + "\nDouble suite: "
+                + countTwoBedroomSuite + "\nTriple Suite: " + countThreeBedroomSuite;
         return str;
     }
 

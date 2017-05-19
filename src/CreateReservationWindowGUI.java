@@ -145,6 +145,7 @@ public class CreateReservationWindowGUI {
             } else if (e.getSource() == clear) {
                 clear();
             } else if (e.getSource() == refresh) {
+                takeAllGuest();
                 createReservationTable(new ArrayList<Reservation>());
             } else if (e.getSource() == choose) {
                 firstName.setText(chosenReservation.getGuest().getName().getFirstName());
