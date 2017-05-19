@@ -43,7 +43,7 @@ public class HotelManager implements Serializable {
         double totalPrice = price.getRoomPrice(reservation.getRoomType()) * total;
         fileAdapter.removeSingleObjectFromFile("inHouseGuests.bin", reservation);
         fileAdapter.appendToFile("pastReservations.bin", reservation);
-        totalPrice = (discount * 100) / totalPrice;
+        totalPrice = (totalPrice-((discount/100)*totalPrice));
         return Double.toString(totalPrice);
 
     }

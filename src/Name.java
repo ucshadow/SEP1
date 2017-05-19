@@ -47,8 +47,8 @@ public class Name implements Serializable {
 	}
 
 	public String toString() {
-		return "First name :" + firstName + ", middle name : " + middleName
-				+ ", last name :" + lastName;
-	}
+		return firstName  + middleName
+				+ lastName;
+}
 
 }
