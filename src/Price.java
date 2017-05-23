@@ -55,26 +55,26 @@ public class Price implements Serializable {
         this.singleRoom = singleRoom;
     }
 
-    /**
-     * Get double room for reservation.
-     * @return doubleRoom room type for reservation.
-     */
-    public double getDoubleRoom() {
-        return doubleRoom;
-    }
-
-    /**
-     * Set double room for reservation.
-     * @param doubleRoom takes room type for reservation.
-     */
-    public void setDoubleRoom(double doubleRoom) {
-        this.doubleRoom = doubleRoom;
-    }
-
-    /**
-     * Get Single suite for reservation.
-     * @return singleSuite room type for reservation.
-     */
+//    /**
+//     * Get double room for reservation.
+//     * @return doubleRoom room type for reservation.
+//     */
+//    public double getDoubleRoom() {
+//        return doubleRoom;
+//    }
+//
+//    /**
+//     * Set double room for reservation.
+//     * @param doubleRoom takes room type for reservation.
+//     */
+//    public void setDoubleRoom(double doubleRoom) {
+//        this.doubleRoom = doubleRoom;
+//    }
+//
+//    /**
+//     * Get Single suite for reservation.
+//     * @return singleSuite room type for reservation.
+//     */
     public double getSingleSuite() {
         return singleSuite;
     }
@@ -128,9 +128,7 @@ public class Price implements Serializable {
         if (roomType.equals("single room")) {
             return singleRoom;
         }
-        if (roomType.equals("double room")) {
-            return doubleRoom;
-        }
+
         if (roomType.equals("double room-twin beds")) {
             return doubleRoom;
         }
