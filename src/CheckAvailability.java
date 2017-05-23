@@ -16,9 +16,9 @@ public class CheckAvailability {
     private HotelManager hm = new HotelManager();
     private ArrayList<Reservation> parsedData = new ArrayList<>();
 
-    private JFrame mainFrame;
+    //private JFrame mainFrame;
     private JPanel controlPanel;
-    private JTabbedPane tabPane;
+    //private JTabbedPane tabPane;
 
 
     private JPanel left;
@@ -35,31 +35,31 @@ public class CheckAvailability {
     }
 
     private void prepareGUI() {
-        mainFrame = new JFrame("Search");
-        mainFrame.setSize(1440, 960);
-        mainFrame.setLayout(new FlowLayout());
+        //mainFrame = new JFrame("Check Availability");
+        //mainFrame.setSize(1440, 960);
+        //mainFrame.setLayout(new FlowLayout());
 
 
-        tabPane = new JTabbedPane();
-        mainFrame.add(tabPane);
+        //tabPane = new JTabbedPane();
+        //mainFrame.add(tabPane);
 
         left = new JPanel();
         right = new JPanel();
         right.setPreferredSize(new Dimension(700, 860));
         left.setPreferredSize(new Dimension(700, 860));
 
-        mainFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent) {
-                System.exit(0);
-            }
-        });
+//        mainFrame.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent windowEvent) {
+//                System.exit(0);
+//            }
+//        });
         controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout());
 
         controlPanel.add(left);
         controlPanel.add(right);
-        tabPane.addTab("Search between dates", controlPanel);
-        mainFrame.setVisible(true);
+        //tabPane.addTab("Search between dates", controlPanel);
+        //mainFrame.setVisible(true);
         prepareSearchWindow();
     }
 
@@ -95,7 +95,7 @@ public class CheckAvailability {
         left.add(toField);
         left.add(warnings);
 
-        mainFrame.setVisible(true);
+        //mainFrame.setVisible(true);
     }
 
     private void displayRooms(DateHandler d1, DateHandler d2) {
@@ -164,6 +164,10 @@ public class CheckAvailability {
         public void keyReleased(KeyEvent e) {
             //System.out.println(fromField.getText());
         }
+    }
+
+    public JPanel getAvailabilityTab() {
+        return controlPanel;
     }
 
 }

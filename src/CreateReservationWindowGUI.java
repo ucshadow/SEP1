@@ -7,18 +7,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CreateReservationWindowGUI {
-    private JFrame mainFrame;
-    private JTabbedPane CreateReservationPane;
+    //private JFrame mainFrame;
+    //private JTabbedPane createReservationPane;
     private JPanel reservationPanel, leftPanel, rightPanel, guestDataLabels, guestDataTextFields, guestDataCheckBoxes, leftPanelButtons, rightPanelButtons;
     private JLabel firstNameLabel, middleNameLabel, lastNameLabel, countryLabel, cityLabel, postCodeLabel, streetLabel, phoneNumberLabel, nationalityLabel, dateOfBirthLabel, arrivalLabel, departureLabel, roomTypeLabel, bookingInitiatorLabel, lateArrivalNoticeLabel, priorityGuestLabel;
     private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality, dateOfBirth, arrival, departure;
     private JCheckBox bookingInitiator, lateArrivalNotice, priorityGuest;
     private JScrollPane allGuestScroll;
-    private JButton save, clear, choose, refresh, cancel;
+    private JButton save, clear, choose, refresh, cancel, update, remove;
     private ArrayList<JLabel> allJLabels;
     private ArrayList<JTextField> allTextFields;
     private ArrayList<Reservation> allReservations;
@@ -33,8 +32,14 @@ public class CreateReservationWindowGUI {
     private MyListSelectionListener tableSelect;
     private Reservation chosenReservation;
     private boolean canConvertToDateHandlerB, isCanConvertToDateHandlerA, isCanConvertToDateHandlerD;
+    private FileAdapter fa = new FileAdapter();
+    private boolean isSearch = false;
 
     public CreateReservationWindowGUI() {
+
+        if(this.getClass().getName().equals("Search")) {
+            isSearch = true;
+        }
 
         left();
         takeAllGuest();
@@ -45,7 +50,7 @@ public class CreateReservationWindowGUI {
     public void prepareGUI() {
         listener = new MyButtonListener();
         presser = new KeyPressEvent();
-        mainFrame = new JFrame("Create reservation");
+        //mainFrame = new JFrame("Overlook Hotel");
         tableSelect = new MyListSelectionListener();
         left();
 
@@ -56,26 +61,28 @@ public class CreateReservationWindowGUI {
         reservationPanel.add(leftPanel, BorderLayout.WEST);
         reservationPanel.add(rightPanel, BorderLayout.EAST);
         bookingInitiator.doClick();
-        CreateReservationPane = new JTabbedPane();
-        CreateReservationPane.addTab("CreateReservation", reservationPanel);
+        //createReservationPane = new JTabbedPane();
+        //createReservationPane.addTab("Create Reservation", reservationPanel);
 
-        mainFrame.add(CreateReservationPane);
-        mainFrame.setSize(1440, 960);
-        mainFrame.setVisible(true);
-        mainFrame.setResizable(false);
+        //mainFrame.add(createReservationPane);
+        //mainFrame.setSize(1440, 960);
+        //mainFrame.setVisible(true);
+        //mainFrame.setResizable(false);
 
         // Exit the application when the window is closed
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Center window to screen
-        mainFrame.setLocationRelativeTo(null);
+        //mainFrame.setLocationRelativeTo(null);
     }
 
     private class MyListSelectionListener implements ListSelectionListener {
 
         public void valueChanged(ListSelectionEvent e) {
             int a = allGuests.getSelectedRow();
-            chosenReservation = foundNames.get(a);
+            if (a >= 0) {
+                chosenReservation = foundNames.get(a);
+            }
         }
 
     }
@@ -96,9 +103,9 @@ public class CreateReservationWindowGUI {
 
         public boolean isValidPhoneNumber(String str) {
             Long a;
-            try{
+            try {
                 a = Long.parseLong(str);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return false;
             }
             return true;
@@ -124,6 +131,7 @@ public class CreateReservationWindowGUI {
                 priorityGuest.doClick();
             }
         }
+
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == save) {
                 // dateOfBirth, arrival, departure is checked when pressing save
@@ -136,7 +144,7 @@ public class CreateReservationWindowGUI {
                 if (!(isValidDate(departure.getText()))) {
                     JOptionPane.showMessageDialog(null, "Departure date " + departure.getText() + " is not a valid date");
                 }
-                if (!(isValidPhoneNumber(phoneNumber.getText()))){
+                if (!(isValidPhoneNumber(phoneNumber.getText()))) {
                     JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber.getText() + "is not a phone number");
                 }
                 createrForReservation();
@@ -162,11 +170,25 @@ public class CreateReservationWindowGUI {
                 if (chosenReservation.isPriorityGuest()) {
                     priorityGuest.doClick();
                 }
+                if(isSearch) {
+                    String arrDay = String.valueOf(chosenReservation.getArrival().getCheckInDate().getDay());
+                    String arrMonth = String.valueOf(chosenReservation.getArrival().getCheckInDate().getMonth());
+                    String arrYear = String.valueOf(chosenReservation.getArrival().getCheckInDate().getYear());
+                    String depDay = String.valueOf(chosenReservation.getDeparture().getCheckOutDate().getDay());
+                    String depMonth = String.valueOf(chosenReservation.getDeparture().getCheckOutDate().getMonth());
+                    String depYear = String.valueOf(chosenReservation.getDeparture().getCheckOutDate().getYear());
+                    arrival.setText(arrDay + "/" + arrMonth + "/" + arrYear);
+                    departure.setText(depDay + "/" + depMonth + "/" + depYear);
+                }
             } else if (e.getSource() == cancel) {
                 int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit the create reservation window?", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
+            } else if (e.getSource() == update) {
+                updateReservation(chosenReservation);
+            } else if (e.getSource() == remove) {
+                fa.removeSingleObjectFromFile("reservations.bin", chosenReservation);
             }
         }
 
@@ -205,9 +227,13 @@ public class CreateReservationWindowGUI {
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(700, 650));
 
-        save = new JButton("SAVE");
+        save = new JButton("Save");
         save.addActionListener(listener);
-        clear = new JButton("CLEAR");
+        update = new JButton("Update");
+        update.addActionListener(listener);
+        remove = new JButton("Remove");
+        remove.addActionListener(listener);
+        clear = new JButton("Clear");
         clear.addActionListener(listener);
 
         guestDataLabels = new JPanel(new GridLayout(13, 1, 2, 2));
@@ -274,7 +300,14 @@ public class CreateReservationWindowGUI {
             guestDataTextFields.add(allTextFields.get(i));
         }
         guestDataTextFields.add(roomTypes);
-        leftPanelButtons.add(save);
+        // leftPanelButtons.add(save);
+
+        if (!isSearch) {
+            leftPanelButtons.add(save);
+        } else {
+            leftPanelButtons.add(update);
+            leftPanelButtons.add(remove);
+        }
         leftPanelButtons.add(clear);
         leftPanel.add(guestDataLabels);
         leftPanel.add(guestDataTextFields);
@@ -336,9 +369,10 @@ public class CreateReservationWindowGUI {
 
         temp.addAll(reservations);
 
-        temp.addAll(pastReservation);
-
-        temp.addAll(inHouse);
+        if (!isSearch) {
+            temp.addAll(pastReservation);
+            temp.addAll(inHouse);
+        }
 
         for (int i = 0; i < temp.size(); i++) {
             allReservations.add(temp.get(i));
@@ -388,9 +422,68 @@ public class CreateReservationWindowGUI {
         hm.createReservation(rs);
     }
 
+    private void updateReservation(Reservation r) {
+        String firstName_ = firstName.getText();
+        String middleName_ = middleName.getText();
+        String lastName_ = lastName.getText();
+        String country_ = country.getText();
+        String city_ = city.getText();
+        String postCode_ = postCode.getText();
+        String street_ = street.getText();
+        String phoneNumber_ = phoneNumber.getText();
+        String nationality_ = nationality.getText();
+        String dateOfBirth_ = dateOfBirth.getText();
+        String roomType_ = roomTypes.getSelectedItem().toString();
+        String[] arrival_ = arrival.getText().split("/");
+        String[] departure_ = departure.getText().split("/");
+        boolean lateArraivalNotice_ = false;
+        boolean priorityGuest_ = false;
+        boolean bookingInitiator_ = false;
+        if (lateArrivalNotice.isSelected()) {
+            lateArraivalNotice_ = true;
+        }
+        if (priorityGuest.isSelected()) {
+            priorityGuest_ = true;
+        }
+        if(bookingInitiator.isSelected()) {
+            bookingInitiator_ = true;
+        }
 
-    public static void main(String[] args) {
-        CreateReservationWindowGUI a = new CreateReservationWindowGUI();
+        Name name = new Name(firstName_, middleName_, lastName_);
+
+        //toDo check for valid Data!
+        DateHandler arrDH = new DateHandler(Integer.parseInt(arrival_[0]),
+                Integer.parseInt(arrival_[1]), Integer.parseInt(arrival_[2]));
+        DateHandler depDH = new DateHandler(Integer.parseInt(departure_[0]),
+                Integer.parseInt(departure_[1]), Integer.parseInt(departure_[2]));
+        Arrival arr = new Arrival(arrDH);
+        Departure dep = new Departure(depDH);
+        Address address = new Address(country_, city_, postCode_, street_);
+
+        Guest guest = new Guest(name, Long.parseLong(phoneNumber_), address, nationality_, dateOfBirth_);
+
+        Reservation reservation = new Reservation(guest, arr, dep, roomType_, bookingInitiator_,
+                lateArraivalNotice_, priorityGuest_);
+
+        // toDo: reWrite to file
+
+        fa.removeSingleObjectFromFile("reservations.bin", r);
+        fa.appendToFile("reservations.bin", reservation);
     }
+
+
+    // toDO: index should be based ont the tab number in the row!;
+//    public void changeTitle(String title) {
+//        createReservationPane.setTitleAt(1, title);
+//    }
+
+    public JPanel getAvailabilityTab() {
+        return reservationPanel;
+    }
+
+
+//    public static void main(String[] args) {
+//        CreateReservationWindowGUI a = new CreateReservationWindowGUI();
+//    }
 
 }
