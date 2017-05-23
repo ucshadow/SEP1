@@ -1,83 +1,163 @@
 import java.io.Serializable;
 
+/**
+ * @author Yusuf A Farah
+ * @version 1.0
+ */
 public class Guest implements Serializable {
 
-	private Name name;
-	private long phoneNumber;
-	private Address address;
-	private String nationality;
-	private String dateOfBirth;
+    private Name name;
+    private long phoneNumber;
+    private Address address;
+    private String nationality;
+    private String dateOfBirth;
 
-	public Guest(Name name, long phoneNumber, Address address,
-				 String nationality, String dateOfBirth) {
+    /**
+     * Constructor initializing Guest.
+     *
+     * @param name        for initializing the constructor.
+     * @param phoneNumber for initializing the constructor.
+     * @param address     for initializing the constructor.
+     * @param nationality for initializing the constructor.
+     * @param dateOfBirth for initializing the constructor.
+     */
 
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.nationality = nationality;
-		this.dateOfBirth = dateOfBirth;
-	}
+    public Guest(Name name, long phoneNumber, Address address,
+                 String nationality, String dateOfBirth) {
 
-	public Name getName() {
-		return name;
-	}
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.nationality = nationality;
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public void setName(Name name) {
-		this.name = name;
-	}
+    /**
+     * Get a names for a guest.
+     *
+     * @return name names for a guest.
+     */
+    public Name getName() {
+        return name;
+    }
 
-	public long getPhoneNumber() {
-		return phoneNumber;
-	}
+    /**
+     * Set names for a guest
+     *
+     * @param name takes name for a guest.
+     */
+    public void setName(Name name) {
+        this.name = name;
+    }
 
-	public void setPhoneNumber(long phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    /**
+     * Get a phone number for a guest.
+     *
+     * @return phoneNumber  Phone number of a guest.
+     */
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public Address getAddress() {
-		return address;
-	}
+    /**
+     * Set phone number for a guest.
+     *
+     * @param phoneNumber takes phone number for a guest.
+     */
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    /**
+     * Get a addres for a guest.
+     *
+     * @return address Address for a guest.
+     */
+    public Address getAddress() {
+        return address;
+    }
 
-	public String getNationality() {
-		return nationality;
-	}
+    /**
+     * Set address for a guest.
+     *
+     * @param address takes address for a guest
+     */
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
+    /**
+     * Get a nationality for a guest.
+     *
+     * @return nationality Nationality for a guest.
+     */
+    public String getNationality() {
+        return nationality;
+    }
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
+    /**
+     * Set nationality for a guest.
+     *
+     * @param nationality takes Nationality for a guest.
+     */
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    /**
+     * Get Birthday for a guest.
+     *
+     * @return dateOfBirth Birthday for a guest.
+     */
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public Guest copy() {
-		return new Guest(name, phoneNumber, address, nationality,
-				dateOfBirth);
-	}
+    /**
+     * Set birthday for a guest.
+     *
+     * @param dateOfBirth takes Birthday for a guest.
+     */
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Guest)) {
-			return false;
-		}
-		Guest other = (Guest) obj;
-		return name.equals(other.name) && phoneNumber == other.phoneNumber
-				&& address.equals(other.address)
-				&& nationality.equals(other.nationality)
-				&& dateOfBirth.equals(other.dateOfBirth);
-	}
+    /**
+     * Get copy of a guest.
+     *
+     * @return Guest copy of a guest.
+     */
+    public Guest copy() {
+        return new Guest(name, phoneNumber, address, nationality,
+                dateOfBirth);
+    }
 
-	public String toString() {
-		return name.toString() + address.toString() + ", phone number "
-				+ phoneNumber + ", nationality " + nationality
-				+ ", date of birth" + dateOfBirth;
-	}
+    /**
+     * check if a guest is equal to another guest.
+     *
+     * @param obj Object for comparing
+     * @return true or false. if the guest is equal after comparing with obj will return true, else will return false.
+     */
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Guest)) {
+            return false;
+        }
+        Guest other = (Guest) obj;
+        return name.equals(other.name) && phoneNumber == other.phoneNumber
+                && address.equals(other.address)
+                && nationality.equals(other.nationality)
+                && dateOfBirth.equals(other.dateOfBirth);
+    }
+
+    /**
+     * return a String
+     *
+     * @return String containing name, address, phone number, nationality, birthday.
+     */
+    public String toString() {
+        return name.toString() + address.toString() + ", phone number "
+                + phoneNumber + ", nationality " + nationality
+                + ", date of birth" + dateOfBirth;
+    }
 
 }

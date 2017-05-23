@@ -3,9 +3,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
+ * @version 1.0
+ */
 public class FileAdapter implements Serializable {
     private MyFileIO fileIO = new MyFileIO();
 
+    /**
+     * Writing reservation to file.
+     *
+     * @param fileName    takes filename.
+     * @param reservation takes specific reservation to write
+     */
     public void writeToFile(String fileName, Reservation reservation) {
         try {
             fileIO.writeToFile(fileName, reservation);
@@ -22,6 +32,12 @@ public class FileAdapter implements Serializable {
 //        }
 //    }
 
+    /**
+     * Write object to file.
+     *
+     * @param fileName takes file name.
+     * @param object   takes object.
+     */
 
     public void writeToFileObj(String fileName, Object object) {
         try {
@@ -31,6 +47,12 @@ public class FileAdapter implements Serializable {
         }
     }
 
+    /**
+     * Reading object from file.
+     *
+     * @param fileName takes file name.
+     * @return object
+     */
     public Object readFromFileObj(String fileName) {
         Object read = null;
         try {
@@ -51,6 +73,12 @@ public class FileAdapter implements Serializable {
 //        this.fileName = fileName;
 //    }
 
+    /**
+     * Reading from file.
+     *
+     * @param fileName takes file name.
+     * @return ArrayList<Reservtion> AllGuests returns all guests.
+     */
     public ArrayList<Reservation> getAllGuests(String fileName) {
         ArrayList<Reservation> reservations = new ArrayList<Reservation>();
         Object[] fg = null;
@@ -67,6 +95,12 @@ public class FileAdapter implements Serializable {
         return reservations;
     }
 
+    /**
+     * Append to file.
+     *
+     * @param fileName    takes file name.
+     * @param reservation takes specific reservation
+     */
     public void appendToFile(String fileName, Reservation reservation) {
 
         Object[] read = null;
@@ -90,6 +124,12 @@ public class FileAdapter implements Serializable {
         }
     }
 
+    /**
+     * Remove single reservation from file
+     *
+     * @param fileName    takes file name.
+     * @param reservation takes specific reservation.
+     */
     public void removeSingleObjectFromFile(String fileName, Reservation reservation) {
         Object[] read = null;
         try {

@@ -1,54 +1,110 @@
 import java.io.Serializable;
 
+/**
+ * A class containing names.
+ *
+ * @author Nikolay D Nikolov
+ * @version 1.0
+ */
+
 public class Name implements Serializable {
-	private String firstName;
-	private String middleName;
-	private String lastName;
+    private String firstName;
+    private String middleName;
+    private String lastName;
 
-	public Name(String firstName, String middleName, String lastName) {
+    /**
+     * Constructor for initializing Name.
+     *
+     * @param firstName  Constructor takes first name to initialize constructor
+     * @param middleName Constructor takes middle name to initialize constructor
+     * @param lastName   Constructor takes last name to initialize constructor
+     */
+    public Name(String firstName, String middleName, String lastName) {
 
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-	}
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    /**
+     * Gets the first name of a person.
+     *
+     * @return firstName The first name of a person.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    /**
+     * Set first name of a person.
+     * @param firstName takes the first name of a person.
+     */
 
-	public String getMiddleName() {
-		return middleName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+    /**
+     * Gets the middle name of a person.
+     *
+     * @return middleName The middle name of a person.
+     */
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getMiddleName() {
+        return middleName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    /**
+     * Set middle name of a person.
+     * @param middleName takes middle name of a person.
+     */
 
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Name)) {
-			return false;
-		}
-		Name other = (Name) obj;
-		return firstName.equals(other.firstName)
-				&& middleName.equals(other.middleName)
-				&& lastName.equals(other.lastName);
-	}
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-	public String toString() {
-		return firstName  + middleName
-				+ lastName;
-}
+    /**
+     * Gets the last name of a person.
+     *
+     * @return lastName The last name of a person
+     */
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Set last name of a person.
+     * @param lastName takes last name of a person.
+     */
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * check if a name is equal to another name.
+     * @param obj Object for comparing
+     * @return true or false. if all names are equal after comparing with obj will return true, else will return false.
+     */
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Name)) {
+            return false;
+        }
+        Name other = (Name) obj;
+        return firstName.equals(other.firstName)
+                && middleName.equals(other.middleName)
+                && lastName.equals(other.lastName);
+    }
+
+    /**
+     *  return a String
+     * @return String containing first name, middle name, last name.
+     */
+    public String toString() {
+        return firstName + middleName
+                + lastName;
+    }
 
 }
