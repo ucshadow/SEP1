@@ -10,6 +10,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/**
+ * @author Catalin Udrea
+ */
 public class CheckAvailability {
 
     private FileAdapter fa = new FileAdapter();
@@ -29,11 +32,17 @@ public class CheckAvailability {
     private JTextPane warnings;
     private JLabel label;
 
+    /**
+     * No-argument constructor for initialing CheckAvailability
+     */
     public CheckAvailability() {
-        parseData();
+//        parseData();
         prepareGUI();
     }
 
+    /**
+     * A method preparing GUI for launch.
+     */
     private void prepareGUI() {
         //mainFrame = new JFrame("Check Availability");
         //mainFrame.setSize(1440, 960);
@@ -63,6 +72,9 @@ public class CheckAvailability {
         prepareSearchWindow();
     }
 
+    /**
+     * A method containing the design of the GUI
+     */
     private void prepareSearchWindow() {
         roomData = new JTextArea(hm.getAvailabilityFromDateInterval(new DateHandler(1, 1, 2200),
                 new DateHandler(1, 2, 2200)));
@@ -105,25 +117,33 @@ public class CheckAvailability {
         roomData.revalidate();
     }
 
-    private void parseData() {
-
-        //ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
-        //ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
-
-//        for(Reservation r: reservations) {
-//            parsedData.add(r);
-//        }
+//    private void parseData() {
 //
-//        for(Reservation r: inHouse) {
-//            parsedData.add(r);
-//            System.out.println(r);
-//        }
-    }
+//        //ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
+//        //ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
+//
+////        for(Reservation r: reservations) {
+////            parsedData.add(r);
+////        }
+////
+////        for(Reservation r: inHouse) {
+////            parsedData.add(r);
+////            System.out.println(r);
+////        }
+//    }
 
+    /**
+     * A class records the key that was pressed
+     */
     class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
         }
 
+        /**
+         * A method to listener for key presses.
+         *
+         * @param e takes the source of the action.
+         */
         public void keyPressed(KeyEvent e) {
             if ((e.getSource().equals(toField) || e.getSource().equals(fromField)) && e.getKeyCode() == 10) {
                 String[] str = fromField.getText().split("/");
@@ -149,6 +169,12 @@ public class CheckAvailability {
 
         }
 
+        /**
+         * Checks if the enter dates are in the correct format.
+         *
+         * @param str takes the date as a string
+         * @return true or false . If dates are entered properly returns true , else will return false.
+         */
         public boolean isValidDate(String str) {
             String[] arr = str.split("/");
             if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {

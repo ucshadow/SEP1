@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 
 // toDo: all guest currently in the hotel window!!!!  Radu
 
@@ -17,6 +16,16 @@ import java.util.Arrays;
 // toDo: search functionality on home window  Yusuf
 
 // toDo use HM for arr and dep
+
+
+/**
+ * This class holds the JFrame (the window)  of the GUI and also the JTabbedPane.
+ * It also holds the default GUI tab named "Home". All other tabs are instantiated here.
+ *
+ * @author Yusuf A Farah, Catalin Udrea
+ * @version 1.0
+ */
+
 
 public class MainGuiWindow {
     private FileAdapter adapter = new FileAdapter();
@@ -76,8 +85,10 @@ public class MainGuiWindow {
     private Object[][] arrCol;
     private Object[][] depCol;
 
-    private boolean inDisabledWindow = false;
-
+    /**
+     * Constructor used for initialising window params, adding tabs to the tab pane,
+     * disabling the check-in and check-out tabs and loading all data from the bin files.
+     */
     public MainGuiWindow() {
         mainWindow();
 
@@ -94,14 +105,24 @@ public class MainGuiWindow {
 
         refresh();
 
-       // int[] i = { 1, 2, 3 };
-
     }
 
+    /**
+     * Adds a tab to the tab pane with a title. The tab is passed by each separate Class
+     * that creates a new tab.
+     *
+     * @param title the title of the tab
+     * @param tab   the JPanel that will be added to the JTabbedPane
+     */
     public void addTab(String title, JPanel tab) {
         tabPane.add(title, tab);
     }
 
+    /**
+     * Empties the arrayLists that contain reservation data, and re-reads the data from the file.
+     * The method is called in the constructor and each time data is modified in a file.
+     * It will refresh the displayed data in the main window ("Home")
+     */
     public void refresh() {
         arrivals.clear();
         departures.clear();
@@ -116,6 +137,9 @@ public class MainGuiWindow {
         right.revalidate();
     }
 
+    /**
+     * The window that hods the GUI.
+     */
     private void mainWindow() {
 
         adapter = new FileAdapter();
@@ -242,15 +266,14 @@ public class MainGuiWindow {
         mainPanel.add(left, BorderLayout.WEST);
         mainPanel.add(right, BorderLayout.EAST);
 
-// Add Main panel to Tab
-        // toDo: I can make them load all at the same time, but slower
+        // Add Main panel to Tab
         tabPane.addTab("Home", mainPanel);
 
         mainWindow.add(tabPane);
         mainWindow.setVisible(true);
         mainWindow.setResizable(false);
 
-//Exit On Close event
+        //Exit On Close event
         mainWindow.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent) {
                 System.exit(0);
@@ -259,6 +282,12 @@ public class MainGuiWindow {
     }
 
 
+    /**
+     * Iterates an arrayList of reservations and checks if the arrival date of any reservation
+     * matches the current date. It sets the table data in the Arrival panel of the "Home" tab
+     * to be equal to all the found reservations that do.
+     * @param arrivals an ArrayList of Reservation objects
+     */
     public void getAllArrivalsForToday(ArrayList<Reservation> arrivals) {
         arrCol = new Object[arrivals.size()][5];
 
@@ -277,6 +306,12 @@ public class MainGuiWindow {
         allArrivalsTable.setModel(dtm);
     }
 
+    /**
+     * Iterates an arrayList of reservations and checks if the departure date of any reservation
+     * matches the current date. It sets the table data in the Departure panel of the "Home" tab
+     * to be equal to all the found reservations that do.
+     * @param departures an ArrayList of Reservation objects
+     */
     public void getAllDeparturesForToday(ArrayList<Reservation> departures) {
         depCol = new Object[departures.size()][5];
 
@@ -295,6 +330,10 @@ public class MainGuiWindow {
     }
 
 
+    /**
+     * Gets all the reservations from the reservations file and fills the arrivals ArrayList with any reservation
+     * that has the Arrival date equals to today's date
+     */
     public void getArrivalsForToday() {
         ArrayList<Reservation> reservations = adapter.getAllGuests("reservations.bin");
         DateHandler d = new DateHandler(1, 1, 1);
@@ -306,6 +345,10 @@ public class MainGuiWindow {
 
     }
 
+    /**
+     * Gets all the reservations from the reservations file and fills the departures ArrayList with any reservation
+     * that has the Departure date equals to today's date
+     */
     public void getDeparturesForToday() {
         ArrayList<Reservation> inHouse = adapter.getAllGuests("inHouseGuests.bin");
         DateHandler d = new DateHandler(1, 1, 1);
@@ -316,6 +359,10 @@ public class MainGuiWindow {
         }
     }
 
+    /**
+     * Reads the inHouseGuest file and each Reservation in that file
+     * is added as data to the allInHouseGuests table.
+     */
     public void getAllInHouseGuests() {
         inHouseGuestsArray = adapter.getAllGuests("inHouseGuests.bin");
         Object[][] dataIHG = new Object[inHouseGuestsArray.size()][8];
@@ -335,21 +382,25 @@ public class MainGuiWindow {
     }
 
     private class MyButtonListener implements ActionListener {
+
+        /**
+         * Performs an action based on thr button clicked. It either activates the check-in tab or the check-out tab
+         * with the selected data from the table row.
+         * @param e the action event
+         */
         public void actionPerformed(ActionEvent e) {
-            //calculate button for checking out the person.
+            // check-in button
             if (e.getSource() == leftButton) {
-                if(allArrivalsTable.getSelectedRow() >= 0) {
+                if (allArrivalsTable.getSelectedRow() >= 0) {
                     checkInGUI.getDataForCheckIn(arrivals.get(allArrivalsTable.getSelectedRow()));
                     checkInGUI.setRoomNumber(arrivals.get(allArrivalsTable.getSelectedRow()));
                     tabPane.setSelectedIndex(5);
                     refresh();
                 }
             }
+            // check-out button
             if (e.getSource() == rightButton) {
-                //System.out.println("right click");
-                if(allDeparturesTable.getSelectedRow() >= 0) {
-                    //System.out.println(departures.get(allDeparturesTable.getSelectedRow()).getGuest().getName());
-                    //checkOutGUI.getDataForCheckOut(departures.get(allDeparturesTable.getSelectedRow()));
+                if (allDeparturesTable.getSelectedRow() >= 0) {
                     checkOutGUI.setRes(departures.get(allDeparturesTable.getSelectedRow()));
                     checkOutGUI.getDataForCheckOut();
                     tabPane.setSelectedIndex(4);
@@ -360,30 +411,21 @@ public class MainGuiWindow {
         }
     }
 
+    /**
+     * This method will call the refresh method each time the "Home" tab is focused.
+     * @see #refresh()
+     */
     ChangeListener changeListener = new ChangeListener() {
         public void stateChanged(ChangeEvent changeEvent) {
             JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-//            if(sourceTabbedPane.getSelectedIndex() == 4 || sourceTabbedPane.getSelectedIndex() == 5) {
-//                inDisabledWindow = true;
-//            }
-//            if(sourceTabbedPane.getSelectedIndex() == 0 && inDisabledWindow) {
-//                System.out.println("refreshing main window...");
-//                inDisabledWindow = false;
-//                refresh();
-//            }
-//            // refresh on create
-//            if(sourceTabbedPane.getSelectedIndex() == 1) {
-//                refresh();
-//            }
-            // refresh each time you switch to the main window
-            if(sourceTabbedPane.getSelectedIndex() == 0) {
+            if (sourceTabbedPane.getSelectedIndex() == 0) {
                 refresh();
             }
         }
     };
 
     // Event listeners for search
-//Arrivals Search
+    //Arrivals Search
     class arrSearch implements KeyListener {
         public void keyTyped(KeyEvent e) {
         }
@@ -393,6 +435,10 @@ public class MainGuiWindow {
 
         }
 
+        /**
+         * Filters the Arrival table based on the user input
+         * @param e key event
+         */
         public void keyReleased(KeyEvent e) {
             ArrayList<Reservation> foundNames = new ArrayList<Reservation>();
             getAllArrivalsForToday(arrivals);
@@ -419,6 +465,10 @@ public class MainGuiWindow {
 
         }
 
+        /**
+         * Filters the Departure table based on the user input
+         * @param e key event
+         */
         public void keyReleased(KeyEvent e) {
             ArrayList<Reservation> foundNames = new ArrayList<Reservation>();
             getAllDeparturesForToday(departures);

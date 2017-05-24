@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * A class containing the GUI for check out.
+ * A class containing the GUI for check in.
  *
- * @author Nikolay D Nikolov
+ * @author Radu G Orleanu, Yusuf A Farah
  * @version 1.0
  */
 public class CheckInGUI {
@@ -26,7 +26,7 @@ public class CheckInGUI {
     //private JTabbedPane checkOut;
 
     /**
-     * No-argument constructor initializing the check out GUI.
+     * No-argument constructor initializing the check in GUI.
      */
     public CheckInGUI(JTabbedPane parent) {
 
@@ -135,9 +135,9 @@ public class CheckInGUI {
     }
 
     /**
-     * Method preparing an object for check out.
+     * Method preparing an object for check in.
      *
-     * @param res the reservation for check out
+     * @param res the reservation for check in
      */
 
     public void getDataForCheckIn(Reservation res) {
@@ -180,6 +180,12 @@ public class CheckInGUI {
         }
     }
 
+    /**
+     * A method that generetes Arraylist of Integers.
+     * @param number1 the first integer
+     * @param number2 the second integer
+     * @return Arraylist of Integers from the first until the last.
+     */
     public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
         ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = number1; i < number2 + 1; i++) {
@@ -191,6 +197,10 @@ public class CheckInGUI {
         return temp;
     }
 
+    /**
+     * A method to set room number
+     * @param res takes specific reservation
+     */
     public void setRoomNumber(Reservation res) {
 
 
