@@ -16,8 +16,9 @@ import java.util.ArrayList;
 public class MyFileIO {
     /**
      * Write object to file.
+     *
      * @param fileName takes file name.
-     * @param obj takes specific object.
+     * @param obj      takes specific object.
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -42,8 +43,9 @@ public class MyFileIO {
 
     /**
      * Write multiple objects to file
+     *
      * @param fileName takes file name.
-     * @param objs takes multiple objects.
+     * @param objs     takes multiple objects.
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -70,6 +72,7 @@ public class MyFileIO {
 
     /**
      * Read object from file.
+     *
      * @param fileName takes file name.
      * @return object
      * @throws FileNotFoundException
@@ -102,6 +105,7 @@ public class MyFileIO {
 
     /**
      * Read array from file
+     *
      * @param fileName takes file name
      * @return ArrayList returns the whole list as an array list.
      * @throws FileNotFoundException
@@ -123,6 +127,9 @@ public class MyFileIO {
                     break;
                 }
             }
+        } catch (EOFException e) {
+            System.out.println("I think the file " + fileName + " was empty");
+            return new Object[0];
         } finally {
             if (readFromFile != null) {
                 try {

@@ -73,42 +73,42 @@ public class HotelManager implements Serializable {
     public void createReservation(Reservation reservation) {
         fileAdapter.appendToFile("reservations.bin", reservation);
     }
+//
+//    public ArrayList<Reservation> modifyReservation(String firstName) {
+//        ArrayList<Reservation> foundReservations = new ArrayList<Reservation>();
+//        for (int i = 0; i < allReservations.size(); i++) {
+//            if (allReservations.get(i).getGuest().getName().getFirstName().equals(firstName)) {
+//                foundReservations.add(allReservations.get(i));
+//            }
+//        }
+//        return foundReservations;
+//        // the method will be changed later with all the code that will change
+//        // the rest of the reservation
+//    }
+//
+//    public void cancelReservation(Reservation reservation) {
+//        fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
+//    }
 
-    public ArrayList<Reservation> modifyReservation(String firstName) {
-        ArrayList<Reservation> foundReservations = new ArrayList<Reservation>();
-        for (int i = 0; i < allReservations.size(); i++) {
-            if (allReservations.get(i).getGuest().getName().getFirstName().equals(firstName)) {
-                foundReservations.add(allReservations.get(i));
-            }
-        }
-        return foundReservations;
-        // the method will be changed later with all the code that will change
-        // the rest of the reservation
-    }
-
-    public void cancelReservation(Reservation reservation) {
-        fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
-    }
-
-    public ArrayList<Reservation> getArrivalList(DateHandler today) {
-        ArrayList<Reservation> arr = new ArrayList<Reservation>();
-        for (int i = 0; i < allReservations.size(); i++) {
-            if (allReservations.get(i).getArrival().getCheckInDate().equals(today)) {
-                arr.add(allReservations.get(i));
-            }
-        }
-        return arr;
-    }
-
-    public ArrayList<Reservation> getDepartureList(DateHandler today) {
-        ArrayList<Reservation> dep = new ArrayList<Reservation>();
-        for (int i = 0; i < allReservations.size(); i++) {
-            if (allReservations.get(i).getDeparture().getCheckOutDate().equals(today)) {
-                dep.add(allReservations.get(i));
-            }
-        }
-        return dep;
-    }
+//    public ArrayList<Reservation> getArrivalList(DateHandler today) {
+//        ArrayList<Reservation> arr = new ArrayList<Reservation>();
+//        for (int i = 0; i < allReservations.size(); i++) {
+//            if (allReservations.get(i).getArrival().getCheckInDate().equals(today)) {
+//                arr.add(allReservations.get(i));
+//            }
+//        }
+//        return arr;
+//    }
+//
+//    public ArrayList<Reservation> getDepartureList(DateHandler today) {
+//        ArrayList<Reservation> dep = new ArrayList<Reservation>();
+//        for (int i = 0; i < allReservations.size(); i++) {
+//            if (allReservations.get(i).getDeparture().getCheckOutDate().equals(today)) {
+//                dep.add(allReservations.get(i));
+//            }
+//        }
+//        return dep;
+//    }
 
 //    public Room[] getAvailabilityFromDate(DateHandler arrival){
 //    }
