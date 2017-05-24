@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class containing the GUI for check out.
@@ -16,18 +17,21 @@ public class CheckInGUI {
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
     private JLabel firstName, middleName, lastName, country, city, postCode, street,
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumberLabel;
-    private JTextField roomNumberField;
+    private JComboBox<Integer> roomNumberField;
     private ArrayList<JLabel> allJlabelsForFields, allJlabelsForLabels;
     private ArrayList<Reservation> allInHouseGuests;
     private Reservation res;
     private MyButtonListener listener;
     private JButton checkIn, cancel;
+    private JTabbedPane parent;
     //private JTabbedPane checkOut;
 
     /**
      * No-argument constructor initializing the check out GUI.
      */
-    public CheckInGUI() {
+    public CheckInGUI(JTabbedPane parent) {
+
+        this.parent = parent;
 
         allInHouseGuests = new ArrayList<Reservation>();
         allJlabelsForFields = new ArrayList<JLabel>();
@@ -80,7 +84,7 @@ public class CheckInGUI {
         checkIn = new JButton("Check in");
         checkIn.addActionListener(listener);
 
-        roomNumberField = new JTextField();
+        roomNumberField = new JComboBox<>();
         Font f = new Font("Arial", Font.BOLD, 25);
         roomNumberField.setPreferredSize(new Dimension(100, 25));
         roomNumberField.setFont(f);
@@ -155,25 +159,121 @@ public class CheckInGUI {
 
     }
 
+
+    public void setRoomNumber(Reservation res) {
+
+        ArrayList<Reservation> inHouse = new FileAdapter().getAllGuests("inHouseGuests.bin");
+
+        ArrayList<Integer> singleRooms = generateRoomNumber(101, 110);
+        ArrayList<Integer> twinRoom = generateRoomNumber(111, 116);
+        ArrayList<Integer> kingSize = generateRoomNumber(117, 119);
+        ArrayList<Integer> kingSize2 = generateRoomNumber(201, 219);
+        for (int i = 0; i < kingSize2.size(); i++) {
+            kingSize.add(kingSize2.get(i));
+        }
+        ArrayList<Integer> singleSuite = generateRoomNumber(303, 304);
+        ArrayList<Integer> doubleSuite = new ArrayList<Integer>();
+        doubleSuite.add(302);
+        ArrayList<Integer> tripleSuite = new ArrayList<Integer>();
+        tripleSuite.add(301);
+
+
+        for (int i = 0; i < inHouse.size(); i++) {
+            if (singleRooms.contains(inHouse.get(i).getRoomNumber())) {
+                singleRooms.remove(inHouse.get(i).getRoomNumber());
+            }
+            if (twinRoom.contains(inHouse.get(i).getRoomNumber())) {
+                twinRoom.remove(inHouse.get(i).getRoomNumber());
+            }
+            if (kingSize.contains(inHouse.get(i).getRoomNumber())) {
+                kingSize.remove(inHouse.get(i).getRoomNumber());
+            }
+            if (singleSuite.contains(inHouse.get(i).getRoomNumber())) {
+                singleSuite.remove(inHouse.get(i).getRoomNumber());
+            }
+            if (doubleSuite.contains(inHouse.get(i).getRoomNumber())) {
+                doubleSuite.remove(inHouse.get(i).getRoomNumber());
+            }
+            if (tripleSuite.contains(inHouse.get(i).getRoomNumber())) {
+                tripleSuite.remove(inHouse.get(i).getRoomNumber());
+            }
+        }
+
+        if (res.getRoomType().equals("single room")) {
+            for (int i = 0; i < singleRooms.size(); i++) {
+                roomNumberField.addItem(singleRooms.get(i));
+            }
+        }
+        if (res.getRoomType().equals("double room-twin beds")) {
+            for (int i = 0; i < twinRoom.size(); i++) {
+                roomNumberField.addItem(twinRoom.get(i));
+            }
+        }
+        if (res.getRoomType().equals("double room-kingsize")) {
+            for (int i = 0; i < kingSize.size(); i++) {
+                roomNumberField.addItem(kingSize.get(i));
+            }
+        }
+        if (res.getRoomType().equals("single bedroom suite")) {
+            for (int i = 0; i < singleSuite.size(); i++) {
+                roomNumberField.addItem(singleSuite.get(i));
+            }
+        }
+        if (res.getRoomType().equals("three bedroom suite")) {
+            for (int i = 0; i < tripleSuite.size(); i++) {
+                roomNumberField.addItem(tripleSuite.get(i));
+            }
+        }
+        if (res.getRoomType().equals("two bedroom suite")) {
+            for (int i = 0; i < doubleSuite.size(); i++) {
+                roomNumberField.addItem(doubleSuite.get(i));
+            }
+        }
+
+
+    }
+
+
+    public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        for (int i = number1; i < number2 + 1; i++) {
+            temp.add(i);
+            if (number1 == number2) {
+                break;
+            }
+        }
+        return temp;
+    }
+    // toDo: add waring for bad input
+
     /**
      * Action listener for buttons.
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //checkIn button for checking in the person.
-            if (e.getSource() == checkIn){
-                HotelManager hm  = new HotelManager();
-                hm.checkIn(res, Integer.parseInt(roomNumberField.getText()));
+            if (e.getSource() == checkIn) {
+                HotelManager hm = new HotelManager();
+                hm.checkIn(res, Integer.parseInt(roomNumberField.getSelectedItem().toString()));
+                parent.setSelectedIndex(0);
             }
-                    //cancel button to close the window.
-            else if (e.getSource() == cancel) {
+            if (e.getSource() == cancel) {
                 int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check in", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
-                    System.exit(1);
+                    parent.setSelectedIndex(0);
                 }
             }
         }
     }
+
+//    public boolean isValidNumber(String num) {
+//        try {
+//            Integer.parseInt(num);
+//            return true;
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
 
     public JPanel getAvailableTab() {
         return leftPanel;

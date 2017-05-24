@@ -54,7 +54,7 @@ public class MainGuiWindow {
     private Search search = new Search();
     private CheckAvailability checkAvailability = new CheckAvailability();
     private CheckOutGUI checkOutGUI = new CheckOutGUI();
-    private CheckInGUI checkInGUI = new CheckInGUI();
+    private CheckInGUI checkInGUI = new CheckInGUI(tabPane);
 
     public MainGuiWindow() {
         mainWindow();
@@ -247,6 +247,7 @@ public class MainGuiWindow {
             if (e.getSource() == leftButton) {
                 if(allArrivalsTable.getSelectedRow() >= 0) {
                     checkInGUI.getDataForCheckIn(arrivals.get(allArrivalsTable.getSelectedRow()));
+                    checkInGUI.setRoomNumber(arrivals.get(allArrivalsTable.getSelectedRow()));
                     tabPane.setSelectedIndex(5);
                 }
             }
