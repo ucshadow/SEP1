@@ -208,9 +208,10 @@ public class CreateReservationWindowGUI {
                 if (a==0) {
                     reservationCreator();
                     clear();
-
+                    parent.setSelectedIndex(0);
                 }
-                parent.setSelectedIndex(0);
+
+
 
             }
             // Checks if button clear is pressed and clears all fields.
