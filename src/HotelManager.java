@@ -4,7 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-// toDo: if file is empty use write instead of append;
+/**
+ * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
+ * @version 1.0
+ */
+
+
 public class HotelManager implements Serializable {
     //    private Room room;
     private Price price;
@@ -14,22 +19,35 @@ public class HotelManager implements Serializable {
     private ArrayList<Reservation> allReservations;
     // we don't have a guest because all methods take a guest
 
+    /**
+     * No-argument constructor. Used to initialize HotelManager.
+     */
     public HotelManager() {
         fileAdapter = new FileAdapter();
         this.price = new Price();
 //        rooms = new ArrayList<Room>();
         dateHandler = new DateHandler(1, 1, 2017);
-        // toDO: fix for empty file!!
         allReservations = fileAdapter.getAllGuests("inHouseGuests.bin");
     }
 
+    /**
+     * Check in method. Used to check in a reservation.
+     *
+     * @param reservation takes specific reserervation.
+     * @param roomNumber  takes specific room number.
+     */
     public void checkIn(Reservation reservation, int roomNumber) {
         fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
         reservation.setRoomNumber(roomNumber);
         fileAdapter.appendToFile("inHouseGuests.bin", reservation);
     }
 
-    // toDo: modify to not check-out and return the string at the same time
+    /**
+     * Check out method. Used to check out person.
+     *
+     * @param reservation takes specific reservation.
+     */
+
     public void checkOut(Reservation reservation) {
 
         Calendar cal = new GregorianCalendar();
@@ -46,7 +64,13 @@ public class HotelManager implements Serializable {
     }
 
 
-    // added this for concern splitting
+    /**
+     * Total price method. Used to calculate the price upon check out.
+     *
+     * @param reservation takes specific reservation.
+     * @param discount    takes discount so calculates the price upon check out.
+     * @return price Price with the discount.
+     */
     public String getTotalPrice(Reservation reservation, double discount) {
 
         Calendar cal = new GregorianCalendar();
@@ -70,6 +94,11 @@ public class HotelManager implements Serializable {
 //
 //    }
 
+    /**
+     * Create reservation method. Used to create reservation and save it in the system.
+     *
+     * @param reservation takes specific reservation.
+     */
     public void createReservation(Reservation reservation) {
         fileAdapter.appendToFile("reservations.bin", reservation);
     }
@@ -114,6 +143,13 @@ public class HotelManager implements Serializable {
 //    }
 //    remains to be implemented tomorrow or the day after tomorrow
 
+    /**
+     * Availability method. Used to check availability between dates.
+     *
+     * @param arrival   takes specific date for arraving.
+     * @param departure takes specific date for departure.
+     * @return availability Returns specific numbers of available rooms.
+     */
     public String getAvailabilityFromDateInterval(DateHandler arrival, DateHandler departure) {
         int countSingleBedroomSuite = 0;
         int countTwoBedroomSuite = 0;
