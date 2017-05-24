@@ -17,7 +17,7 @@ public class TestClass {
 ////        ArrayList<Reservation> incoming = fa.getAllGuests("reservations.bin");
 ////        ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
         //CheckAvailability s = new CheckAvailability();
-        new MainGuiWindow();
+        //new MainGuiWindow();
 //
 //        for(int i = 0; i < 500; i++) {
 //            fa.appendToFile("pastReservations.bin", fgt.makeNewReservation());
@@ -101,6 +101,10 @@ public class TestClass {
 //        Object o = fa.readFromFileObj("prices.bin");
 //        Price pp = (Price) o;
 //        System.out.println(pp);
+
+        //new Search();
+        //CheckAvailability();
+        new MainGuiWindow();
 
     }
 

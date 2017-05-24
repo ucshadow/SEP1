@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A class containing the GUI for check out.
@@ -17,7 +16,7 @@ public class CheckInGUI {
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
     private JLabel firstName, middleName, lastName, country, city, postCode, street,
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumberLabel;
-    private JComboBox<Integer> roomNumberField;
+    private JComboBox roomNumberField;
     private ArrayList<JLabel> allJlabelsForFields, allJlabelsForLabels;
     private ArrayList<Reservation> allInHouseGuests;
     private Reservation res;
@@ -84,7 +83,7 @@ public class CheckInGUI {
         checkIn = new JButton("Check in");
         checkIn.addActionListener(listener);
 
-        roomNumberField = new JComboBox<>();
+        roomNumberField = new JComboBox();
         Font f = new Font("Arial", Font.BOLD, 25);
         roomNumberField.setPreferredSize(new Dimension(100, 25));
         roomNumberField.setFont(f);
@@ -159,10 +158,46 @@ public class CheckInGUI {
 
     }
 
+    // toDo: add waring for bad input
+
+    /**
+     * Action listener for buttons.
+     */
+    private class MyButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            //checkIn button for checking in the person.
+            if (e.getSource() == checkIn){
+                HotelManager hm  = new HotelManager();
+                hm.checkIn(res, Integer.parseInt(roomNumberField.getSelectedItem().toString()));
+                parent.setSelectedIndex(0);
+            }
+            if (e.getSource() == cancel) {
+                int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check in", "Exit", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    parent.setSelectedIndex(0);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        for (int i = number1; i < number2 + 1; i++) {
+            temp.add(i);
+            if (number1 == number2) {
+                break;
+            }
+        }
+        return temp;
+    }
 
     public void setRoomNumber(Reservation res) {
 
+
         ArrayList<Reservation> inHouse = new FileAdapter().getAllGuests("inHouseGuests.bin");
+//        if(inHouse.isEmpty()){
+//            inHouse = new FileAdapter().writeToFile("inHouseGuests.bin");
+//        }
 
         ArrayList<Integer> singleRooms = generateRoomNumber(101, 110);
         ArrayList<Integer> twinRoom = generateRoomNumber(111, 116);
@@ -180,22 +215,22 @@ public class CheckInGUI {
 
         for (int i = 0; i < inHouse.size(); i++) {
             if (singleRooms.contains(inHouse.get(i).getRoomNumber())) {
-                singleRooms.remove(inHouse.get(i).getRoomNumber());
+                singleRooms.remove(singleRooms.indexOf(inHouse.get(i).getRoomNumber()));
             }
             if (twinRoom.contains(inHouse.get(i).getRoomNumber())) {
-                twinRoom.remove(inHouse.get(i).getRoomNumber());
+                twinRoom.remove(twinRoom.indexOf(inHouse.get(i).getRoomNumber()));
             }
             if (kingSize.contains(inHouse.get(i).getRoomNumber())) {
-                kingSize.remove(inHouse.get(i).getRoomNumber());
+                kingSize.remove(kingSize.indexOf(inHouse.get(i).getRoomNumber()));
             }
             if (singleSuite.contains(inHouse.get(i).getRoomNumber())) {
-                singleSuite.remove(inHouse.get(i).getRoomNumber());
+                singleSuite.remove(singleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
             if (doubleSuite.contains(inHouse.get(i).getRoomNumber())) {
-                doubleSuite.remove(inHouse.get(i).getRoomNumber());
+                doubleSuite.remove(doubleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
             if (tripleSuite.contains(inHouse.get(i).getRoomNumber())) {
-                tripleSuite.remove(inHouse.get(i).getRoomNumber());
+                tripleSuite.remove(tripleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
         }
 
@@ -232,40 +267,7 @@ public class CheckInGUI {
 
 
     }
-
-
-    public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
-        ArrayList<Integer> temp = new ArrayList<Integer>();
-        for (int i = number1; i < number2 + 1; i++) {
-            temp.add(i);
-            if (number1 == number2) {
-                break;
-            }
-        }
-        return temp;
-    }
-    // toDo: add waring for bad input
-
-    /**
-     * Action listener for buttons.
-     */
-    private class MyButtonListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //checkIn button for checking in the person.
-            if (e.getSource() == checkIn) {
-                HotelManager hm = new HotelManager();
-                hm.checkIn(res, Integer.parseInt(roomNumberField.getSelectedItem().toString()));
-                parent.setSelectedIndex(0);
-            }
-            if (e.getSource() == cancel) {
-                int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check in", "Exit", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    parent.setSelectedIndex(0);
-                }
-            }
-        }
-    }
-
+//
 //    public boolean isValidNumber(String num) {
 //        try {
 //            Integer.parseInt(num);

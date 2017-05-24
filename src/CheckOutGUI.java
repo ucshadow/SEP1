@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +12,9 @@ import java.util.ArrayList;
  * @author Nikolay D Nikolov
  * @version 1.0
  */
+
+// toDo: discount price is busted...
+
 public class CheckOutGUI {
 
     //private JFrame mainFrame;
@@ -22,17 +27,22 @@ public class CheckOutGUI {
     private double discount;
     private Reservation res;
     private MyButtonListener listener;
-    private JButton calculate, cancel;
+    private KeyPressEvent keyLogger;
+    private JButton checkOutButton, cancel;
+    private JTabbedPane parent;
+    private HotelManager hm = new HotelManager();
 
     /**
      * No-argument constructor initializing the check out GUI.
      */
-    public CheckOutGUI() {
+    public CheckOutGUI(JTabbedPane parent) {
+        this.parent = parent;
 
         allInHouseGuests = new ArrayList<>();
         allJLabelsForFields = new ArrayList<>();
         allJLabelsForLabels = new ArrayList<>();
         listener = new MyButtonListener();
+        keyLogger = new KeyPressEvent();
 
         prepareGUI();
 
@@ -65,11 +75,11 @@ public class CheckOutGUI {
         cancel = new JButton("Cancel");
         cancel.addActionListener(listener);
 
-        calculate = new JButton("Check out");
-        calculate.addActionListener(listener);
+        checkOutButton = new JButton("Check out");
+        checkOutButton.addActionListener(listener);
 
         discountField = new JTextField();
-        discountField.addActionListener(listener);
+        discountField.addKeyListener(keyLogger);
         discountField.setPreferredSize(new Dimension(100, 20));
 
         allJLabelsForFields.add(firstName = new JLabel(""));
@@ -112,7 +122,7 @@ public class CheckOutGUI {
         leftPanel.add(mainPanelForFields, BorderLayout.EAST);
         leftPanel.add(new JLabel("Discount"), BorderLayout.WEST);
         leftPanel.add(discountField);
-        leftPanel.add(calculate);
+        leftPanel.add(checkOutButton);
         leftPanel.add(cancel);
 
 
@@ -120,11 +130,9 @@ public class CheckOutGUI {
 
     /**
      * Method preparing an object for check out.
-     *
-     * @param res the reservation for check out
      */
 
-    public void getDataForCheckOut(Reservation res) {
+    public void getDataForCheckOut() {
         firstName.setText(res.getGuest().getName().getFirstName());
         middleName.setText(res.getGuest().getName().getMiddleName());
         lastName.setText(res.getGuest().getName().getLastName());
@@ -139,7 +147,8 @@ public class CheckOutGUI {
         departure.setText(String.valueOf(res.getDeparture().getCheckOutDate()));
         roomType.setText(String.valueOf(res.getRoomType()));
         roomNumber.setText(String.valueOf(res.getRoomNumber()));
-        price.setText(String.valueOf(new HotelManager().checkOut(res, discount)));
+        price.setText(String.valueOf(hm.getTotalPrice(res, discount)));
+        System.out.println("--> " + hm.getTotalPrice(res, discount));
     }
 
     /**
@@ -147,30 +156,56 @@ public class CheckOutGUI {
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //calculate button for checking out the person.
-            if (e.getSource() == calculate && discountField.getText().length() > 0) {
-                discount = Double.parseDouble(discountField.getText());
-                if (discount > 100 || discount < 0) {
-                    JOptionPane.showMessageDialog(null, "Invalid discount", "My msg", JOptionPane.WARNING_MESSAGE);
-                    price.setText("0");
-                    price.revalidate();
-                } else if (discount < 100 || discount > 0) {
-                    res = allInHouseGuests.get(0);
-                    discount = Double.parseDouble(discountField.getText());
-                    price.setText(new HotelManager().checkOut(res, discount));
-                    price.revalidate();
-                }
-
+            //checkOutButton button for checking out the person.
+            if (e.getSource() == checkOutButton) {
+                hm.checkOut(res);
+                parent.setSelectedIndex(0);
             }
             //cancel button to close the window.
-            else if (e.getSource() == cancel) {
+            if (e.getSource() == cancel) {
                 int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check out", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
-                    System.exit(1);
+                    parent.setSelectedIndex(0);
                 }
             }
 
         }
+    }
+
+    class KeyPressEvent implements KeyListener {
+        public void keyTyped(KeyEvent e) {
+        }
+
+        public void keyPressed(KeyEvent e) {
+        }
+
+        public void keyReleased(KeyEvent e) {
+
+            if (isValidNumber(discountField.getText())) {
+                double discount = Double.parseDouble(discountField.getText());
+                if (e.getSource() == discountField && discount >= 1 && discount <= 100) {
+                    price.setText(hm.getTotalPrice(res, Double.parseDouble(discountField.getText())));
+                }
+
+            }
+            if (e.getSource() == discountField && !isValidNumber(discountField.getText()) ||
+                    discountField.getText().isEmpty()) {
+                price.setText(hm.getTotalPrice(res, 0));
+            }
+        }
+    }
+
+    public boolean isValidNumber(String num) {
+        try {
+            Double.parseDouble(num);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void setRes(Reservation res) {
+        this.res = res;
     }
 
     public JPanel getAvailableTab() {

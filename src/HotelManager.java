@@ -6,9 +6,9 @@ import java.util.GregorianCalendar;
 
 // toDo: if file is empty use write instead of append;
 public class HotelManager implements Serializable {
-//    private Room room;
+    //    private Room room;
     private Price price;
-//    private ArrayList<Room> rooms;
+    //    private ArrayList<Room> rooms;
     private DateHandler dateHandler;
     private FileAdapter fileAdapter;
     private ArrayList<Reservation> allReservations;
@@ -29,7 +29,25 @@ public class HotelManager implements Serializable {
         fileAdapter.appendToFile("inHouseGuests.bin", reservation);
     }
 
-    public String checkOut(Reservation reservation, double discount) {
+    // toDo: modify to not check-out and return the string at the same time
+    public void checkOut(Reservation reservation) {
+
+        Calendar cal = new GregorianCalendar();
+        Calendar cal2 = new GregorianCalendar();
+        cal.setTime(new Date((reservation.getArrival().getCheckInDate().getYear())
+                , (reservation.getArrival().getCheckInDate().getMonth() - 1)
+                , reservation.getArrival().getCheckInDate().getDay()));
+        cal2.setTime(new Date((reservation.getDeparture().getCheckOutDate().getYear())
+                , (reservation.getDeparture().getCheckOutDate().getMonth() - 1)
+                , reservation.getDeparture().getCheckOutDate().getDay()));
+        fileAdapter.removeSingleObjectFromFile("inHouseGuests.bin", reservation);
+        fileAdapter.appendToFile("pastReservations.bin", reservation);
+
+    }
+
+
+    // added this for concern splitting
+    public String getTotalPrice(Reservation reservation, double discount) {
 
         Calendar cal = new GregorianCalendar();
         Calendar cal2 = new GregorianCalendar();
@@ -41,11 +59,11 @@ public class HotelManager implements Serializable {
                 , reservation.getDeparture().getCheckOutDate().getDay()));
         int total = cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR);
         double totalPrice = price.getRoomPrice(reservation.getRoomType()) * total;
-        fileAdapter.removeSingleObjectFromFile("inHouseGuests.bin", reservation);
-        fileAdapter.appendToFile("pastReservations.bin", reservation);
-        totalPrice = (totalPrice-((discount/100)*totalPrice));
-        return Double.toString(totalPrice);
-
+        if (discount == 0) {
+            return String.valueOf(totalPrice);
+        }
+        double finalPrice = Math.round((discount * totalPrice) / 100);
+        return String.valueOf(totalPrice - finalPrice);
     }
 
 //    public String checkOut(int roomNumber){
@@ -101,7 +119,6 @@ public class HotelManager implements Serializable {
         int countTwoBedroomSuite = 0;
         int countThreeBedroomSuite = 0;
         int singleRoom = 0;
-        int doubleRoom = 0;
         int twinRoom = 0;
         int kingSizeRoom = 0;
         ArrayList<Reservation> temp = new ArrayList<>();
@@ -127,9 +144,6 @@ public class HotelManager implements Serializable {
             }
             if (temp.get(i).getRoomType().equals("single room")) {
                 singleRoom++;
-            }
-            if (temp.get(i).getRoomType().equals("double room")) {
-                doubleRoom++;
             }
             if (temp.get(i).getRoomType().equals("double room-twin beds")) {
                 twinRoom++;
@@ -164,12 +178,6 @@ public class HotelManager implements Serializable {
             singleRoom = 0;
         }
 
-        if (doubleRoom <= 28) {
-            doubleRoom = 28 - doubleRoom;
-        } else {
-            doubleRoom = 0;
-        }
-
         if (twinRoom <= 6) {
             twinRoom = 6 - twinRoom;
         } else {
@@ -182,8 +190,8 @@ public class HotelManager implements Serializable {
             kingSizeRoom = 0;
         }
 
-        String str = "Single room: " + singleRoom + "\nDouble room: " + doubleRoom
-                + "\nDouble room-twin bed: " + twinRoom + "\nDouble room-kingsize bed: "
+        String str = "Single room: " + singleRoom +
+                "\nDouble room-twin bed: " + twinRoom + "\nDouble room-kingsize bed: "
                 + kingSizeRoom + "\nSingle suite: " + countSingleBedroomSuite + "\nDouble suite: "
                 + countTwoBedroomSuite + "\nTriple Suite: " + countThreeBedroomSuite;
         return str;

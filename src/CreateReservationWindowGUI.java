@@ -34,12 +34,15 @@ public class CreateReservationWindowGUI {
     private boolean canConvertToDateHandlerB, isCanConvertToDateHandlerA, isCanConvertToDateHandlerD;
     private FileAdapter fa = new FileAdapter();
     private boolean isSearch = false;
+    private JTabbedPane parent;
 
-    public CreateReservationWindowGUI() {
+    public CreateReservationWindowGUI(JTabbedPane parent) {
 
         if(this.getClass().getName().equals("Search")) {
             isSearch = true;
         }
+
+        this.parent = parent;
 
         left();
         takeAllGuest();
@@ -147,8 +150,9 @@ public class CreateReservationWindowGUI {
                 if (!(isValidPhoneNumber(phoneNumber.getText()))) {
                     JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber.getText() + "is not a phone number");
                 }
-                createrForReservation();
+                reservationCreator();
                 clear();
+                parent.setSelectedIndex(0);
 
             } else if (e.getSource() == clear) {
                 clear();
@@ -250,7 +254,7 @@ public class CreateReservationWindowGUI {
 
         allTextFields = new ArrayList<JTextField>();
         allJLabels = new ArrayList<JLabel>();
-        String[] roomTypesForComboBox = {"single room", "double room", "double room-twin beds", "double room-kingsize",
+        String[] roomTypesForComboBox = {"single room", "double room-twin beds", "double room-kingsize",
                 "single bedroom suite", "double bedroom suite", "three bedroom suite"};
         roomTypes = new JComboBox<String>(roomTypesForComboBox);
 
@@ -400,12 +404,9 @@ public class CreateReservationWindowGUI {
 
     }
 
-    public void createrForReservation() {
+    public void reservationCreator() {
 
-
-        DateHandler date = new DateHandler(Integer.parseInt(dateOfBirth.getText().split("/")[0]),
-                Integer.parseInt(dateOfBirth.getText().split("/")[1]),
-                Integer.parseInt(dateOfBirth.getText().split("/")[2]));
+        //toDo: check for valid data
 
         Arrival arr = new Arrival(new DateHandler(Integer.parseInt(arrival.getText().split("/")[0]),
                 Integer.parseInt(arrival.getText().split("/")[1]),
@@ -416,7 +417,7 @@ public class CreateReservationWindowGUI {
         Name name = new Name(firstName.getText(), middleName.getText(), lastName.getText());
         Address add = new Address(country.getText(), city.getText(), postCode.getText(), street.getText());
         Guest guest = new Guest(name, Long.parseLong(phoneNumber.getText()), add, nationality.getText(), dateOfBirth.getText());
-        Reservation rs = new Reservation(guest, arr, dep, roomTypes.getName(), bookingInitiator.isSelected(),
+        Reservation rs = new Reservation(guest, arr, dep, roomTypes.getSelectedItem().toString(), bookingInitiator.isSelected(),
                 lateArrivalNotice.isSelected(), priorityGuest.isSelected());
         HotelManager hm = new HotelManager();
         hm.createReservation(rs);
@@ -434,6 +435,7 @@ public class CreateReservationWindowGUI {
         String nationality_ = nationality.getText();
         String dateOfBirth_ = dateOfBirth.getText();
         String roomType_ = roomTypes.getSelectedItem().toString();
+        System.out.println(roomTypes.getSelectedItem().toString());
         String[] arrival_ = arrival.getText().split("/");
         String[] departure_ = departure.getText().split("/");
         boolean lateArraivalNotice_ = false;
