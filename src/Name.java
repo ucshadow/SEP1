@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * A class containing names.
+ * A class containing names which later on will be used to create a reservation.
  *
  * @author Nikolay D Nikolov
  * @version 1.0

@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 /**
+ * A class containing price which later on will be used by the HotelManager class in order to completed checkOut method and set master prices.
  * @author Radu G Orleanu
  * @version 1.0
  */

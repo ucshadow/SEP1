@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 /**
+ * A class containing date which later on will be used to create a different date objects.
  * @author Catalin Udrea
  * @version 1.0
  */

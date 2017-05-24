@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
+ * A class  which later on will be used to save a object from the HotelManager with the help of MyFileIO.
  * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
  * @version 1.0
  */

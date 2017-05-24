@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 /**
+ * A class containing check in date which later on will be used to create a reservation.
  * @author Yusuf A Farah
  * @version 1.0
  */

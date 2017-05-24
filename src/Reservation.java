@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 /**
+ * A class containing reservation which later on will be used from the HotelManager.
  * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
  * @version 1.0
  */

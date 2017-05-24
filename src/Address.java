@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 /**
+ * A class containing address which later on will be used to create a reservation.
  * @author Nikolay D Nikolov
  * @version 1.0
  */

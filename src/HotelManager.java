@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
+ * A class containing methods which later on will be used from our GUI.
  * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
  * @version 1.0
  */
