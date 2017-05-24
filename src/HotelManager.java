@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 /**
  * A class containing methods which later on will be used from our GUI.
+ *
  * @author Nikolay D Nikolav, Yusuf A Farah, Radu G Orleanu, Catalin Udrea
  * @version 1.0
  */
@@ -160,10 +161,12 @@ public class HotelManager implements Serializable {
         int kingSizeRoom = 0;
         ArrayList<Reservation> temp = new ArrayList<>();
         ArrayList<Reservation> compare = fileAdapter.getAllGuests("reservations.bin");
+
         compare.addAll(fileAdapter.getAllGuests("inHouseGuests.bin"));
+
         for (int i = 0; i < compare.size(); i++) {
             if ((!(compare.get(i).getDeparture().getCheckOutDate().isBefore(arrival)))
-                    && (!(compare.get(i).getArrival().getCheckInDate().isBefore(departure)))) {
+                    && ((compare.get(i).getArrival().getCheckInDate().isBefore(departure)))) {
                 temp.add(compare.get(i));
             }
         }

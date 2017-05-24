@@ -38,7 +38,6 @@ public class CreateReservationWindowGUI {
     private ArrayList<Reservation> foundNames;
     private MyListSelectionListener tableSelect;
     private Reservation chosenReservation;
-    private boolean canConvertToDateHandlerB, isCanConvertToDateHandlerA, isCanConvertToDateHandlerD;
     private FileAdapter fa = new FileAdapter();
     private boolean isSearch = false;
     private JTabbedPane parent;
@@ -187,23 +186,30 @@ public class CreateReservationWindowGUI {
          * @param e takes the source of the action.
          */
         public void actionPerformed(ActionEvent e) {
+            int a = 0;
             // Checks if button save is pressed and if all data is valid will create reservation and clear all the fields.
             if (e.getSource() == save) {
-                // dateOfBirth, arrival, departure is checked when pressing save
-                if (!(isValidDate(dateOfBirth.getText()))) {
-                    JOptionPane.showMessageDialog(null, "Date of birth " + dateOfBirth.getText() + " is not a valid date");
+                if(firstName.getText().length()<2){
+                    a++;
                 }
+                // arrival, departure is checked when pressing save
                 if (!(isValidDate(arrival.getText()))) {
                     JOptionPane.showMessageDialog(null, "Arrival date " + arrival.getText() + " is not a valid date");
+                    a++;
                 }
                 if (!(isValidDate(departure.getText()))) {
                     JOptionPane.showMessageDialog(null, "Departure date " + departure.getText() + " is not a valid date");
+                    a++;
                 }
                 if (!(isValidPhoneNumber(phoneNumber.getText()))) {
                     JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber.getText() + "is not a phone number");
+                    a++;
                 }
-                reservationCreator();
-                clear();
+                if (a==0) {
+                    reservationCreator();
+                    clear();
+
+                }
                 parent.setSelectedIndex(0);
 
             }
