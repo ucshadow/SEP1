@@ -9,6 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+/**
+ * A class used for create reseration window GUI part
+ * This class Search extends CreateReservationWindowGUI.
+ *
+ * @author Nikolay D Nikolov, Radu G Orleanu
+ * @version 1.0
+ */
 public class CreateReservationWindowGUI {
     //private JFrame mainFrame;
     //private JTabbedPane createReservationPane;
@@ -36,9 +43,12 @@ public class CreateReservationWindowGUI {
     private boolean isSearch = false;
     private JTabbedPane parent;
 
+    /**
+     * @param parent
+     */
     public CreateReservationWindowGUI(JTabbedPane parent) {
 
-        if(this.getClass().getName().equals("Search")) {
+        if (this.getClass().getName().equals("Search")) {
             isSearch = true;
         }
 
@@ -50,6 +60,11 @@ public class CreateReservationWindowGUI {
         prepareGUI();
     }
 
+    /**
+     * A method used to prepare all methods below for the GUI so everything launches together.
+     * Preparing all listeners.
+     * Preparing the left and the right part of the window.
+     */
     public void prepareGUI() {
         listener = new MyButtonListener();
         presser = new KeyPressEvent();
@@ -73,14 +88,21 @@ public class CreateReservationWindowGUI {
         //mainFrame.setResizable(false);
 
         // Exit the application when the window is closed
-       //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Center window to screen
         //mainFrame.setLocationRelativeTo(null);
     }
 
+    /**
+     * A class conteining Selection listener.
+     */
     private class MyListSelectionListener implements ListSelectionListener {
-
+        /**
+         * A method used to select specific reservation from a list.
+         *
+         * @param e Not used in our case for that specific method.
+         */
         public void valueChanged(ListSelectionEvent e) {
             int a = allGuests.getSelectedRow();
             if (a >= 0) {
@@ -90,52 +112,82 @@ public class CreateReservationWindowGUI {
 
     }
 
-
-    private class MyButtonListener implements ActionListener {
-        public boolean isValidDate(String str) {
-            String[] arr = str.split("/");
-            if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {
-                if (arr[1].chars().allMatch(Character::isDigit) && arr[1].length() == 2) {
-                    if (arr[2].chars().allMatch(Character::isDigit) && arr[2].length() == 4) {
-                        return true;
-                    }
+    /**
+     * A method used to check if the inputted data is in the correct format. Checks the data fields.
+     *
+     * @param str takes a string.
+     * @return true or false Returns true if the date format was typed properly in the text field else will return false.
+     * @author Catalin Udrea
+     * @version 1.0
+     */
+    public boolean isValidDate(String str) {
+        String[] arr = str.split("/");
+        if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {
+            if (arr[1].chars().allMatch(Character::isDigit) && arr[1].length() == 2) {
+                if (arr[2].chars().allMatch(Character::isDigit) && arr[2].length() == 4) {
+                    return true;
                 }
             }
+        }
+        return false;
+    }
+
+    /**
+     * A method used to check if the inputted data is in the correct format.  Checks the phone number field.
+     *
+     * @param str takes a string.
+     * @return true or false Returns true if the phone number was typed properly in the text field else will return false.
+     * @author Catalin Udrea
+     * @version 1.0
+     */
+    public boolean isValidPhoneNumber(String str) {
+        Long a;
+        try {
+            a = Long.parseLong(str);
+        } catch (Exception e) {
             return false;
         }
+        return true;
+    }
 
-        public boolean isValidPhoneNumber(String str) {
-            Long a;
-            try {
-                a = Long.parseLong(str);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
+    /**
+     * A method created for the clear button.
+     * if the clear button is clicked it will clear all fields except the booking initiator check box.
+     * Check box for booking initiator is always when in create reservation window
+     */
+    public void clear() {
+        firstName.setText("");
+        middleName.setText("");
+        lastName.setText("");
+        country.setText("");
+        city.setText("");
+        postCode.setText("");
+        street.setText("");
+        phoneNumber.setText("");
+        nationality.setText("");
+        dateOfBirth.setText("");
+        arrival.setText("");
+        departure.setText("");
+        if (lateArrivalNotice.isSelected()) {
+            lateArrivalNotice.doClick();
         }
-
-        public void clear() {
-            firstName.setText("");
-            middleName.setText("");
-            lastName.setText("");
-            country.setText("");
-            city.setText("");
-            postCode.setText("");
-            street.setText("");
-            phoneNumber.setText("");
-            nationality.setText("");
-            dateOfBirth.setText("");
-            arrival.setText("");
-            departure.setText("");
-            if (lateArrivalNotice.isSelected()) {
-                lateArrivalNotice.doClick();
-            }
-            if (priorityGuest.isSelected()) {
-                priorityGuest.doClick();
-            }
+        if (priorityGuest.isSelected()) {
+            priorityGuest.doClick();
         }
+    }
 
+    /**
+     * A class used to add button listener to the button in that window
+     */
+    private class MyButtonListener implements ActionListener {
+
+        /**
+         * A method used to check if a button is pressed.
+         *
+         * @param e takes the source of the action.
+         */
         public void actionPerformed(ActionEvent e) {
+            // Checks if button save is pressed and if all data is valid will create reservation and clear all the fields.
             if (e.getSource() == save) {
                 // dateOfBirth, arrival, departure is checked when pressing save
                 if (!(isValidDate(dateOfBirth.getText()))) {
@@ -154,12 +206,22 @@ public class CreateReservationWindowGUI {
                 clear();
                 parent.setSelectedIndex(0);
 
-            } else if (e.getSource() == clear) {
+            }
+            // Checks if button clear is pressed and clears all fields.
+            else if (e.getSource() == clear) {
                 clear();
-            } else if (e.getSource() == refresh) {
+            }
+            // Checks if the refresh button is pressed. If pressed will refresh the list on the right side and give you fresh list with all reservations
+            else if (e.getSource() == refresh) {
                 takeAllGuest();
                 createReservationTable(new ArrayList<Reservation>());
-            } else if (e.getSource() == choose) {
+            }
+            // Checks if the choose button is pressed.
+            // If pressed uses the method valueChanged that gives you a specific reservation.
+            // After that fills up the text fields with the value of that reservation.
+            // Depending from which tab is pressed fills up different data.
+
+            else if (e.getSource() == choose) {
                 firstName.setText(chosenReservation.getGuest().getName().getFirstName());
                 middleName.setText(chosenReservation.getGuest().getName().getMiddleName());
                 lastName.setText(chosenReservation.getGuest().getName().getLastName());
@@ -174,7 +236,7 @@ public class CreateReservationWindowGUI {
                 if (chosenReservation.isPriorityGuest()) {
                     priorityGuest.doClick();
                 }
-                if(isSearch) {
+                if (isSearch) {
                     String arrDay = String.valueOf(chosenReservation.getArrival().getCheckInDate().getDay());
                     String arrMonth = String.valueOf(chosenReservation.getArrival().getCheckInDate().getMonth());
                     String arrYear = String.valueOf(chosenReservation.getArrival().getCheckInDate().getYear());
@@ -184,32 +246,43 @@ public class CreateReservationWindowGUI {
                     arrival.setText(arrDay + "/" + arrMonth + "/" + arrYear);
                     departure.setText(depDay + "/" + depMonth + "/" + depYear);
                 }
-            } else if (e.getSource() == cancel) {
+            }
+            // Checks if the cancel button is pressed. If pressed return to the main window of the GUI.
+            else if (e.getSource() == cancel) {
                 int choice = JOptionPane.showConfirmDialog(null, "Do you really want to exit the create reservation window?", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-            } else if (e.getSource() == update) {
+            }
+            // Checks if the update button is pressed. If pressed edits a chosen reservation.
+            else if (e.getSource() == update) {
                 updateReservation(chosenReservation);
-            } else if (e.getSource() == remove) {
+            }
+            // Check if the remove button is pressed. If pressed removes a specific reservation from the file . Used to cancel reservation.
+            else if (e.getSource() == remove) {
                 fa.removeSingleObjectFromFile("reservations.bin", chosenReservation);
             }
         }
 
     }
 
+    /**
+     * A class records the key that was pressed
+     */
     class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
         }
 
         public void keyPressed(KeyEvent e) {
-//            if(e.getKeyCode() == KeyEvent.VK_ENTER){
-//
-//            }
-//            //System.out.println(e.getKeyChar());
+
 
         }
 
+        /**
+         * A method used for filtering all reservations.
+         *
+         * @param e takes the source of the action.
+         */
         public void keyReleased(KeyEvent e) {
             foundNames = new ArrayList<Reservation>();
             createReservationTable(allReservations);
@@ -226,7 +299,9 @@ public class CreateReservationWindowGUI {
         }
     }
 
-
+    /**
+     * A method used to structure the left side of the GUI.
+     */
     public void left() {
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(700, 650));
@@ -319,6 +394,9 @@ public class CreateReservationWindowGUI {
         leftPanel.add(leftPanelButtons);
     }
 
+    /**
+     * A method used to structure the right side of the GUI.
+     */
 
     public void right() {
 
@@ -363,6 +441,9 @@ public class CreateReservationWindowGUI {
 
     }
 
+    /**
+     * A method used to take all guest in to array list.
+     */
     public void takeAllGuest() {
         FileAdapter fa = new FileAdapter();
         ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
@@ -384,7 +465,11 @@ public class CreateReservationWindowGUI {
 
     }
 
-    // we decided to use the same method Allan is using in order to update the reservation table
+    /**
+     * A method used to take the desired date for our JTable.
+     *
+     * @param res takes specific reservation.
+     */
 
     public void createReservationTable(ArrayList<Reservation> res) {
         resColumn = new Object[res.size()][5];
@@ -404,6 +489,9 @@ public class CreateReservationWindowGUI {
 
     }
 
+    /**
+     * A method used to create reservation.
+     */
     public void reservationCreator() {
 
         //toDo: check for valid data
@@ -423,6 +511,11 @@ public class CreateReservationWindowGUI {
         hm.createReservation(rs);
     }
 
+    /**
+     * A method used to update specific reservation.
+     *
+     * @param r takes specific reservation.
+     */
     private void updateReservation(Reservation r) {
         String firstName_ = firstName.getText();
         String middleName_ = middleName.getText();
@@ -447,7 +540,7 @@ public class CreateReservationWindowGUI {
         if (priorityGuest.isSelected()) {
             priorityGuest_ = true;
         }
-        if(bookingInitiator.isSelected()) {
+        if (bookingInitiator.isSelected()) {
             bookingInitiator_ = true;
         }
 
