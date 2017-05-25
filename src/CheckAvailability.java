@@ -31,6 +31,8 @@ public class CheckAvailability {
     private JTextArea roomData;
     private JTextPane warnings;
     private JLabel label;
+    private boolean error;
+
 
     /**
      * No-argument constructor for initialing CheckAvailability
@@ -97,7 +99,7 @@ public class CheckAvailability {
 
         warnings = new JTextPane();
         warnings.setPreferredSize(new Dimension(300, 25));
-
+        warnings.setEditable(false);
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet asset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.RED);
         warnings.setCharacterAttributes(asset, false);
@@ -148,22 +150,32 @@ public class CheckAvailability {
             if ((e.getSource().equals(toField) || e.getSource().equals(fromField)) && e.getKeyCode() == 10) {
                 String[] str = fromField.getText().split("/");
                 String[] str2 = toField.getText().split("/");
+                error = true;
                 System.out.println(isValidDate(fromField.getText()) && isValidDate(toField.getText()));
                 if (!(isValidDate(fromField.getText()) && isValidDate(toField.getText()))) {
+//
                     warnings.setText("Please use the format provided");
+
+                    error = false;
                 } else {
                     DateHandler d1 = new DateHandler(Integer.parseInt(str[0]), Integer.parseInt(str[1]), Integer.parseInt(str[2]));
                     DateHandler d2 = new DateHandler(Integer.parseInt(str2[0]), Integer.parseInt(str2[1]), Integer.parseInt(str2[2]));
                     if (d1.isBefore(d2)) {
                         displayRooms(d1, d2);
                     } else {
-                        warnings.setText("Departure before Arrival");
+                        error = false;
+
+                        warnings.setText("Departure is before Arrival");
                         roomData.setText("Single room: " + 0 + "\nDouble room: " + 0
                                 + "\nDouble room-twin bed: " + 0 + "\nDouble room-kingsize bed: "
                                 + 0 + "\nSingle suite: " + 0 + "\nDouble suite: "
                                 + 0 + "\nTriple Suite: " + 0);
                     }
                 }
+                if (error) {
+                    warnings.setText("");
+                }
+
             }
             //System.out.println(e.getKeyChar());
 

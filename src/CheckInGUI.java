@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * A class containing the GUI for check out.
+ * A class containing the GUI for check in.
  *
- * @author Nikolay D Nikolov
+ * @author Radu G Orleanu, Yusuf A Farah
  * @version 1.0
  */
 public class CheckInGUI {
@@ -23,10 +23,11 @@ public class CheckInGUI {
     private MyButtonListener listener;
     private JButton checkIn, cancel;
     private JTabbedPane parent;
+    private ArrayList<Integer> singleRooms, twinRoom, kingSize, kingSize2, singleSuite, doubleSuite, tripleSuite;
     //private JTabbedPane checkOut;
 
     /**
-     * No-argument constructor initializing the check out GUI.
+     * No-argument constructor initializing the check in GUI.
      */
     public CheckInGUI(JTabbedPane parent) {
 
@@ -47,6 +48,8 @@ public class CheckInGUI {
      */
     public void prepareGUI() {
         designGUI();
+
+
         //checkOut = new JTabbedPane();
 //
 //        mainFrame = new JFrame("Check out");
@@ -135,9 +138,9 @@ public class CheckInGUI {
     }
 
     /**
-     * Method preparing an object for check out.
+     * Method preparing an object for check in.
      *
-     * @param res the reservation for check out
+     * @param res the reservation for check in
      */
 
     public void getDataForCheckIn(Reservation res) {
@@ -166,8 +169,8 @@ public class CheckInGUI {
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //checkIn button for checking in the person.
-            if (e.getSource() == checkIn){
-                HotelManager hm  = new HotelManager();
+            if (e.getSource() == checkIn) {
+                HotelManager hm = new HotelManager();
                 hm.checkIn(res, Integer.parseInt(roomNumberField.getSelectedItem().toString()));
                 parent.setSelectedIndex(0);
             }
@@ -181,6 +184,13 @@ public class CheckInGUI {
         }
     }
 
+    /**
+     * A method that generetes Arraylist of Integers.
+     *
+     * @param number1 the first integer
+     * @param number2 the second integer
+     * @return Arraylist of Integers from the first until the last.
+     */
     public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
         ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = number1; i < number2 + 1; i++) {
@@ -192,25 +202,26 @@ public class CheckInGUI {
         return temp;
     }
 
+    /**
+     * A method to set room number
+     *
+     * @param res takes specific reservation
+     */
     public void setRoomNumber(Reservation res) {
 
 
         ArrayList<Reservation> inHouse = new FileAdapter().getAllGuests("inHouseGuests.bin");
-//        if(inHouse.isEmpty()){
-//            inHouse = new FileAdapter().writeToFile("inHouseGuests.bin");
-//        }
-
-        ArrayList<Integer> singleRooms = generateRoomNumber(101, 110);
-        ArrayList<Integer> twinRoom = generateRoomNumber(111, 116);
-        ArrayList<Integer> kingSize = generateRoomNumber(117, 119);
-        ArrayList<Integer> kingSize2 = generateRoomNumber(201, 219);
+        singleRooms = generateRoomNumber(101, 110);
+        twinRoom = generateRoomNumber(111, 116);
+        kingSize = generateRoomNumber(117, 119);
+        kingSize2 = generateRoomNumber(201, 219);
         for (int i = 0; i < kingSize2.size(); i++) {
             kingSize.add(kingSize2.get(i));
         }
-        ArrayList<Integer> singleSuite = generateRoomNumber(303, 304);
-        ArrayList<Integer> doubleSuite = new ArrayList<Integer>();
+        singleSuite = generateRoomNumber(303, 304);
+        doubleSuite = new ArrayList<Integer>();
         doubleSuite.add(302);
-        ArrayList<Integer> tripleSuite = new ArrayList<Integer>();
+        tripleSuite = new ArrayList<Integer>();
         tripleSuite.add(301);
 
 
@@ -234,13 +245,16 @@ public class CheckInGUI {
                 tripleSuite.remove(tripleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
         }
-
+        roomNumberField.revalidate();
         if (res.getRoomType().equals("single room")) {
+
             for (int i = 0; i < singleRooms.size(); i++) {
+
                 roomNumberField.addItem(singleRooms.get(i));
             }
         }
         if (res.getRoomType().equals("double room-twin beds")) {
+            System.out.println(roomNumberField.getItemCount());
             for (int i = 0; i < twinRoom.size(); i++) {
                 roomNumberField.addItem(twinRoom.get(i));
             }
@@ -265,7 +279,16 @@ public class CheckInGUI {
                 roomNumberField.addItem(doubleSuite.get(i));
             }
         }
-
+        singleRooms.clear();
+        twinRoom.clear();
+        kingSize.clear();
+        kingSize2.clear();
+        singleSuite.clear();
+        doubleSuite.clear();
+        tripleSuite.clear();
+        for (int i = 0; i < twinRoom.size(); i++) {
+            System.out.println(twinRoom.get(i).toString());
+        }
 
     }
 //
