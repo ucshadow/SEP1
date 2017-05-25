@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * A class containing the GUI for check in.
+ * A class containing the GUI for check out.
  *
- * @author Radu G Orleanu, Yusuf A Farah
+ * @author Nikolay D Nikolov
  * @version 1.0
  */
 public class CheckInGUI {
@@ -26,7 +26,7 @@ public class CheckInGUI {
     //private JTabbedPane checkOut;
 
     /**
-     * No-argument constructor initializing the check in GUI.
+     * No-argument constructor initializing the check out GUI.
      */
     public CheckInGUI(JTabbedPane parent) {
 
@@ -135,9 +135,9 @@ public class CheckInGUI {
     }
 
     /**
-     * Method preparing an object for check in.
+     * Method preparing an object for check out.
      *
-     * @param res the reservation for check in
+     * @param res the reservation for check out
      */
 
     public void getDataForCheckIn(Reservation res) {
@@ -172,6 +172,7 @@ public class CheckInGUI {
                 parent.setSelectedIndex(0);
             }
             if (e.getSource() == cancel) {
+                roomNumberField = new JComboBox();
                 int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check in", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     parent.setSelectedIndex(0);
@@ -180,12 +181,6 @@ public class CheckInGUI {
         }
     }
 
-    /**
-     * A method that generetes Arraylist of Integers.
-     * @param number1 the first integer
-     * @param number2 the second integer
-     * @return Arraylist of Integers from the first until the last.
-     */
     public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
         ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = number1; i < number2 + 1; i++) {
@@ -197,10 +192,6 @@ public class CheckInGUI {
         return temp;
     }
 
-    /**
-     * A method to set room number
-     * @param res takes specific reservation
-     */
     public void setRoomNumber(Reservation res) {
 
 

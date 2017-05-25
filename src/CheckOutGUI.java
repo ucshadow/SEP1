@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A class containing the GUI for check out.
@@ -20,7 +21,7 @@ public class CheckOutGUI {
     //private JFrame mainFrame;
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
     private JLabel firstName, middleName, lastName, country, city, postCode, street,
-            phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumber, price;
+            phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumber, price, warnings;
     private JTextField discountField;
     private ArrayList<JLabel> allJLabelsForFields, allJLabelsForLabels;
     private ArrayList<Reservation> allInHouseGuests;
@@ -65,11 +66,11 @@ public class CheckOutGUI {
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(200, 920));
 
-        mainPanelForFields = new JPanel(new GridLayout(15, 1, 2, 2));
-        mainPanelForFields.setPreferredSize(new Dimension(200, 700));
+        mainPanelForFields = new JPanel(new GridLayout(16, 1, 2, 2));
+        mainPanelForFields.setPreferredSize(new Dimension(300, 700));
 
 
-        mainPanelForLabels = new JPanel(new GridLayout(15, 1, 2, 2));
+        mainPanelForLabels = new JPanel(new GridLayout(16, 1, 2, 2));
         mainPanelForLabels.setPreferredSize(new Dimension(100, 700));
 
         cancel = new JButton("Cancel");
@@ -97,6 +98,7 @@ public class CheckOutGUI {
         allJLabelsForFields.add(roomType = new JLabel(""));
         allJLabelsForFields.add(roomNumber = new JLabel(""));
         allJLabelsForFields.add(price = new JLabel(""));
+        allJLabelsForFields.add(warnings = new JLabel(""));
         allJLabelsForLabels.add(new JLabel("First name"));
         allJLabelsForLabels.add(new JLabel("Middle name"));
         allJLabelsForLabels.add(new JLabel("Last name"));
@@ -112,6 +114,7 @@ public class CheckOutGUI {
         allJLabelsForLabels.add(new JLabel("Room type"));
         allJLabelsForLabels.add(new JLabel("Room number"));
         allJLabelsForLabels.add(new JLabel("Price"));
+        allJLabelsForLabels.add(new JLabel("Warnings"));
         for (int i = 0; i < allJLabelsForFields.size(); i++) {
             mainPanelForFields.add(allJLabelsForFields.get(i));
             mainPanelForLabels.add(allJLabelsForLabels.get(i));
@@ -183,14 +186,20 @@ public class CheckOutGUI {
 
             if (isValidNumber(discountField.getText())) {
                 double discount = Double.parseDouble(discountField.getText());
-                if (e.getSource() == discountField && discount >= 1 && discount <= 100) {
+                if (e.getSource() == discountField && discount >= 0 && discount <= 100) {
                     price.setText(hm.getTotalPrice(res, Double.parseDouble(discountField.getText())));
+                    warnings.setText("");
+                } else {
+                    warnings.setText("<html><font color='red'>Discount should be between 0 and 100</font></html>");
                 }
 
             }
             if (e.getSource() == discountField && !isValidNumber(discountField.getText()) ||
                     discountField.getText().isEmpty()) {
                 price.setText(hm.getTotalPrice(res, 0));
+            }
+            if(!isValidNumber(discountField.getText())) {
+                warnings.setText("<html><font color='red'>Discount should be between 0 and 100</font></html>");
             }
         }
     }

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -121,8 +122,8 @@ public class CreateReservationWindowGUI {
      */
     public boolean isValidDate(String str) {
         String[] arr = str.split("/");
-        if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {
-            if (arr[1].chars().allMatch(Character::isDigit) && arr[1].length() == 2) {
+        if (arr[0].chars().allMatch(Character::isDigit) && (arr[0].length() == 2 || arr[0].length() == 1)) {
+            if (arr[1].chars().allMatch(Character::isDigit) && (arr[1].length() == 2 || arr[1].length() == 1)) {
                 if (arr[2].chars().allMatch(Character::isDigit) && arr[2].length() == 4) {
                     return true;
                 }
@@ -188,29 +189,42 @@ public class CreateReservationWindowGUI {
         public void actionPerformed(ActionEvent e) {
             int a = 0;
             // Checks if button save is pressed and if all data is valid will create reservation and clear all the fields.
-            if (e.getSource() == save) {
-                if(firstName.getText().length()<2){
+            if (e.getSource() == save || e.getSource() == update) {
+                if (firstName.getText().length() < 2) {
+                    firstNameLabel.setText("<html><font color='black'>First name </font> <font color='red'>" +
+                            "should have at least 2 letters</font></html>");
                     a++;
+                } else {
+                    firstNameLabel.setText("First name");
                 }
                 // arrival, departure is checked when pressing save
                 if (!(isValidDate(arrival.getText()))) {
-                    JOptionPane.showMessageDialog(null, "Arrival date " + arrival.getText() + " is not a valid date");
+//                    JOptionPane.showMessageDialog(null, "Arrival date " + arrival.getText() + " is not a valid date");
+                    arrivalLabel.setText("<html><font color='black'>Arrival (dd/mm/yyyy) </font> <font color='red'>" +
+                            "please use the format provided</font></html>");
                     a++;
                 }
                 if (!(isValidDate(departure.getText()))) {
-                    JOptionPane.showMessageDialog(null, "Departure date " + departure.getText() + " is not a valid date");
-                    a++;
+                    departureLabel.setText("<html><font color='black'>Departure (dd/mm/yyyy) </font> <font color='red'>" +
+                            "please use the format provided</font></html>");
                 }
                 if (!(isValidPhoneNumber(phoneNumber.getText()))) {
-                    JOptionPane.showMessageDialog(null, "Phone number " + phoneNumber.getText() + "is not a phone number");
+                    phoneNumberLabel.setText("<html><font color='black'>Phone number</font> <font color='red'>" +
+                            "should be a valid phone number</font></html>");
                     a++;
                 }
-                if (a==0) {
+                if (a == 0 && !isSearch) {
                     reservationCreator();
                     clear();
                     parent.setSelectedIndex(0);
                 }
-
+                if (a == 0 && isSearch) {
+                    updateReservation(chosenReservation);
+                    firstNameLabel.setText("First name");
+                    arrivalLabel.setText("Arrival (dd/mm/yyyy)");
+                    departureLabel.setText("Departure (dd/mm/yyyy");
+                    phoneNumberLabel.setText("Phone number");
+                }
 
 
             }
@@ -262,9 +276,9 @@ public class CreateReservationWindowGUI {
                 }
             }
             // Checks if the update button is pressed. If pressed edits a chosen reservation.
-            else if (e.getSource() == update) {
-                updateReservation(chosenReservation);
-            }
+//            else if (e.getSource() == update) {
+//                updateReservation(chosenReservation);
+//            }
             // Check if the remove button is pressed. If pressed removes a specific reservation from the file . Used to cancel reservation.
             else if (e.getSource() == remove) {
                 fa.removeSingleObjectFromFile("reservations.bin", chosenReservation);
@@ -413,13 +427,13 @@ public class CreateReservationWindowGUI {
         rightPanelButtons = new JPanel();
         rightPanelButtons.setPreferredSize(new Dimension(600, 100));
 
-        refresh = new JButton("REFRESH");
+        refresh = new JButton("Refresh");
         refresh.addActionListener(listener);
 
-        choose = new JButton("CHOOSE");
+        choose = new JButton("Choose");
         choose.addActionListener(listener);
 
-        cancel = new JButton("CANCEL");
+        cancel = new JButton("Cancel");
         cancel.addActionListener(listener);
 
         columnNames = new String[5];
