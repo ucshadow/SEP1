@@ -24,8 +24,8 @@ public class TestClass {
 //        }
         //MyFileIO mf = new MyFileIO();
 
-//        System.out.println(r);
 //        hm.createReservation(r);
+//        System.out.println(r);
 //
         //fa.writeToFile("reservations.bin", r);
         //fa.appendToFile("reservations.bin", r2);

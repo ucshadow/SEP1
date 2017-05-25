@@ -59,8 +59,6 @@ public class Arrival implements Serializable {
      * @return String containing check in date.
      */
     public String toString() {
-        return "Arrival{" +
-                "checkInDate=" + checkInDate +
-                '}';
+        return checkInDate.toString();
     }
 }

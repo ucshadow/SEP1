@@ -151,7 +151,7 @@ public class CheckAvailability {
                 String[] str = fromField.getText().split("/");
                 String[] str2 = toField.getText().split("/");
                 error = true;
-                System.out.println(isValidDate(fromField.getText()) && isValidDate(toField.getText()));
+//                System.out.println(isValidDate(fromField.getText()) && isValidDate(toField.getText()));
                 if (!(isValidDate(fromField.getText()) && isValidDate(toField.getText()))) {
 //
                     warnings.setText("Please use the format provided");

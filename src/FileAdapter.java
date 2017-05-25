@@ -148,7 +148,7 @@ public class FileAdapter implements Serializable {
         }
         Object[] temp = new Object[lessValues.size()];
         lessValues.toArray(temp);
-        System.out.println(Arrays.toString(temp));
+        //System.out.println(Arrays.toString(temp));
         try {
             fileIO.writeToFile(fileName, temp);
         } catch (IOException e) {

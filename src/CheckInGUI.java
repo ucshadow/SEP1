@@ -124,7 +124,7 @@ public class CheckInGUI {
             mainPanelForLabels.add(allJlabelsForLabels.get(i));
         }
 
-        System.out.println(mainPanelForFields.getComponent(13).toString());
+//        System.out.println(mainPanelForFields.getComponent(13).toString());
         mainPanelForFields.remove(mainPanelForFields.getComponent(13));
         mainPanelForFields.add(roomNumberField, 13);
 
@@ -245,7 +245,7 @@ public class CheckInGUI {
                 tripleSuite.remove(tripleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
         }
-        roomNumberField.revalidate();
+            roomNumberField.revalidate();
         if (res.getRoomType().equals("single room")) {
 
             for (int i = 0; i < singleRooms.size(); i++) {
@@ -254,7 +254,7 @@ public class CheckInGUI {
             }
         }
         if (res.getRoomType().equals("double room-twin beds")) {
-            System.out.println(roomNumberField.getItemCount());
+
             for (int i = 0; i < twinRoom.size(); i++) {
                 roomNumberField.addItem(twinRoom.get(i));
             }
@@ -279,16 +279,14 @@ public class CheckInGUI {
                 roomNumberField.addItem(doubleSuite.get(i));
             }
         }
-        singleRooms.clear();
-        twinRoom.clear();
-        kingSize.clear();
-        kingSize2.clear();
-        singleSuite.clear();
-        doubleSuite.clear();
-        tripleSuite.clear();
-        for (int i = 0; i < twinRoom.size(); i++) {
-            System.out.println(twinRoom.get(i).toString());
-        }
+//        singleRooms.clear();
+//        twinRoom.clear();
+//        kingSize.clear();
+//        kingSize2.clear();
+//        singleSuite.clear();
+//        doubleSuite.clear();
+//        tripleSuite.clear();
+//
 
     }
 //

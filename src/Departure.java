@@ -55,9 +55,7 @@ public class Departure implements Serializable {
      * @return String containing check out date.
      */
     public String toString() {
-        return "Departure{" +
-                "checkOutDate=" + checkOutDate +
-                '}';
+        return checkOutDate.toString();
     }
 }
 

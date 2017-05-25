@@ -549,7 +549,7 @@ public class CreateReservationWindowGUI {
         String nationality_ = nationality.getText();
         String dateOfBirth_ = dateOfBirth.getText();
         String roomType_ = roomTypes.getSelectedItem().toString();
-        System.out.println(roomTypes.getSelectedItem().toString());
+//        System.out.println(roomTypes.getSelectedItem().toString());
         String[] arrival_ = arrival.getText().split("/");
         String[] departure_ = departure.getText().split("/");
         boolean lateArraivalNotice_ = false;

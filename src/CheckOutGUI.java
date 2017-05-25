@@ -151,7 +151,7 @@ public class CheckOutGUI {
         roomType.setText(String.valueOf(res.getRoomType()));
         roomNumber.setText(String.valueOf(res.getRoomNumber()));
         price.setText(String.valueOf(hm.getTotalPrice(res, discount)));
-        System.out.println("--> " + hm.getTotalPrice(res, discount));
+
     }
 
     /**
