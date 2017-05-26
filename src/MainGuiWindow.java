@@ -1,7 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
@@ -28,6 +32,7 @@ public class MainGuiWindow {
     private JPanel buttonPanelRight;
     private JPanel searchPanelLeft;
     private JPanel searchPanelRight;
+    private JPanel logo = new JPanel();
 
     // inHouse Guests
     private DefaultTableModel dtmIHG;
@@ -143,10 +148,22 @@ public class MainGuiWindow {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(1440, 960));
+        mainWindow.setIconImage(new ImageIcon("logo_.png").getImage());
 
 
         right.setPreferredSize(new Dimension(650, 700));
         left.setPreferredSize(new Dimension(650, 700));
+
+        logo.setPreferredSize(new Dimension(64, 64));
+        try {
+            BufferedImage myPicture = ImageIO.read(new File("logo_.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            picLabel.setPreferredSize(new Dimension(151, 151));
+            logo.add(picLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         //The JTable Begins
         titles = new String[5];
@@ -253,6 +270,7 @@ public class MainGuiWindow {
 
         mainPanel.add(left, BorderLayout.WEST);
         mainPanel.add(right, BorderLayout.EAST);
+        mainPanel.add(logo, BorderLayout.CENTER);
 
         // Add Main panel to Tab
         tabPane.addTab("Home", mainPanel);
