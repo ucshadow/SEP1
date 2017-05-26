@@ -14,22 +14,6 @@ public class Price implements Serializable {
     private double tripleSuite;
 
     /**
-     * Constructor initializing Address
-     * @param singleRoom for initializing the constructor.
-     * @param doubleRoom for initializing the constructor.
-     * @param singleSuite for initializing the constructor.
-     * @param doubleSuite for initializing the constructor.
-     * @param tripleSuite for initializing the constructor.
-     */
-    public Price(double singleRoom, double doubleRoom, double singleSuite, double doubleSuite, double tripleSuite) {
-        this.singleRoom = singleRoom;
-        this.doubleRoom = doubleRoom;
-        this.singleSuite = singleSuite;
-        this.doubleSuite = doubleSuite;
-        this.tripleSuite = tripleSuite;
-    }
-
-    /**
      * No-argument constructor initializing prices.
      */
     public Price(){
@@ -56,26 +40,6 @@ public class Price implements Serializable {
         this.singleRoom = singleRoom;
     }
 
-//    /**
-//     * Get double room for reservation.
-//     * @return doubleRoom room type for reservation.
-//     */
-//    public double getDoubleRoom() {
-//        return doubleRoom;
-//    }
-//
-//    /**
-//     * Set double room for reservation.
-//     * @param doubleRoom takes room type for reservation.
-//     */
-//    public void setDoubleRoom(double doubleRoom) {
-//        this.doubleRoom = doubleRoom;
-//    }
-//
-//    /**
-//     * Get Single suite for reservation.
-//     * @return singleSuite room type for reservation.
-//     */
     public double getSingleSuite() {
         return singleSuite;
     }
@@ -147,14 +111,4 @@ public class Price implements Serializable {
         }
         return 0;
     }
-
-//    public String toString() {
-//        return "Price{" +
-//                "singleRoom=" + singleRoom +
-//                ", doubleRoom=" + doubleRoom +
-//                ", singleSuite=" + singleSuite +
-//                ", doubleSuite=" + doubleSuite +
-//                ", tripleSuite=" + tripleSuite +
-//                '}';
-//    }
 }

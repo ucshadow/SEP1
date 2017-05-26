@@ -1,8 +1,9 @@
 import javax.swing.*;
 
 /**
+ * @author Catalin Udrea
  * A class extending CreateReservationWindowGUI
- *
+ * So much work.
  */
 public class Search extends CreateReservationWindowGUI {
 

@@ -20,7 +20,7 @@ public class TestClass {
         //new MainGuiWindow();
 //
 //        for(int i = 0; i < 500; i++) {
-//            fa.appendToFile("pastReservations.bin", fgt.makeNewReservation());
+//            fa.appendToFile("reservations.bin", fgt.makeNewReservation());
 //        }
         //MyFileIO mf = new MyFileIO();
 

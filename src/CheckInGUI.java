@@ -12,19 +12,16 @@ import java.util.ArrayList;
  */
 public class CheckInGUI {
 
-    //private JFrame mainFrame;
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
     private JLabel firstName, middleName, lastName, country, city, postCode, street,
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumberLabel;
     private JComboBox roomNumberField;
-    private ArrayList<JLabel> allJlabelsForFields, allJlabelsForLabels;
-    private ArrayList<Reservation> allInHouseGuests;
+    private ArrayList<JLabel> allJLabelsForFields, allJLabelsForLabels;
     private Reservation res;
     private MyButtonListener listener;
     private JButton checkIn, cancel;
     private JTabbedPane parent;
     private ArrayList<Integer> singleRooms, twinRoom, kingSize, kingSize2, singleSuite, doubleSuite, tripleSuite;
-    //private JTabbedPane checkOut;
 
     /**
      * No-argument constructor initializing the check in GUI.
@@ -32,36 +29,13 @@ public class CheckInGUI {
     public CheckInGUI(JTabbedPane parent) {
 
         this.parent = parent;
-
-        allInHouseGuests = new ArrayList<Reservation>();
-        allJlabelsForFields = new ArrayList<JLabel>();
-        allJlabelsForLabels = new ArrayList<JLabel>();
+        allJLabelsForFields = new ArrayList<>();
+        allJLabelsForLabels = new ArrayList<>();
         listener = new MyButtonListener();
 
-        prepareGUI();
-
-
-    }
-
-    /**
-     * Method preparing GUI for starting.
-     */
-    public void prepareGUI() {
         designGUI();
 
 
-        //checkOut = new JTabbedPane();
-//
-//        mainFrame = new JFrame("Check out");
-//        mainFrame.add(leftPanel);
-//
-//        mainFrame.add(checkOut);
-        //checkOut.addTab("Check out",leftPanel);
-//        mainFrame.setSize(1440, 960);
-//        mainFrame.setVisible(true);
-//        mainFrame.setResizable(false);
-//        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        mainFrame.setLocationRelativeTo(null);
     }
 
     /**
@@ -69,7 +43,6 @@ public class CheckInGUI {
      */
     public void designGUI() {
 
-        //getDataForCheckIn(res);
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(200, 920));
 
@@ -91,45 +64,41 @@ public class CheckInGUI {
         roomNumberField.setPreferredSize(new Dimension(100, 25));
         roomNumberField.setFont(f);
 
-        allJlabelsForFields.add(firstName = new JLabel(""));
-        allJlabelsForFields.add(middleName = new JLabel(""));
-        allJlabelsForFields.add(lastName = new JLabel(""));
-        allJlabelsForFields.add(country = new JLabel(""));
-        allJlabelsForFields.add(city = new JLabel(""));
-        allJlabelsForFields.add(postCode = new JLabel(""));
-        allJlabelsForFields.add(street = new JLabel(""));
-        allJlabelsForFields.add(phoneNumber = new JLabel(""));
-        allJlabelsForFields.add(nationality = new JLabel(""));
-        allJlabelsForFields.add(dateOfBirth = new JLabel(""));
-        allJlabelsForFields.add(arrival = new JLabel(""));
-        allJlabelsForFields.add(departure = new JLabel(""));
-        allJlabelsForFields.add(roomType = new JLabel(""));
-        allJlabelsForFields.add(roomNumberLabel = new JLabel("asd"));
-        allJlabelsForLabels.add(new JLabel("First name"));
-        allJlabelsForLabels.add(new JLabel("Middle name"));
-        allJlabelsForLabels.add(new JLabel("Last name"));
-        allJlabelsForLabels.add(new JLabel("Country"));
-        allJlabelsForLabels.add(new JLabel("City"));
-        allJlabelsForLabels.add(new JLabel("Post code"));
-        allJlabelsForLabels.add(new JLabel("Street"));
-        allJlabelsForLabels.add(new JLabel("Phone number"));
-        allJlabelsForLabels.add(new JLabel("Nationality"));
-        allJlabelsForLabels.add(new JLabel("Date of birth"));
-        allJlabelsForLabels.add(new JLabel("Arrival"));
-        allJlabelsForLabels.add(new JLabel("Departure"));
-        allJlabelsForLabels.add(new JLabel("Room type"));
-        allJlabelsForLabels.add(new JLabel("Room number"));
-        for (int i = 0; i < allJlabelsForFields.size(); i++) {
-            mainPanelForFields.add(allJlabelsForFields.get(i));
-            mainPanelForLabels.add(allJlabelsForLabels.get(i));
+        allJLabelsForFields.add(firstName = new JLabel(""));
+        allJLabelsForFields.add(middleName = new JLabel(""));
+        allJLabelsForFields.add(lastName = new JLabel(""));
+        allJLabelsForFields.add(country = new JLabel(""));
+        allJLabelsForFields.add(city = new JLabel(""));
+        allJLabelsForFields.add(postCode = new JLabel(""));
+        allJLabelsForFields.add(street = new JLabel(""));
+        allJLabelsForFields.add(phoneNumber = new JLabel(""));
+        allJLabelsForFields.add(nationality = new JLabel(""));
+        allJLabelsForFields.add(dateOfBirth = new JLabel(""));
+        allJLabelsForFields.add(arrival = new JLabel(""));
+        allJLabelsForFields.add(departure = new JLabel(""));
+        allJLabelsForFields.add(roomType = new JLabel(""));
+        allJLabelsForFields.add(roomNumberLabel = new JLabel("asd"));
+        allJLabelsForLabels.add(new JLabel("First name"));
+        allJLabelsForLabels.add(new JLabel("Middle name"));
+        allJLabelsForLabels.add(new JLabel("Last name"));
+        allJLabelsForLabels.add(new JLabel("Country"));
+        allJLabelsForLabels.add(new JLabel("City"));
+        allJLabelsForLabels.add(new JLabel("Post code"));
+        allJLabelsForLabels.add(new JLabel("Street"));
+        allJLabelsForLabels.add(new JLabel("Phone number"));
+        allJLabelsForLabels.add(new JLabel("Nationality"));
+        allJLabelsForLabels.add(new JLabel("Date of birth"));
+        allJLabelsForLabels.add(new JLabel("Arrival"));
+        allJLabelsForLabels.add(new JLabel("Departure"));
+        allJLabelsForLabels.add(new JLabel("Room type"));
+        allJLabelsForLabels.add(new JLabel("Room number"));
+        for (int i = 0; i < allJLabelsForFields.size(); i++) {
+            mainPanelForFields.add(allJLabelsForFields.get(i));
+            mainPanelForLabels.add(allJLabelsForLabels.get(i));
         }
 
-//        System.out.println(mainPanelForFields.getComponent(13).toString());
         mainPanelForFields.remove(mainPanelForFields.getComponent(13));
         mainPanelForFields.add(roomNumberField, 13);
-
-        //mainPanelForFields.add(roomNumberField);
-
 
         leftPanel.add(mainPanelForLabels, BorderLayout.WEST);
         leftPanel.add(mainPanelForFields, BorderLayout.EAST);
@@ -161,14 +130,12 @@ public class CheckInGUI {
 
     }
 
-    // toDo: add waring for bad input
 
     /**
      * Action listener for buttons.
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //checkIn button for checking in the person.
             if (e.getSource() == checkIn) {
                 HotelManager hm = new HotelManager();
                 hm.checkIn(res, Integer.parseInt(roomNumberField.getSelectedItem().toString()));
@@ -279,25 +246,8 @@ public class CheckInGUI {
                 roomNumberField.addItem(doubleSuite.get(i));
             }
         }
-//        singleRooms.clear();
-//        twinRoom.clear();
-//        kingSize.clear();
-//        kingSize2.clear();
-//        singleSuite.clear();
-//        doubleSuite.clear();
-//        tripleSuite.clear();
-//
 
     }
-//
-//    public boolean isValidNumber(String num) {
-//        try {
-//            Integer.parseInt(num);
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
 
     public JPanel getAvailableTab() {
         return leftPanel;

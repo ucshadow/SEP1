@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A class containing the GUI for check out.
@@ -24,8 +23,6 @@ public class CheckOutGUI {
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumber, price, warnings;
     private JTextField discountField;
     private ArrayList<JLabel> allJLabelsForFields, allJLabelsForLabels;
-    private ArrayList<Reservation> allInHouseGuests;
-    private double discount;
     private Reservation res;
     private MyButtonListener listener;
     private KeyPressEvent keyLogger;
@@ -38,8 +35,6 @@ public class CheckOutGUI {
      */
     public CheckOutGUI(JTabbedPane parent) {
         this.parent = parent;
-
-        allInHouseGuests = new ArrayList<>();
         allJLabelsForFields = new ArrayList<>();
         allJLabelsForLabels = new ArrayList<>();
         listener = new MyButtonListener();
@@ -61,8 +56,6 @@ public class CheckOutGUI {
      * Method for GUI design.
      */
     public void designGUI() {
-
-        //getDataForCheckIn(res);
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(200, 920));
 
@@ -150,7 +143,7 @@ public class CheckOutGUI {
         departure.setText(String.valueOf(res.getDeparture().getCheckOutDate()));
         roomType.setText(String.valueOf(res.getRoomType()));
         roomNumber.setText(String.valueOf(res.getRoomNumber()));
-        price.setText(String.valueOf(hm.getTotalPrice(res, discount)));
+        price.setText(String.valueOf(hm.getTotalPrice(res, 0)));
 
     }
 
@@ -159,14 +152,13 @@ public class CheckOutGUI {
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //checkOutButton button for checking out the person.
             if (e.getSource() == checkOutButton) {
                 hm.checkOut(res);
                 parent.setSelectedIndex(0);
             }
-            //cancel button to close the window.
             if (e.getSource() == cancel) {
-                int choice = JOptionPane.showConfirmDialog(null, "Do you want to exit the check out", "Exit", JOptionPane.YES_NO_OPTION);
+                int choice = JOptionPane.showConfirmDialog(null,
+                        "Do you want to exit the check out", "Exit", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     parent.setSelectedIndex(0);
                 }

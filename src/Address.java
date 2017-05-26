@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * A class containing address which later on will be used to create a reservation.
+ * A class containing attributes that form an address which later on will be used to create a reservation.
  * @author Nikolay D Nikolov
  * @version 1.0
  */
@@ -15,10 +15,10 @@ public class Address implements Serializable {
     /**
      * Constructor initializing Address
      *
-     * @param country  for initializing the constructor.
-     * @param city     for initializing the constructor.
-     * @param postCode for initializing the constructor.
-     * @param street   for initializing the constructor.
+     * @param country  for initializing inside the constructor.
+     * @param city     for initializing inside the constructor.
+     * @param postCode for initializing inside the constructor.
+     * @param street   for initializing inside the constructor.
      */
 
     public Address(String country, String city, String postCode, String street) {
@@ -30,36 +30,36 @@ public class Address implements Serializable {
     }
 
     /**
-     * Get a country of a person.
+     * Get a country of a guest.
      *
-     * @return Coutry Country of a person.
+     * @return String, Country of a guest.
      */
     public String getCountry() {
         return country;
     }
 
     /**
-     * Set a country for a person.
+     * Set a country of a guest.
      *
-     * @param country takes country for a person.
+     * @param country a String representing a new Country.
      */
     public void setCountry(String country) {
         this.country = country;
     }
 
     /**
-     * Get a city of a person
+     * Get a city of a guest
      *
-     * @return City City of a person.
+     * @return String, City of a guest.
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * Set a city of a person.
+     * Set a city of a guest.
      *
-     * @param city takes city for a person
+     * @param city a String representing a new city
      */
 
     public void setCity(String city) {
@@ -67,9 +67,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Get a post code of a person
+     * Get a post code of a guest
      *
-     * @return Post code Post code of a person.
+     * @return String, post code of a guest.
      */
 
     public String getPostCode() {
@@ -77,9 +77,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Set post code for a person.
+     * Set post code of a guest.
      *
-     * @param postCode takes post code for a person.
+     * @param postCode a String representing a new post code
      */
 
     public void setPostCode(String postCode) {
@@ -87,9 +87,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Get a street of a person.
+     * Get a street of a guest.
      *
-     * @return Street Street of a person.
+     * @return String Street of a guest.
      */
 
     public String getStreet() {
@@ -97,9 +97,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Set street for a person
+     * Set street for a guest
      *
-     * @param street takes a street for a person.
+     * @param street a String representing a new street
      */
 
     public void setStreet(String street) {

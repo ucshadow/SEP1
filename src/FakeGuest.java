@@ -36,7 +36,7 @@ public class FakeGuest {
             "Anton", "Teodoro", "Rolando", "Keneth", "Hosea", "Rodrigo", "Pablo", "Derick", "Kenneth", "Lino",
             "Demetrius", "Del", "Burt", "Nicolas", "Adan", "Russell", "Jospeh", "Troy", "Don", "Caleb"};
 
-    private String[] roomTypes = {"single room", "double room", "double room-twin beds", "double room-kingsize",
+    private String[] roomTypes = {"single room", "double room-twin beds", "double room-kingsize",
             "single bedroom suite", "two bedroom suite", "three bedroom suite"};
 
     private String[] city = { "Copenhagen", "Aarhus", "Horsens", "Randers",
@@ -82,7 +82,7 @@ public class FakeGuest {
     }
 
     private String getRoomType() {
-        return roomTypes[rnd.nextInt(7)];
+        return roomTypes[rnd.nextInt(6)];
     }
 
     private boolean giveMeABoolean() {

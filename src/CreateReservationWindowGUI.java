@@ -18,11 +18,13 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class CreateReservationWindowGUI {
-    //private JFrame mainFrame;
-    //private JTabbedPane createReservationPane;
-    private JPanel reservationPanel, leftPanel, rightPanel, guestDataLabels, guestDataTextFields, guestDataCheckBoxes, leftPanelButtons, rightPanelButtons;
-    private JLabel firstNameLabel, middleNameLabel, lastNameLabel, countryLabel, cityLabel, postCodeLabel, streetLabel, phoneNumberLabel, nationalityLabel, dateOfBirthLabel, arrivalLabel, departureLabel, roomTypeLabel, bookingInitiatorLabel, lateArrivalNoticeLabel, priorityGuestLabel;
-    private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality, dateOfBirth, arrival, departure;
+    private JPanel reservationPanel, leftPanel, rightPanel, guestDataLabels, guestDataTextFields, guestDataCheckBoxes,
+            leftPanelButtons, rightPanelButtons;
+    private JLabel firstNameLabel, middleNameLabel, lastNameLabel, countryLabel, cityLabel, postCodeLabel, streetLabel,
+            phoneNumberLabel, nationalityLabel, dateOfBirthLabel, arrivalLabel, departureLabel, roomTypeLabel,
+            bookingInitiatorLabel, lateArrivalNoticeLabel, priorityGuestLabel;
+    private JTextField firstName, middleName, lastName, country, city, postCode, street, phoneNumber, nationality,
+            dateOfBirth, arrival, departure;
     private JCheckBox bookingInitiator, lateArrivalNotice, priorityGuest;
     private JScrollPane allGuestScroll;
     private JButton save, clear, choose, refresh, cancel, update, remove;
@@ -68,7 +70,6 @@ public class CreateReservationWindowGUI {
     public void prepareGUI() {
         listener = new MyButtonListener();
         presser = new KeyPressEvent();
-        //mainFrame = new JFrame("Overlook Hotel");
         tableSelect = new MyListSelectionListener();
         left();
 
@@ -79,19 +80,6 @@ public class CreateReservationWindowGUI {
         reservationPanel.add(leftPanel, BorderLayout.WEST);
         reservationPanel.add(rightPanel, BorderLayout.EAST);
         bookingInitiator.doClick();
-        //createReservationPane = new JTabbedPane();
-        //createReservationPane.addTab("Create Reservation", reservationPanel);
-
-        //mainFrame.add(createReservationPane);
-        //mainFrame.setSize(1440, 960);
-        //mainFrame.setVisible(true);
-        //mainFrame.setResizable(false);
-
-        // Exit the application when the window is closed
-        //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Center window to screen
-        //mainFrame.setLocationRelativeTo(null);
     }
 
     /**
@@ -400,7 +388,6 @@ public class CreateReservationWindowGUI {
             guestDataTextFields.add(allTextFields.get(i));
         }
         guestDataTextFields.add(roomTypes);
-        // leftPanelButtons.add(save);
 
         if (!isSearch) {
             leftPanelButtons.add(save);
@@ -470,8 +457,8 @@ public class CreateReservationWindowGUI {
         ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
         ArrayList<Reservation> pastReservation = fa.getAllGuests("pastReservations.bin");
         ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
-        ArrayList<Reservation> temp = new ArrayList<Reservation>();
-        allReservations = new ArrayList<Reservation>();
+        ArrayList<Reservation> temp = new ArrayList<>();
+        allReservations = new ArrayList<>();
 
         temp.addAll(reservations);
 
@@ -549,7 +536,6 @@ public class CreateReservationWindowGUI {
         String nationality_ = nationality.getText();
         String dateOfBirth_ = dateOfBirth.getText();
         String roomType_ = roomTypes.getSelectedItem().toString();
-//        System.out.println(roomTypes.getSelectedItem().toString());
         String[] arrival_ = arrival.getText().split("/");
         String[] departure_ = departure.getText().split("/");
         boolean lateArraivalNotice_ = false;
@@ -588,18 +574,8 @@ public class CreateReservationWindowGUI {
     }
 
 
-    // toDO: index should be based ont the tab number in the row!;
-//    public void changeTitle(String title) {
-//        createReservationPane.setTitleAt(1, title);
-//    }
-
     public JPanel getAvailabilityTab() {
         return reservationPanel;
     }
-
-
-//    public static void main(String[] args) {
-//        CreateReservationWindowGUI a = new CreateReservationWindowGUI();
-//    }
 
 }

@@ -15,14 +15,9 @@ import java.util.ArrayList;
  */
 public class CheckAvailability {
 
-    private FileAdapter fa = new FileAdapter();
     private HotelManager hm = new HotelManager();
-    private ArrayList<Reservation> parsedData = new ArrayList<>();
 
-    //private JFrame mainFrame;
     private JPanel controlPanel;
-    //private JTabbedPane tabPane;
-
 
     private JPanel left;
     private JPanel right;
@@ -38,7 +33,6 @@ public class CheckAvailability {
      * No-argument constructor for initialing CheckAvailability
      */
     public CheckAvailability() {
-//        parseData();
         prepareGUI();
     }
 
@@ -46,31 +40,16 @@ public class CheckAvailability {
      * A method preparing GUI for launch.
      */
     private void prepareGUI() {
-        //mainFrame = new JFrame("Check Availability");
-        //mainFrame.setSize(1440, 960);
-        //mainFrame.setLayout(new FlowLayout());
-
-
-        //tabPane = new JTabbedPane();
-        //mainFrame.add(tabPane);
 
         left = new JPanel();
         right = new JPanel();
         right.setPreferredSize(new Dimension(700, 860));
         left.setPreferredSize(new Dimension(700, 860));
-
-//        mainFrame.addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent windowEvent) {
-//                System.exit(0);
-//            }
-//        });
         controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout());
 
         controlPanel.add(left);
         controlPanel.add(right);
-        //tabPane.addTab("Search between dates", controlPanel);
-        //mainFrame.setVisible(true);
         prepareSearchWindow();
     }
 
@@ -87,7 +66,6 @@ public class CheckAvailability {
 
         fromField = new JTextField();
         fromField.setPreferredSize(new Dimension(100, 25));
-        //fromField.setRows(1);
 
         toField = new JTextField();
         toField.setPreferredSize(new Dimension(100, 25));
@@ -108,8 +86,6 @@ public class CheckAvailability {
         left.add(fromField);
         left.add(toField);
         left.add(warnings);
-
-        //mainFrame.setVisible(true);
     }
 
     private void displayRooms(DateHandler d1, DateHandler d2) {
@@ -118,21 +94,6 @@ public class CheckAvailability {
         roomData.setText(s);
         roomData.revalidate();
     }
-
-//    private void parseData() {
-//
-//        //ArrayList<Reservation> reservations = fa.getAllGuests("reservations.bin");
-//        //ArrayList<Reservation> inHouse = fa.getAllGuests("inHouseGuests.bin");
-//
-////        for(Reservation r: reservations) {
-////            parsedData.add(r);
-////        }
-////
-////        for(Reservation r: inHouse) {
-////            parsedData.add(r);
-////            System.out.println(r);
-////        }
-//    }
 
     /**
      * A class records the key that was pressed
@@ -151,11 +112,8 @@ public class CheckAvailability {
                 String[] str = fromField.getText().split("/");
                 String[] str2 = toField.getText().split("/");
                 error = true;
-//                System.out.println(isValidDate(fromField.getText()) && isValidDate(toField.getText()));
                 if (!(isValidDate(fromField.getText()) && isValidDate(toField.getText()))) {
-//
                     warnings.setText("Please use the format provided");
-
                     error = false;
                 } else {
                     DateHandler d1 = new DateHandler(Integer.parseInt(str[0]), Integer.parseInt(str[1]), Integer.parseInt(str[2]));
@@ -177,8 +135,6 @@ public class CheckAvailability {
                 }
 
             }
-            //System.out.println(e.getKeyChar());
-
         }
 
         /**
@@ -200,7 +156,7 @@ public class CheckAvailability {
         }
 
         public void keyReleased(KeyEvent e) {
-            //System.out.println(fromField.getText());
+
         }
     }
 

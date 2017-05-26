@@ -6,18 +6,6 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 
-// toDo: all guest currently in the hotel window!!!!  Radu
-
-
-// toDo: auto refresh main window on check in and check out!!! -- DONE
-
-// toDO: toggle between windows on clicks  -- DONE
-
-// toDo: search functionality on home window  Yusuf
-
-// toDo use HM for arr and dep
-
-
 /**
  * This class holds the JFrame (the window)  of the GUI and also the JTabbedPane.
  * It also holds the default GUI tab named "Home". All other tabs are instantiated here.
@@ -440,7 +428,7 @@ public class MainGuiWindow {
          * @param e key event
          */
         public void keyReleased(KeyEvent e) {
-            ArrayList<Reservation> foundNames = new ArrayList<Reservation>();
+            ArrayList<Reservation> foundNames = new ArrayList<>();
             getAllArrivalsForToday(arrivals);
 
             for (int i = 0; i < arrCol.length; i++) {
@@ -470,7 +458,7 @@ public class MainGuiWindow {
          * @param e key event
          */
         public void keyReleased(KeyEvent e) {
-            ArrayList<Reservation> foundNames = new ArrayList<Reservation>();
+            ArrayList<Reservation> foundNames = new ArrayList<>();
             getAllDeparturesForToday(departures);
 
             for (int i = 0; i < depCol.length; i++) {

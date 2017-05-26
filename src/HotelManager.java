@@ -13,13 +13,8 @@ import java.util.GregorianCalendar;
 
 
 public class HotelManager implements Serializable {
-    //    private Room room;
     private Price price;
-    //    private ArrayList<Room> rooms;
-    private DateHandler dateHandler;
     private FileAdapter fileAdapter;
-    private ArrayList<Reservation> allReservations;
-    // we don't have a guest because all methods take a guest
 
     /**
      * No-argument constructor. Used to initialize HotelManager.
@@ -27,9 +22,6 @@ public class HotelManager implements Serializable {
     public HotelManager() {
         fileAdapter = new FileAdapter();
         this.price = new Price();
-//        rooms = new ArrayList<Room>();
-        dateHandler = new DateHandler(1, 1, 2017);
-        allReservations = fileAdapter.getAllGuests("inHouseGuests.bin");
     }
 
     /**
@@ -92,10 +84,6 @@ public class HotelManager implements Serializable {
         return String.valueOf(totalPrice - finalPrice);
     }
 
-//    public String checkOut(int roomNumber){
-//
-//    }
-
     /**
      * Create reservation method. Used to create reservation and save it in the system.
      *
@@ -104,46 +92,6 @@ public class HotelManager implements Serializable {
     public void createReservation(Reservation reservation) {
         fileAdapter.appendToFile("reservations.bin", reservation);
     }
-//
-//    public ArrayList<Reservation> modifyReservation(String firstName) {
-//        ArrayList<Reservation> foundReservations = new ArrayList<Reservation>();
-//        for (int i = 0; i < allReservations.size(); i++) {
-//            if (allReservations.get(i).getGuest().getName().getFirstName().equals(firstName)) {
-//                foundReservations.add(allReservations.get(i));
-//            }
-//        }
-//        return foundReservations;
-//        // the method will be changed later with all the code that will change
-//        // the rest of the reservation
-//    }
-//
-//    public void cancelReservation(Reservation reservation) {
-//        fileAdapter.removeSingleObjectFromFile("reservations.bin", reservation);
-//    }
-
-//    public ArrayList<Reservation> getArrivalList(DateHandler today) {
-//        ArrayList<Reservation> arr = new ArrayList<Reservation>();
-//        for (int i = 0; i < allReservations.size(); i++) {
-//            if (allReservations.get(i).getArrival().getCheckInDate().equals(today)) {
-//                arr.add(allReservations.get(i));
-//            }
-//        }
-//        return arr;
-//    }
-//
-//    public ArrayList<Reservation> getDepartureList(DateHandler today) {
-//        ArrayList<Reservation> dep = new ArrayList<Reservation>();
-//        for (int i = 0; i < allReservations.size(); i++) {
-//            if (allReservations.get(i).getDeparture().getCheckOutDate().equals(today)) {
-//                dep.add(allReservations.get(i));
-//            }
-//        }
-//        return dep;
-//    }
-
-//    public Room[] getAvailabilityFromDate(DateHandler arrival){
-//    }
-//    remains to be implemented tomorrow or the day after tomorrow
 
     /**
      * Availability method. Used to check availability between dates.
@@ -172,7 +120,6 @@ public class HotelManager implements Serializable {
         }
 
         for (int i = 0; i < temp.size(); i++) {
-            //System.out.println(temp.get(i));
             if (temp.get(i).getRoomType().equals("single bedroom suite")) {
                 countSingleBedroomSuite++;
             }
@@ -236,10 +183,4 @@ public class HotelManager implements Serializable {
                 + countTwoBedroomSuite + "\nTriple Suite: " + countThreeBedroomSuite;
         return str;
     }
-
-    public void setMasterPrices(ArrayList<Double> prices) {
-        fileAdapter.writeToFileObj("prices.bin", prices);
-    }
-
-    // remember to implement the changeSmokingType and addExtraBed in the GUI
 }

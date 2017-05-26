@@ -11,27 +11,6 @@ import java.util.Arrays;
 public class FileAdapter implements Serializable {
     private MyFileIO fileIO = new MyFileIO();
 
-    /**
-     * Writing reservation to file.
-     *
-     * @param fileName    takes filename.
-     * @param reservation takes specific reservation to write
-     */
-    public void writeToFile(String fileName, Reservation reservation) {
-        try {
-            fileIO.writeToFile(fileName, reservation);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-//    public void writeToFile(Reservation[] reservations) {
-//        try {
-//            fileIO.writeToFile(fileName, reservations);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Write object to file.
@@ -66,14 +45,6 @@ public class FileAdapter implements Serializable {
         return read;
     }
 
-//    public String getFileName() {
-//        return fileName;
-//    }
-//
-//    public void setFileName(String fileName) {
-//        this.fileName = fileName;
-//    }
-
     /**
      * Reading from file.
      *
@@ -107,7 +78,6 @@ public class FileAdapter implements Serializable {
         Object[] read = null;
         try {
             read = fileIO.readArrayFromFile(fileName);
-            //System.out.println(Arrays.toString(read));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -148,7 +118,6 @@ public class FileAdapter implements Serializable {
         }
         Object[] temp = new Object[lessValues.size()];
         lessValues.toArray(temp);
-        //System.out.println(Arrays.toString(temp));
         try {
             fileIO.writeToFile(fileName, temp);
         } catch (IOException e) {
