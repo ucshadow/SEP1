@@ -1,7 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -43,18 +42,8 @@ public class HotelManager implements Serializable {
      */
 
     public void checkOut(Reservation reservation) {
-
-        Calendar cal = new GregorianCalendar();
-        Calendar cal2 = new GregorianCalendar();
-        cal.setTime(new Date((reservation.getArrival().getCheckInDate().getYear())
-                , (reservation.getArrival().getCheckInDate().getMonth() - 1)
-                , reservation.getArrival().getCheckInDate().getDay()));
-        cal2.setTime(new Date((reservation.getDeparture().getCheckOutDate().getYear())
-                , (reservation.getDeparture().getCheckOutDate().getMonth() - 1)
-                , reservation.getDeparture().getCheckOutDate().getDay()));
         fileAdapter.removeSingleObjectFromFile("inHouseGuests.bin", reservation);
         fileAdapter.appendToFile("pastReservations.bin", reservation);
-
     }
 
 
@@ -67,14 +56,12 @@ public class HotelManager implements Serializable {
      */
     public String getTotalPrice(Reservation reservation, double discount) {
 
-        Calendar cal = new GregorianCalendar();
-        Calendar cal2 = new GregorianCalendar();
-        cal.setTime(new Date((reservation.getArrival().getCheckInDate().getYear())
-                , (reservation.getArrival().getCheckInDate().getMonth() - 1)
-                , reservation.getArrival().getCheckInDate().getDay()));
-        cal2.setTime(new Date((reservation.getDeparture().getCheckOutDate().getYear())
-                , (reservation.getDeparture().getCheckOutDate().getMonth() - 1)
-                , reservation.getDeparture().getCheckOutDate().getDay()));
+        Calendar cal = new GregorianCalendar(reservation.getArrival().getCheckInDate().getYear(),
+                reservation.getArrival().getCheckInDate().getMonth() - 1,
+                reservation.getArrival().getCheckInDate().getDay());
+        Calendar cal2 = new GregorianCalendar(reservation.getDeparture().getCheckOutDate().getYear(),
+                reservation.getDeparture().getCheckOutDate().getMonth() - 1,
+                reservation.getDeparture().getCheckOutDate().getDay());
         int total = cal2.get(Calendar.DAY_OF_YEAR) - cal.get(Calendar.DAY_OF_YEAR);
         double totalPrice = price.getRoomPrice(reservation.getRoomType()) * total;
         if (discount == 0) {
