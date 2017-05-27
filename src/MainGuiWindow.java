@@ -149,6 +149,7 @@ public class MainGuiWindow {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setPreferredSize(new Dimension(1440, 960));
         mainWindow.setIconImage(new ImageIcon("logo_.png").getImage());
+        mainWindow.setTitle("Overlook Hotel");
 
 
         right.setPreferredSize(new Dimension(650, 700));
