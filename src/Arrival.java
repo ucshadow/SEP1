@@ -10,41 +10,49 @@ public class Arrival implements Serializable {
 
     /**
      * Constructor initializing Arrival
-     * @param checkInDate for initializing the constructor.
+     *
+     * @param checkInDate for initializing inside the constructor.
      */
+
     public Arrival(DateHandler checkInDate){
         this.checkInDate = checkInDate;
     }
 
     /**
-     * Get check in date for reservation.
-     * @return checkInDate for reservation.
+     * Gets the check in date for the reservation.
+     *
+     * @return checkInDate, DateHandler representing the check in date of the reservation.
      */
+
     public DateHandler getCheckInDate() {
         return checkInDate;
     }
 
     /**
-     * Set check in date for reservation
-     * @param checkInDate takes check in date for reservation.
+     * Replaces the check in date for the reservation
+     *
+     * @param checkInDate the check in date to replace with.
      */
+
     public void setCheckInDate(DateHandler checkInDate) {
         this.checkInDate = checkInDate;
     }
 
     /**
-     * Get copy of Arrival
-     * @return checkInDate Arrival copy.
+     * Gets copy of Arrival
+     *
+     * @return checkInDate, a copy of Arrival.
      */
+
     public Arrival copy(){
         return new Arrival(checkInDate);
     }
 
     /**
-     * check if a arrival is equal to another arrival.
+     * Check if an arrival is equal to another.
      *
      * @param obj Object for comparing
-     * @return true or false. if the whole arrival is equal after comparing with obj will return true, else will return false.
+     * @return true or false. If the entire arrival is equal with obj, the method will return true, else it returns false.
      */
     public boolean equals(Object obj) {
         if(!(obj instanceof Arrival)) return false;
@@ -54,10 +62,11 @@ public class Arrival implements Serializable {
         return checkInDate.equals(arrival.checkInDate);
     }
     /**
-     * return a String
+     * Returns a String
      *
-     * @return String containing check in date.
+     * @return String, representing the check in date.
      */
+
     public String toString() {
         return checkInDate.toString();
     }

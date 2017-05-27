@@ -23,7 +23,7 @@ public class CheckOutGUI {
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumber, price, warnings;
     private JTextField discountField;
     private ArrayList<JLabel> allJLabelsForFields, allJLabelsForLabels;
-    private Reservation res;
+    private Reservation reservation;
     private MyButtonListener listener;
     private KeyPressEvent keyLogger;
     private JButton checkOutButton, cancel;
@@ -31,8 +31,9 @@ public class CheckOutGUI {
     private HotelManager hm = new HotelManager();
 
     /**
-     * No-argument constructor initializing the check out GUI.
+     * No-argument constructor initializing the CheckOutGUI's tab, design, JLabels and the button and key press listener.
      */
+
     public CheckOutGUI(JTabbedPane parent) {
         this.parent = parent;
         allJLabelsForFields = new ArrayList<>();
@@ -46,8 +47,9 @@ public class CheckOutGUI {
     }
 
     /**
-     * Method preparing GUI for starting.
+     * Method for creating the design on the GUI.
      */
+
     public void prepareGUI() {
         designGUI();
     }
@@ -55,6 +57,7 @@ public class CheckOutGUI {
     /**
      * Method for GUI design.
      */
+
     public void designGUI() {
         leftPanel = new JPanel();
         leftPanel.setPreferredSize(new Dimension(200, 920));
@@ -125,35 +128,35 @@ public class CheckOutGUI {
     }
 
     /**
-     * Method preparing an object for check out.
+     * Method for preparing an object for check out.
      */
 
     public void getDataForCheckOut() {
-        firstName.setText(res.getGuest().getName().getFirstName());
-        middleName.setText(res.getGuest().getName().getMiddleName());
-        lastName.setText(res.getGuest().getName().getLastName());
-        country.setText(res.getGuest().getAddress().getCountry());
-        city.setText(res.getGuest().getAddress().getCity());
-        postCode.setText(res.getGuest().getAddress().getPostCode());
-        street.setText(res.getGuest().getAddress().getStreet());
-        phoneNumber.setText(String.valueOf(res.getGuest().getPhoneNumber()));
-        nationality.setText(res.getGuest().getNationality());
-        dateOfBirth.setText(String.valueOf(res.getGuest().getDateOfBirth()));
-        arrival.setText(String.valueOf(res.getArrival().getCheckInDate()));
-        departure.setText(String.valueOf(res.getDeparture().getCheckOutDate()));
-        roomType.setText(String.valueOf(res.getRoomType()));
-        roomNumber.setText(String.valueOf(res.getRoomNumber()));
-        price.setText(String.valueOf(hm.getTotalPrice(res, 0)));
+        firstName.setText(reservation.getGuest().getName().getFirstName());
+        middleName.setText(reservation.getGuest().getName().getMiddleName());
+        lastName.setText(reservation.getGuest().getName().getLastName());
+        country.setText(reservation.getGuest().getAddress().getCountry());
+        city.setText(reservation.getGuest().getAddress().getCity());
+        postCode.setText(reservation.getGuest().getAddress().getPostCode());
+        street.setText(reservation.getGuest().getAddress().getStreet());
+        phoneNumber.setText(String.valueOf(reservation.getGuest().getPhoneNumber()));
+        nationality.setText(reservation.getGuest().getNationality());
+        dateOfBirth.setText(String.valueOf(reservation.getGuest().getDateOfBirth()));
+        arrival.setText(String.valueOf(reservation.getArrival().getCheckInDate()));
+        departure.setText(String.valueOf(reservation.getDeparture().getCheckOutDate()));
+        roomType.setText(String.valueOf(reservation.getRoomType()));
+        roomNumber.setText(String.valueOf(reservation.getRoomNumber()));
+        price.setText(String.valueOf(hm.getTotalPrice(reservation, 0)));
 
     }
 
     /**
-     * Action listener for buttons.
+     * Button listener which implements ActionListener.
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == checkOutButton) {
-                hm.checkOut(res);
+                hm.checkOut(reservation);
                 parent.setSelectedIndex(0);
             }
             if (e.getSource() == cancel) {
@@ -167,7 +170,10 @@ public class CheckOutGUI {
         }
     }
 
-    class KeyPressEvent implements KeyListener {
+    /**
+     * KeyListener for the discount field. Activates each time a key is released in the discount field.
+     */
+    private class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
         }
 
@@ -178,17 +184,17 @@ public class CheckOutGUI {
 
             if (isValidNumber(discountField.getText())) {
                 double discount = Double.parseDouble(discountField.getText());
-                if (e.getSource() == discountField && discount >= 0 && discount <= 100) {
-                    price.setText(hm.getTotalPrice(res, Double.parseDouble(discountField.getText())));
+                if (discount >= 0 && discount <= 100) {
+                    price.setText(hm.getTotalPrice(reservation, Double.parseDouble(discountField.getText())));
                     warnings.setText("");
                 } else {
                     warnings.setText("<html><font color='red'>Discount should be between 0 and 100</font></html>");
                 }
 
             }
-            if (e.getSource() == discountField && !isValidNumber(discountField.getText()) ||
+            if (!isValidNumber(discountField.getText()) ||
                     discountField.getText().isEmpty()) {
-                price.setText(hm.getTotalPrice(res, 0));
+                price.setText(hm.getTotalPrice(reservation, 0));
             }
             if(!isValidNumber(discountField.getText())) {
                 warnings.setText("<html><font color='red'>Discount should be between 0 and 100</font></html>");
@@ -196,6 +202,11 @@ public class CheckOutGUI {
         }
     }
 
+    /**
+     * verifies if the String can be parsed as a double.
+     * @param num number to be checked
+     * @return true or false. If the entire string can be parsed as a double, the method will return true, else it returns false.
+     */
     public boolean isValidNumber(String num) {
         try {
             Double.parseDouble(num);
@@ -205,9 +216,18 @@ public class CheckOutGUI {
         }
     }
 
-    public void setRes(Reservation res) {
-        this.res = res;
+    /**
+     *  Sets the reservation in Check out window to the reservation that was passed to this method.
+     * @param reservation
+     */
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
+
+    /**
+     * Returns the CheckOut main JPanel
+     * @return leftPanel, the main JPanel of this class
+     */
 
     public JPanel getAvailableTab() {
         return leftPanel;

@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 /**
- * A class containing attributes that form an address which later on will be used to create a reservation.
+ * A class containing attributes that create an address which later on will be used to create a reservation.
  * @author Nikolay D Nikolov
  * @version 1.0
  */
@@ -30,46 +30,45 @@ public class Address implements Serializable {
     }
 
     /**
-     * Get a country of a guest.
+     * Gets the country of a guest.
      *
-     * @return String, Country of a guest.
+     * @return String, representing the country of a guest.
      */
     public String getCountry() {
         return country;
     }
 
     /**
-     * Set a country of a guest.
+     * Replaces the country of a guest.
      *
-     * @param country a String representing a new Country.
+     * @param country a String representing the country to replace with.
      */
     public void setCountry(String country) {
         this.country = country;
     }
 
     /**
-     * Get a city of a guest
+     * Gets the city of a guest
      *
-     * @return String, City of a guest.
+     * @return String, representing the city of a guest.
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * Set a city of a guest.
+     * Replaces the city of a guest.
      *
-     * @param city a String representing a new city
+     * @param city a String representing the city to replace with
      */
-
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * Get a post code of a guest
+     * Gets the post code of a guest
      *
-     * @return String, post code of a guest.
+     * @return String, representing post code of a guest.
      */
 
     public String getPostCode() {
@@ -77,9 +76,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Set post code of a guest.
+     * Replaces the post code of a guest.
      *
-     * @param postCode a String representing a new post code
+     * @param postCode a String representing the post code to replace with
      */
 
     public void setPostCode(String postCode) {
@@ -87,9 +86,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Get a street of a guest.
+     * Gets the street of a guest.
      *
-     * @return String Street of a guest.
+     * @return String, representing the street of a guest.
      */
 
     public String getStreet() {
@@ -97,9 +96,9 @@ public class Address implements Serializable {
     }
 
     /**
-     * Set street for a guest
+     * Replaces the street of a guest
      *
-     * @param street a String representing a new street
+     * @param street a String representing the street to replace with
      */
 
     public void setStreet(String street) {
@@ -107,11 +106,12 @@ public class Address implements Serializable {
     }
 
     /**
-     * check if a address is equal to another address.
+     * Checks if the address is equal to another address.
      *
      * @param obj Object for comparing
-     * @return true or false. if the whole address is equal after comparing with obj will return true, else will return false.
+     * @return true or false. If the entire address is equal to obj, the method will return true, else it returns false.
      */
+
     public boolean equals(Object obj) {
         if (!(obj instanceof Address)) {
             return false;
@@ -126,8 +126,9 @@ public class Address implements Serializable {
     /**
      * return a String
      *
-     * @return String containing country, city,post code, street.
+     * @return String, representing country, city, post code and street.
      */
+
     public String toString() {
         return ", Country :" + country + ", city " + city + " ,postcode "
                 + postCode + " ,street " + street;

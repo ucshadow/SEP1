@@ -24,8 +24,9 @@ public class CheckInGUI {
     private ArrayList<Integer> singleRooms, twinRoom, kingSize, kingSize2, singleSuite, doubleSuite, tripleSuite;
 
     /**
-     * No-argument constructor initializing the check in GUI.
+     * No-argument constructor initializing the CheckInGUI's tab, design, JLabels and the button listener.
      */
+
     public CheckInGUI(JTabbedPane parent) {
 
         this.parent = parent;
@@ -39,8 +40,9 @@ public class CheckInGUI {
     }
 
     /**
-     * Method for GUI design.
+     * Method for creating the design of the GUI.
      */
+
     public void designGUI() {
 
         leftPanel = new JPanel();
@@ -107,9 +109,9 @@ public class CheckInGUI {
     }
 
     /**
-     * Method preparing an object for check in.
+     * Method for preparing an object for check in.
      *
-     * @param res the reservation for check in
+     * @param res the reservation used for check in
      */
 
     public void getDataForCheckIn(Reservation res) {
@@ -134,6 +136,7 @@ public class CheckInGUI {
     /**
      * Action listener for buttons.
      */
+
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == checkIn) {
@@ -152,12 +155,13 @@ public class CheckInGUI {
     }
 
     /**
-     * A method that generetes Arraylist of Integers.
+     * A method that generates an ArrayList of integers representing the room numbers.
      *
      * @param number1 the first integer
      * @param number2 the second integer
-     * @return Arraylist of Integers from the first until the last.
+     * @return ArrayList of integers containing integers representing all room numbers.
      */
+
     public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
         ArrayList<Integer> temp = new ArrayList<Integer>();
         for (int i = number1; i < number2 + 1; i++) {
@@ -170,10 +174,11 @@ public class CheckInGUI {
     }
 
     /**
-     * A method to set room number
+     * A method to set room numbers for each roomType and then remove the room number from the available room section if that room has a guest
      *
-     * @param res takes specific reservation
+     * @param res the specific reservation
      */
+
     public void setRoomNumber(Reservation res) {
 
 
@@ -212,7 +217,9 @@ public class CheckInGUI {
                 tripleSuite.remove(tripleSuite.indexOf(inHouse.get(i).getRoomNumber()));
             }
         }
-            roomNumberField.revalidate();
+        roomNumberField.revalidate();
+
+
         if (res.getRoomType().equals("single room")) {
 
             for (int i = 0; i < singleRooms.size(); i++) {
@@ -248,6 +255,12 @@ public class CheckInGUI {
         }
 
     }
+
+    /**
+     * A method to return the leftPanel of this class as a JPanel.
+     *
+     * @return JPanel, leftPanel representing the main panel of this tab, where all GUI elements from check in are contained
+     */
 
     public JPanel getAvailableTab() {
         return leftPanel;

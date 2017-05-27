@@ -408,7 +408,7 @@ public class MainGuiWindow {
             // check-out button
             if (e.getSource() == rightButton) {
                 if (allDeparturesTable.getSelectedRow() >= 0) {
-                    checkOutGUI.setRes(departures.get(allDeparturesTable.getSelectedRow()));
+                    checkOutGUI.setReservation(departures.get(allDeparturesTable.getSelectedRow()));
                     checkOutGUI.getDataForCheckOut();
                     tabPane.setSelectedIndex(4);
                     refresh();
@@ -419,7 +419,7 @@ public class MainGuiWindow {
     }
 
     /**
-     * This method will call the refresh method each time the "Home" tab is focused.
+     * This method will call the refresh method each time the "Home" tab is pressed.
      * @see #refresh()
      */
     ChangeListener changeListener = new ChangeListener() {
