@@ -94,14 +94,15 @@ public class HotelManager implements Serializable {
         int singleRoom = 0;
         int twinRoom = 0;
         int kingSizeRoom = 0;
-        ArrayList<Reservation> temp = new ArrayList<>();
-        ArrayList<Reservation> compare = fileAdapter.getAllGuests("reservations.bin");
 
+        ArrayList<Reservation> temp = new ArrayList<>();
+
+        ArrayList<Reservation> compare = fileAdapter.getAllGuests("reservations.bin");
         compare.addAll(fileAdapter.getAllGuests("inHouseGuests.bin"));
 
         for (int i = 0; i < compare.size(); i++) {
-            if ((!(compare.get(i).getDeparture().getCheckOutDate().isBefore(arrival)))
-                    && ((compare.get(i).getArrival().getCheckInDate().isBefore(departure)))) {
+            if (!(compare.get(i).getDeparture().getCheckOutDate().isBefore(arrival))
+                    && (compare.get(i).getArrival().getCheckInDate().isBefore(departure))) {
                 temp.add(compare.get(i));
             }
         }
@@ -110,7 +111,7 @@ public class HotelManager implements Serializable {
             if (temp.get(i).getRoomType().equals("single bedroom suite")) {
                 countSingleBedroomSuite++;
             }
-            if (temp.get(i).getRoomType().equals("two bedroom suite")) {
+            if (temp.get(i).getRoomType().equals("double bedroom suite")) {
                 countTwoBedroomSuite++;
             }
             if (temp.get(i).getRoomType().equals("three bedroom suite")) {
