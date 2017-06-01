@@ -79,7 +79,7 @@ public class MainGuiWindow {
     private Object[][] depCol;
 
     /**
-     * Constructor used for initialising window params, adding tabs to the tab pane,
+     * No-argument constructor used for initialising window params, adding tabs to the tab pane,
      * disabling the check-in and check-out tabs and loading all data from the bin files.
      */
     public MainGuiWindow() {
@@ -293,6 +293,7 @@ public class MainGuiWindow {
      * Iterates an arrayList of reservations and checks if the arrival date of any reservation
      * matches the current date. It sets the table data in the Arrival panel of the "Home" tab
      * to be equal to all the found reservations that do.
+     *
      * @param arrivals an ArrayList of Reservation objects
      */
     public void getAllArrivalsForToday(ArrayList<Reservation> arrivals) {
@@ -317,6 +318,7 @@ public class MainGuiWindow {
      * Iterates an arrayList of reservations and checks if the departure date of any reservation
      * matches the current date. It sets the table data in the Departure panel of the "Home" tab
      * to be equal to all the found reservations that do.
+     *
      * @param departures an ArrayList of Reservation objects
      */
     public void getAllDeparturesForToday(ArrayList<Reservation> departures) {
@@ -391,8 +393,9 @@ public class MainGuiWindow {
     private class MyButtonListener implements ActionListener {
 
         /**
-         * Performs an action based on thr button clicked. It either activates the check-in tab or the check-out tab
+         * Performs an action based on the button clicked. It either activates the check-in tab or the check-out tab
          * with the selected data from the table row.
+         *
          * @param e the action event
          */
         public void actionPerformed(ActionEvent e) {
@@ -420,6 +423,7 @@ public class MainGuiWindow {
 
     /**
      * This method will call the refresh method each time the "Home" tab is pressed.
+     *
      * @see #refresh()
      */
     ChangeListener changeListener = new ChangeListener() {
@@ -444,6 +448,7 @@ public class MainGuiWindow {
 
         /**
          * Filters the Arrival table based on the user input
+         *
          * @param e key event
          */
         public void keyReleased(KeyEvent e) {
@@ -474,6 +479,7 @@ public class MainGuiWindow {
 
         /**
          * Filters the Departure table based on the user input
+         *
          * @param e key event
          */
         public void keyReleased(KeyEvent e) {

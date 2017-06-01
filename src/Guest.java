@@ -16,11 +16,11 @@ public class Guest implements Serializable {
     /**
      * Constructor initializing Guest.
      *
-     * @param name        for initializing the constructor.
-     * @param phoneNumber for initializing the constructor.
-     * @param address     for initializing the constructor.
-     * @param nationality for initializing the constructor.
-     * @param dateOfBirth for initializing the constructor.
+     * @param name        for initializing inside the constructor.
+     * @param phoneNumber for initializing inside the constructor.
+     * @param address     for initializing inside the constructor.
+     * @param nationality for initializing inside the constructor.
+     * @param dateOfBirth for initializing inside the constructor.
      */
 
     public Guest(Name name, long phoneNumber, Address address,
@@ -43,7 +43,7 @@ public class Guest implements Serializable {
     }
 
     /**
-     * Set names for a guest
+     * Sets name for a guest
      *
      * @param name takes name for a guest.
      */
@@ -54,7 +54,7 @@ public class Guest implements Serializable {
     /**
      * Get a phone number for a guest.
      *
-     * @return phoneNumber  Phone number of a guest.
+     * @return phoneNumber Phone number of a guest.
      */
     public long getPhoneNumber() {
         return phoneNumber;
@@ -70,7 +70,7 @@ public class Guest implements Serializable {
     }
 
     /**
-     * Get a addres for a guest.
+     * Get a address for a guest.
      *
      * @return address Address for a guest.
      */
@@ -137,7 +137,7 @@ public class Guest implements Serializable {
      * check if a guest is equal to another guest.
      *
      * @param obj Object for comparing
-     * @return true or false. if the guest is equal after comparing with obj will return true, else will return false.
+     * @return true or false. If the guest is equal after comparing with obj will return true, else will return false.
      */
     public boolean equals(Object obj) {
         if (!(obj instanceof Guest)) {

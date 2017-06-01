@@ -21,7 +21,7 @@ public class Arrival implements Serializable {
     /**
      * Gets the check in date for the reservation.
      *
-     * @return checkInDate, DateHandler representing the check in date of the reservation.
+     * @return DateHandler, named checkInDate representing the check in date of the reservation.
      */
 
     public DateHandler getCheckInDate() {
@@ -41,7 +41,7 @@ public class Arrival implements Serializable {
     /**
      * Gets copy of Arrival
      *
-     * @return checkInDate, a copy of Arrival.
+     * @return DateHandler, named checkInDate which is a copy of Arrival.
      */
 
     public Arrival copy(){

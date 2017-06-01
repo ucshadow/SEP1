@@ -18,13 +18,13 @@ public class Reservation implements Serializable {
     /**
      * Constructor initializing Address
      *
-     * @param guest             for initializing the constructor.
-     * @param arrival           for initializing the constructor.
-     * @param departure         for initializing the constructor.
-     * @param roomType          for initializing the constructor.
-     * @param bookingInitiator  for initializing the constructor.
-     * @param lateArrivalNotice for initializing the constructor.
-     * @param priorityGuest     for initializing the constructor.
+     * @param guest             for initializing inside the constructor.
+     * @param arrival           for initializing inside the constructor.
+     * @param departure         for initializing inside the constructor.
+     * @param roomType          for initializing inside the constructor.
+     * @param bookingInitiator  for initializing inside the constructor.
+     * @param lateArrivalNotice for initializing inside the constructor.
+     * @param priorityGuest     for initializing inside the constructor.
      */
     public Reservation(Guest guest, Arrival arrival, Departure departure, String roomType,
                        boolean bookingInitiator, boolean lateArrivalNotice, boolean priorityGuest) {
@@ -166,7 +166,7 @@ public class Reservation implements Serializable {
 
     /**
      * Set room number for reservation.
-     * @param roomNumber takes roomnumber for a guest for reservation.
+     * @param roomNumber takes roomNumber for a guest for reservation.
      */
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;

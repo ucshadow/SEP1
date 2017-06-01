@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @author Radu G Orleanu, Yusuf A Farah
  * @version 1.0
  */
+
 public class CheckInGUI {
 
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
@@ -25,6 +26,8 @@ public class CheckInGUI {
 
     /**
      * No-argument constructor initializing the CheckInGUI's tab, design, JLabels and the button listener.
+     *
+     * @param parent represents the JTabbedPane to which the CheckInGUI tab will be added
      */
 
     public CheckInGUI(JTabbedPane parent) {
@@ -36,11 +39,10 @@ public class CheckInGUI {
 
         designGUI();
 
-
     }
 
     /**
-     * Method for creating the design of the GUI.
+     * Method for creating the design of this tab.
      */
 
     public void designGUI() {
@@ -134,7 +136,7 @@ public class CheckInGUI {
 
 
     /**
-     * Action listener for buttons.
+     * A class that listens to any activity regarding the buttons
      */
 
     private class MyButtonListener implements ActionListener {
@@ -159,7 +161,7 @@ public class CheckInGUI {
      *
      * @param number1 the first integer
      * @param number2 the second integer
-     * @return ArrayList of integers containing integers representing all room numbers.
+     * @return ArrayList of integers, containing integers representing all room numbers.
      */
 
     public ArrayList<Integer> generateRoomNumber(int number1, int number2) {
@@ -174,7 +176,7 @@ public class CheckInGUI {
     }
 
     /**
-     * A method to set room numbers for each roomType and then remove the room number from the available room section if that room has a guest
+     * A method to set room numbers for each roomType and add the empty rooms to the roomNumberField comboBox
      *
      * @param res the specific reservation
      */
@@ -257,7 +259,7 @@ public class CheckInGUI {
     }
 
     /**
-     * A method to return the leftPanel of this class as a JPanel.
+     * A method that returns the leftPanel of this class as a JPanel.
      *
      * @return JPanel, leftPanel representing the main panel of this tab, where all GUI elements from check in are contained
      */

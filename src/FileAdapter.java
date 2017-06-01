@@ -13,7 +13,7 @@ public class FileAdapter implements Serializable {
 
 
     /**
-     * Write object to file.
+     * Writing object to file.
      *
      * @param fileName takes file name.
      * @param object   takes object.
@@ -46,10 +46,10 @@ public class FileAdapter implements Serializable {
     }
 
     /**
-     * Reading from file.
+     * Reading from a file.
      *
      * @param fileName takes file name.
-     * @return ArrayList<Reservtion> AllGuests returns all guests.
+     * @return reservations, an array list containing all guests.
      */
     public ArrayList<Reservation> getAllGuests(String fileName) {
         ArrayList<Reservation> reservations = new ArrayList<Reservation>();
@@ -68,7 +68,7 @@ public class FileAdapter implements Serializable {
     }
 
     /**
-     * Append to file.
+     * Append to a file.
      *
      * @param fileName    takes file name.
      * @param reservation takes specific reservation

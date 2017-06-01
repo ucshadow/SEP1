@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 /**
- * A class containing date which later on will be used to create a different date objects.
+ * A class containing dates which later on will be used to create a different date objects.
  * @author Catalin Udrea
  * @version 1.0
  */
@@ -17,10 +17,11 @@ public class DateHandler implements Serializable {
 
     /**
      * Constructor initializing DateHandler
-     * @param day  for initializing the constructor.
-     * @param month  for initializing the constructor.
-     * @param year  for initializing the constructor.
+     * @param day  for initializing inside the constructor.
+     * @param month  for initializing inside the constructor.
+     * @param year  for initializing inside the constructor.
      */
+
     public DateHandler(int day, int month, int year) {
         this.day = day;
         this.month = month;

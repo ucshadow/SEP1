@@ -13,11 +13,8 @@ import java.util.ArrayList;
  * @version 1.0
  */
 
-// toDo: discount price is busted...
-
 public class CheckOutGUI {
 
-    //private JFrame mainFrame;
     private JPanel mainPanelForFields, mainPanelForLabels, leftPanel;
     private JLabel firstName, middleName, lastName, country, city, postCode, street,
             phoneNumber, nationality, dateOfBirth, arrival, departure, roomType, roomNumber, price, warnings;
@@ -32,6 +29,8 @@ public class CheckOutGUI {
 
     /**
      * No-argument constructor initializing the CheckOutGUI's tab, design, JLabels and the button and key press listener.
+     *
+     * @param parent represents the JTabbedPane to which the CheckInGUI tab will be added
      */
 
     public CheckOutGUI(JTabbedPane parent) {
@@ -41,21 +40,11 @@ public class CheckOutGUI {
         listener = new MyButtonListener();
         keyLogger = new KeyPressEvent();
 
-        prepareGUI();
-
-
-    }
-
-    /**
-     * Method for creating the design on the GUI.
-     */
-
-    public void prepareGUI() {
         designGUI();
     }
 
     /**
-     * Method for GUI design.
+     * Method for creating the design of this tab.
      */
 
     public void designGUI() {
@@ -151,7 +140,7 @@ public class CheckOutGUI {
     }
 
     /**
-     * Button listener which implements ActionListener.
+     * A class that listens to any activity regarding the buttons
      */
     private class MyButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -171,7 +160,7 @@ public class CheckOutGUI {
     }
 
     /**
-     * KeyListener for the discount field. Activates each time a key is released in the discount field.
+     * A class that listens to any activity regarding the keyboard. Used for the discount field.
      */
     private class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
@@ -180,6 +169,11 @@ public class CheckOutGUI {
         public void keyPressed(KeyEvent e) {
         }
 
+        /**
+         * A method to listen for key releases.
+         *
+         * @param e event representing the action event.
+         */
         public void keyReleased(KeyEvent e) {
 
             if (isValidNumber(discountField.getText())) {
@@ -218,15 +212,16 @@ public class CheckOutGUI {
 
     /**
      *  Sets the reservation in Check out window to the reservation that was passed to this method.
-     * @param reservation
+     *
+     * @param reservation represents the reservation that will be replaced.
      */
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
 
     /**
-     * Returns the CheckOut main JPanel
-     * @return leftPanel, the main JPanel of this class
+     * A method that returns the leftPanel of this class as a JPanel.
+     * @return leftPanel, the main JPanel of this class, where all GUI elements from check out are contained
      */
 
     public JPanel getAvailableTab() {

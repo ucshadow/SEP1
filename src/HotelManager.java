@@ -26,7 +26,7 @@ public class HotelManager implements Serializable {
     /**
      * Check in method. Used to check in a reservation.
      *
-     * @param reservation takes specific reserervation.
+     * @param reservation takes specific reservation.
      * @param roomNumber  takes specific room number.
      */
     public void checkIn(Reservation reservation, int roomNumber) {
@@ -85,7 +85,7 @@ public class HotelManager implements Serializable {
      *
      * @param arrival   takes specific date for arraving.
      * @param departure takes specific date for departure.
-     * @return availability Returns specific numbers of available rooms.
+     * @return String, returns specific numbers of available rooms by room type.
      */
     public String getAvailabilityFromDateInterval(DateHandler arrival, DateHandler departure) {
         int countSingleBedroomSuite = 0;

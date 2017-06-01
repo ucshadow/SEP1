@@ -37,7 +37,7 @@ public class CheckAvailability {
     }
 
     /**
-     * A method preparing GUI for launch.
+     * A method preparing the GUI for launch.
      */
     private void prepareGUI() {
 
@@ -88,6 +88,12 @@ public class CheckAvailability {
         left.add(warnings);
     }
 
+    /**
+     * The method takes two date handlers and executes the getAvailabilityFromDate using them and displaying the resulting String s in the roomData JTextArea
+     * @param d1 DateHandler object representing arrival date
+     * @param d2 DateHandler object representing departure date
+     */
+
     private void displayRooms(DateHandler d1, DateHandler d2) {
 
         String s = hm.getAvailabilityFromDateInterval(d1, d2);
@@ -96,16 +102,16 @@ public class CheckAvailability {
     }
 
     /**
-     * A class records the key that was pressed
+     * A class that listens to any activity regarding the keyboard
      */
     class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
         }
 
         /**
-         * A method to listener for key presses.
+         * A method to listen for key presses.
          *
-         * @param e takes the source of the action.
+         * @param e event representing the action event.
          */
         public void keyPressed(KeyEvent e) {
             if ((e.getSource().equals(toField) || e.getSource().equals(fromField)) && e.getKeyCode() == 10) {
@@ -138,11 +144,12 @@ public class CheckAvailability {
         }
 
         /**
-         * Checks if the enter dates are in the correct format.
+         * Checks if the entered dates are in the correct format.
          *
          * @param str takes the date as a string
-         * @return true or false . If dates are entered properly returns true , else will return false.
+         * @return true or false. If dates are entered in the proper way, the method returns true , else it returns false.
          */
+
         public boolean isValidDate(String str) {
             String[] arr = str.split("/");
             if (arr[0].chars().allMatch(Character::isDigit) && arr[0].length() == 2) {
@@ -159,6 +166,12 @@ public class CheckAvailability {
 
         }
     }
+
+    /**
+     * A method that returns the controlPanel of this class as a JPanel.
+     *
+     * @return JPanel, controlPanel representing the main panel of this tab, where all GUI elements from check availability are contained
+     */
 
     public JPanel getAvailabilityTab() {
         return controlPanel;

@@ -11,9 +11,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 /**
- * A class used for create reseration window GUI part
- * This class Search extends CreateReservationWindowGUI.
- *
+ * A class for creating the Create Reservation tab in the GUI.
  * @author Nikolay D Nikolov, Radu G Orleanu
  * @version 1.0
  */
@@ -46,8 +44,10 @@ public class CreateReservationWindowGUI {
     private JTabbedPane parent;
 
     /**
-     * @param parent
+     * Constructor for initializing the required methods
+     * @param parent representing the JTabbedPane where the Create Reservation Tab will be in
      */
+
     public CreateReservationWindowGUI(JTabbedPane parent) {
 
         if (this.getClass().getName().equals("Search")) {
@@ -63,18 +63,17 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to prepare all methods below for the GUI so everything launches together.
-     * Preparing all listeners.
-     * Preparing the left and the right part of the window.
+     * A method used to prepare all the methods below for the GUI for launching together.
+     * Prepares all listeners.
+     * Prepares  the left and the right parts of the window.
      */
+
     public void prepareGUI() {
         listener = new MyButtonListener();
         presser = new KeyPressEvent();
         tableSelect = new MyListSelectionListener();
         left();
-
         right();
-
         reservationPanel = new JPanel();
         reservationPanel.setPreferredSize(new Dimension(1440, 960));
         reservationPanel.add(leftPanel, BorderLayout.WEST);
@@ -83,13 +82,13 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A class conteining Selection listener.
+     * A class listening for whenever the selection changes.
      */
     private class MyListSelectionListener implements ListSelectionListener {
         /**
-         * A method used to select specific reservation from a list.
+         * A method used to select a specific reservation from a list.
          *
-         * @param e Not used in our case for that specific method.
+         * @param e the event that characterizes the change. This event e is not used in this case.
          */
         public void valueChanged(ListSelectionEvent e) {
             int a = allGuests.getSelectedRow();
@@ -101,10 +100,10 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to check if the inputted data is in the correct format. Checks the data fields.
+     * A method used to check if the input data is in the correct format. Checks the data fields.
      *
      * @param str takes a string.
-     * @return true or false Returns true if the date format was typed properly in the text field else will return false.
+     * @return true or false. Returns true if the date format was typed properly in the text field, else it returns false.
      * @author Catalin Udrea
      * @version 1.0
      */
@@ -121,10 +120,10 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to check if the inputted data is in the correct format.  Checks the phone number field.
+     * A method used to check if the input data is in the correct format. Checks the phone number field.
      *
      * @param str takes a string.
-     * @return true or false Returns true if the phone number was typed properly in the text field else will return false.
+     * @return true or false. Returns true if the phone number was typed properly in the text field, else it returns false.
      * @author Catalin Udrea
      * @version 1.0
      */
@@ -140,8 +139,8 @@ public class CreateReservationWindowGUI {
 
     /**
      * A method created for the clear button.
-     * if the clear button is clicked it will clear all fields except the booking initiator check box.
-     * Check box for booking initiator is always when in create reservation window
+     * If the clear button is clicked, it will clear all fields except the booking initiator check box.
+     * Check box for booking initiator is checked by default.
      */
     public void clear() {
         firstName.setText("");
@@ -165,14 +164,14 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A class used to add button listener to the button in that window
+     * A class which listens for any activity regarding the buttons.
      */
     private class MyButtonListener implements ActionListener {
 
         /**
          * A method used to check if a button is pressed.
          *
-         * @param e takes the source of the action.
+         * @param e event representing the action event.
          */
         public void actionPerformed(ActionEvent e) {
             int a = 0;
@@ -187,7 +186,6 @@ public class CreateReservationWindowGUI {
                 }
                 // arrival, departure is checked when pressing save
                 if (!(isValidDate(arrival.getText()))) {
-//                    JOptionPane.showMessageDialog(null, "Arrival date " + arrival.getText() + " is not a valid date");
                     arrivalLabel.setText("<html><font color='black'>Arrival (dd/mm/yyyy) </font> <font color='red'>" +
                             "please use the format provided</font></html>");
                     a++;
@@ -263,10 +261,7 @@ public class CreateReservationWindowGUI {
                     System.exit(0);
                 }
             }
-            // Checks if the update button is pressed. If pressed edits a chosen reservation.
-//            else if (e.getSource() == update) {
-//                updateReservation(chosenReservation);
-//            }
+
             // Check if the remove button is pressed. If pressed removes a specific reservation from the file . Used to cancel reservation.
             else if (e.getSource() == remove) {
                 fa.removeSingleObjectFromFile("reservations.bin", chosenReservation);
@@ -276,7 +271,7 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A class records the key that was pressed
+     * A class that listens to any activity regarding the keyboard.
      */
     class KeyPressEvent implements KeyListener {
         public void keyTyped(KeyEvent e) {
@@ -288,9 +283,10 @@ public class CreateReservationWindowGUI {
         }
 
         /**
-         * A method used for filtering all reservations.
+         * On key released, if the first name in a reservation has all the letters that were typed inside the name
+         * field, it will add that reservation to a list and display it
          *
-         * @param e takes the source of the action.
+         * @param e event representing the action event.
          */
         public void keyReleased(KeyEvent e) {
             foundNames = new ArrayList<Reservation>();
@@ -303,13 +299,11 @@ public class CreateReservationWindowGUI {
                 }
             }
             createReservationTable(foundNames);
-
-
         }
     }
 
     /**
-     * A method used to structure the left side of the GUI.
+     * A method used to design the left side of the CreateReservation tab.
      */
     public void left() {
         leftPanel = new JPanel();
@@ -403,7 +397,7 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to structure the right side of the GUI.
+     * A method used to design the right side of the CreateReservation tab.
      */
 
     public void right() {
@@ -450,7 +444,7 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to take all guest in to array list.
+     * A method used to get all the guests in an array list.
      */
     public void takeAllGuest() {
         FileAdapter fa = new FileAdapter();
@@ -474,9 +468,9 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to take the desired date for our JTable.
+     * A method used to get the required data for the JTable.
      *
-     * @param res takes specific reservation.
+     * @param res represents a reservation array.
      */
 
     public void createReservationTable(ArrayList<Reservation> res) {
@@ -489,21 +483,15 @@ public class CreateReservationWindowGUI {
             resColumn[i][3] = res.get(i).getGuest().getAddress().getCountry();
             resColumn[i][4] = res.get(i).getGuest().getPhoneNumber();
         }
-
         dtm = new DefaultTableModel(resColumn, columnNames);
         allGuests.setModel(dtm);
         allGuests.revalidate();
-
-
     }
 
     /**
-     * A method used to create reservation.
+     * A method used to create a reservation.
      */
     public void reservationCreator() {
-
-        //toDo: check for valid data
-
         Arrival arr = new Arrival(new DateHandler(Integer.parseInt(arrival.getText().split("/")[0]),
                 Integer.parseInt(arrival.getText().split("/")[1]),
                 Integer.parseInt(arrival.getText().split("/")[2])));
@@ -520,9 +508,9 @@ public class CreateReservationWindowGUI {
     }
 
     /**
-     * A method used to update specific reservation.
+     * A method used to update a specific reservation.
      *
-     * @param r takes specific reservation.
+     * @param r takes a specific reservation.
      */
     private void updateReservation(Reservation r) {
         String firstName_ = firstName.getText();
@@ -553,7 +541,6 @@ public class CreateReservationWindowGUI {
 
         Name name = new Name(firstName_, middleName_, lastName_);
 
-        //toDo check for valid Data!
         DateHandler arrDH = new DateHandler(Integer.parseInt(arrival_[0]),
                 Integer.parseInt(arrival_[1]), Integer.parseInt(arrival_[2]));
         DateHandler depDH = new DateHandler(Integer.parseInt(departure_[0]),
@@ -567,13 +554,15 @@ public class CreateReservationWindowGUI {
         Reservation reservation = new Reservation(guest, arr, dep, roomType_, bookingInitiator_,
                 lateArraivalNotice_, priorityGuest_);
 
-        // toDo: reWrite to file
-
         fa.removeSingleObjectFromFile("reservations.bin", r);
         fa.appendToFile("reservations.bin", reservation);
     }
 
-
+    /**
+     * A method that returns the reservation of this class as a JPanel.
+     *
+     * @return JPanel, reservationPanel representing the main panel of this tab, where all GUI elements from this class are contained
+     */
     public JPanel getAvailabilityTab() {
         return reservationPanel;
     }

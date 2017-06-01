@@ -20,8 +20,9 @@ public class MyFileIO {
      *
      * @param fileName takes file name.
      * @param obj      takes specific object.
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException when a file is not found
+     * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of
+     * exceptions produced by failed or interrupted I/O operations.
      */
     public void writeToFile(String fileName, Object obj) throws FileNotFoundException, IOException {
         ObjectOutputStream writeToFile = null;
@@ -47,8 +48,9 @@ public class MyFileIO {
      *
      * @param fileName takes file name.
      * @param objs     takes multiple objects.
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException when a file is not found
+     * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of
+     * exceptions produced by failed or interrupted I/O operations.
      */
     public void writeToFile(String fileName, Object[] objs) throws FileNotFoundException, IOException {
         ObjectOutputStream writeToFile = null;
@@ -76,9 +78,10 @@ public class MyFileIO {
      *
      * @param fileName takes file name.
      * @return object
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws FileNotFoundException when a file is not found
+     * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of
+     * exceptions produced by failed or interrupted I/O operations.
+     * @throws ClassNotFoundException when the object is not in the same class
      */
     public Object readObjectFromFile(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
         Object obj = null;
@@ -109,9 +112,10 @@ public class MyFileIO {
      *
      * @param fileName takes file name
      * @return ArrayList returns the whole list as an array list.
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws FileNotFoundException when a file is not found
+     * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of
+     * exceptions produced by failed or interrupted I/O operations.
+     * @throws ClassNotFoundException when the object is not in the same class
      */
     public Object[] readArrayFromFile(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
         ArrayList<Object> objs = new ArrayList<Object>();

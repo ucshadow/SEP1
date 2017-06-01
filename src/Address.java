@@ -59,7 +59,7 @@ public class Address implements Serializable {
     /**
      * Replaces the city of a guest.
      *
-     * @param city a String representing the city to replace with
+     * @param city a String representing the city to replace with.
      */
     public void setCity(String city) {
         this.city = city;
@@ -124,7 +124,7 @@ public class Address implements Serializable {
     }
 
     /**
-     * return a String
+     * Returns a String
      *
      * @return String, representing country, city, post code and street.
      */
